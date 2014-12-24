@@ -14,11 +14,18 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-leiningen'
+Bundle 'tpope/vim-projectionist'
+Bundle 'tpope/vim-dispatch'
+Bundle 'tpope/vim-fireplace.git'
+Bundle 'tpope/vim-classpath.git'
+Bundle 'tpope/vim-commentary.git'
+Bundle 'kien/rainbow_parentheses.vim.git'
+Bundle 'guns/vim-clojure-static'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'tpope/vim-rails.git'
 Bundle 'tomasr/molokai'
-Bundle 'ervandew/supertab.git'
 Bundle 'sbl/scvim.git'
 Bundle 'ervandew/supertab.git'
 Bundle 'tobys/vip.git'
@@ -29,28 +36,33 @@ Bundle 'xolox/vim-session'
 Bundle 'mklabs/grunt.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'othree/html5.vim'
+Bundle 'mustache/vim-mustache-handlebars'
+Bundle 'eiginn/netrw'
+Bundle 'scrooloose/nerdtree'
 
 Bundle 'sophacles/vim-processing'
 
 Bundle 'kchmck/vim-coffee-script'
 
-" vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'scrooloose/nerdtree'
-" Bundle 'project.tar.gz'
-" non github repos
-Bundle 'git://git.wincent.com/command-t.git'
-
 Bundle 'vim-scripts/bufmru.vim'
-"Bundle 'tpope/vim-surround'
-Bundle 'AutoClose'
+Bundle 'tpope/vim-surround'
+Bundle 'jiangmiao/auto-pairs'
 
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 
 Bundle "garbas/vim-snipmate"
+
+" vim-scripts repos
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+Bundle 'paredit.vim'
+
+" Bundle 'project.tar.gz'
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+
 
 Bundle 'git://drupalcode.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
 
@@ -184,6 +196,9 @@ let NERDTreeQuitOnOpen = 1
 
 nmap <silent> <Leader>m :make<CR>
 
+nmap <silent> <Leader>r :w<CR>
+
+
 let g:proj_flags="lmstc"
 
 if has('gui_running')
@@ -220,3 +235,7 @@ au BufRead,BufNewFile *.txt,*.tex,*.md set wrap linebreak nolist textwidth=0 wra
 let g:session_autosave='yes'
 let g:session_autoload='yes'
 
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
