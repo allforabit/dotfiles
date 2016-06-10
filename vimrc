@@ -2,69 +2,95 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required! 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
-" My Bundles here:
+Plugin 'joonty/vdebug.git'
+Plugin 'countoren/WSearch'
+
+" My Plugins here:
 "
 " original repos on github
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-leiningen'
-Bundle 'tpope/vim-projectionist'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-fireplace.git'
-Bundle 'tpope/vim-classpath.git'
-Bundle 'tpope/vim-commentary.git'
-Bundle 'kien/rainbow_parentheses.vim.git'
-Bundle 'guns/vim-clojure-static'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
-Bundle 'tomasr/molokai'
-Bundle 'sbl/scvim.git'
-Bundle 'ervandew/supertab.git'
-Bundle 'tobys/vip.git'
-Bundle 'wavded/vim-stylus'
-Bundle 'plasticboy/vim-markdown.git'
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-session'
-Bundle 'mklabs/grunt.vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'othree/html5.vim'
-Bundle 'mustache/vim-mustache-handlebars'
-Bundle 'eiginn/netrw'
-Bundle 'scrooloose/nerdtree'
+" Plugin 'neovim/node-host'
+" Plugin 'snoe/nvim-parinfer.js'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-salve'
+Plugin 'tpope/vim-projectionist'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-fireplace.git'
+Plugin 'tpope/vim-classpath.git'
+Plugin 'tpope/vim-commentary.git'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people.git'
+Plugin 'veloce/vim-behat'
+Plugin 'luochen1990/rainbow'
+Plugin 'guns/vim-clojure-static'
+Plugin 'guns/vim-sexp'
+Plugin 'tpope/vim-repeat'
 
-Bundle 'sophacles/vim-processing'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'tpope/vim-rails.git'
+Plugin 'tomasr/molokai'
+Plugin 'sbl/scvim.git'
 
-Bundle 'kchmck/vim-coffee-script'
+Plugin 'marijnh/tern_for_vim'
 
-Bundle 'vim-scripts/bufmru.vim'
-Bundle 'tpope/vim-surround'
-Bundle 'jiangmiao/auto-pairs'
+Plugin 'Valloric/YouCompleteMe'
 
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "honza/snipmate-snippets"
+Plugin 'tobys/vip.git'
+Plugin 'wavded/vim-stylus'
+Plugin 'plasticboy/vim-markdown.git'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
+Plugin 'mklabs/grunt.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'othree/html5.vim'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'eiginn/netrw'
+Plugin 'scrooloose/nerdtree'
+Plugin 'heavenshell/vim-jsdoc'
 
-Bundle "garbas/vim-snipmate"
+Plugin 'sophacles/vim-processing'
+
+Plugin 'kchmck/vim-coffee-script'
+
+Plugin 'vim-scripts/bufmru.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'jiangmiao/auto-pairs'
+
+"Plugin 'MarcWeber/vim-addon-mw-utils'
+"Plugin 'tomtom/tlib_vim'
+
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+"vim-react-snippets:
+Plugin 'justinj/vim-react-snippets'
+"Plugin 'ervandew/supertab'
+
+Plugin 'mattn/emmet-vim'
 
 " vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'paredit.vim'
+Plugin 'L9'
+Plugin 'FuzzyFinder'
+" Plugin 'paredit.vim'
 
-" Bundle 'project.tar.gz'
 " non github repos
-Bundle 'git://git.wincent.com/command-t.git'
+Plugin 'git://git.wincent.com/command-t.git'
 
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'bling/vim-airline'
 
-Bundle 'git://drupalcode.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
+Plugin 'altercation/vim-colors-solarized'
+
+Plugin 'pangloss/vim-javascript'
+
+call vundle#end()
 
 " ================ General Config ====================
 
@@ -76,6 +102,7 @@ set showmode                    "Show current mode down the bottom
 set gcr=a:blinkon0              "Disable cursor blink
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
+set autowrite
 
 " This makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
@@ -84,6 +111,12 @@ set hidden
 
 "turn on syntax highlighting
 syntax on
+
+set nocursorline
+set nocursorcolumn
+set scrolljump=5
+
+set clipboard=unnamed
 
 " ================ Search Settings  =================
 
@@ -156,26 +189,31 @@ set sidescroll=1
 
 " ================ Misc ========================
 
-set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+set pastetoggle=<F2>
 
-set timeoutlen = 5000  " allow buffer switching without saving
+" set statusline=[%n]\ %<%.99f\ %h%w%m%r%{SL('CapsLockStatusline')}%y%{SL('fugitive#statusline')}%#ErrorMsg#%{SL('SyntasticStatuslineFlag')}%*%=%-14.(%l,%c%V%)\ %P
+" set statusline+=%#warningmsg#
+" set statusline+=%*
 
-colorscheme molokai 
+set timeoutlen=1200 " A little bit more time for macros
+set ttimeoutlen=50  " Make Esc work faster
+
+let g:solarized_termcolors = 16
+let g:solarized_termtrans = 1
+colorscheme molokai
 
 " ...
 
 filetype plugin indent on     " required!
 "
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" :PluginList          - list configured bundles
+" :PluginInstall(!)    - install(update) bundles
+" :PluginSearch(!) foo - search(or refresh cache first) for foo
+" :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+" NOTE: comments after Plugin command are not allowed..
 
 
 "The default leader is '\', but many people prefer ',' as it's in a standard
@@ -187,8 +225,6 @@ let maplocalleader = ','
 "Map colon to semicolon and double semicolon to semicolon
 map ; :
 noremap ;; ;
-
-"nmap <silent> <Leader>l :Project<CR>
 
 "nerdtree config
 nmap <silent> <Leader>l :NERDTreeToggle<CR>
@@ -235,7 +271,97 @@ au BufRead,BufNewFile *.txt,*.tex,*.md set wrap linebreak nolist textwidth=0 wra
 let g:session_autosave='yes'
 let g:session_autoload='yes'
 
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+    \   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+    \   'operators': '_,_',
+    \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+    \   'separately': {
+    \       '*': {},
+    \       'tex': {
+    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+    \       },
+    \       'lisp': {
+    \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+    \       },
+    \       'vim': {
+    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+    \       },
+    \       'html': {
+    \           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ > ])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+    \       },
+    \       'css': 0,
+    \   }
+\}
+
+if has("eval")
+function! SL(function)
+  if exists('*'.a:function)
+    return call(a:function,[])
+  else
+    return ''
+  endif
+endfunction
+endif
+
+command! Piggie :Piggieback (cemerick.austin/exec-env)
+command! Biggie :Piggieback (cemerick.austin/exec-env :exec-cmds ["open" "-ga" "/Applications/Google Chrome.app"])
+command! Wiggie :Piggieback (weasel.repl.websocket/repl-env :ip "0.0.0.0" :port 9001) 
+
+"set clipboard=unnamed
+
+"let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+"let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+"
+autocmd FileType cucumber let b:dispatch = 'cd ~/Projects/campusie/sites/default/behat-tests;behat'
+autocmd FileType php let b:dispatch = 'cd ~/Projects/campusie/sites/default/behat-tests;behat'
+autocmd FileType drupal let b:dispatch = 'drush cc all -q'
+
+map <F8>    :make<CR>
+map <F9>    :Dispatch<CR>
+let g:feature_filetype='behat'
+
+" tmux will only forward escape sequences to the terminal if surrounded by a DCS sequence
+" http://sourceforge.net/mailarchive/forum.php?thread_name=AANLkTinkbdoZ8eNR1X2UobLTeww1jFrvfJxTMfKSq-L%2B%40mail.gmail.com&forum_name=tmux-users
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-u>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+"Disable scratch pad showing for tern plugin autocomplete
+set completeopt-=preview
+" When the filetype is FILETYPE then make AutoPairs only match for parenthesis
+" autocmd Filetype clojure let b:AutoPairs = {}
+let g:AutoPairsFlyMode = 1
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Toggle this for vim-sexp to not go into insert mode after wrapping something
+let g:sexp_insert_after_wrap = 0
+" Toggle this to disable automatically creating closing brackets and quotes
+let g:sexp_enable_insert_mode_mappings = 1
+
+let g:sexp_mappings = {
+  \ 'sexp_insert_at_list_tail':      '',
+  \ }
+
+command! Figwheel :Piggieback! (do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/cljs-repl))
