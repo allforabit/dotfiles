@@ -33,16 +33,18 @@ values."
      polymode
 
      (clojure :variables clojure-enable-fancify-symbols t)
-     evil-cleverparens
+     ;; evil-cleverparens
      unimpaired
-     ;; lispy
-     ;; lisp-custom
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
+     spell-checking
+     syntax-checking
+     version-control
+     php
+     javascript
+     html
+     ; gtags
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -50,9 +52,9 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
-     evil-smartparens
      mmm-mode
      glsl-mode
+     lispyville
    )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -271,7 +273,8 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
-  (setq-default
+  (lispyville-motions-put-into-special t
+   setq-default
    evil-move-beyond-eol t
    cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))"
    evil-shift-width 2
@@ -289,6 +292,7 @@ layers configuration. You are free to put any user code."
 
   ;; Fix <C-i> to make it jump forward properly vi style
   (define-key key-translation-map (kbd "TAB") 'my-translate-C-i)
+
   (with-eval-after-load 'evil-maps
     (define-key evil-motion-state-map (kbd "<C-i>") 'evil-jump-forward))
 
@@ -296,13 +300,30 @@ layers configuration. You are free to put any user code."
   ;; (define-key evil-normal-state-map
   ;;   (kbd "\\") 'evil-repeat-find-char-reverse)
 
-  ;; Smartparens strict
-  (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
-  (add-hook 'clojurescript-mode-hook #'smartparens-strict-mode)
+  ;; Lispy mode
+  (add-hook 'clojure-mode-hook #'lispy-mode)
+  (add-hook 'clojurescript-mode-hook #'lispy-mode)
 
-  ;; Cleverparens
-  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
-  (add-hook 'clojurescript-mode-hook #'evil-cleverparens-mode)
+  ;; Lispyville mode
+  (add-hook 'clojure-mode-hook #'lispyville-mode)
+  (add-hook 'clojurescript-mode-hook #'lispyville-mode)
+
+  ;; Turn off smartparens
+  (add-hook 'clojure-mode-hook #'turn-off-smartparens-mode)
+  (add-hook 'clojurescript-mode-hook #'turn-off-smartparens-mode)
+
+  (add-hook 'org-mode-hook #'visual-line-mode)
+  (add-hook 'org-mode-hook #'spacemacs/toggle-visual-line-navigation-on)
+
+  (with-eval-after-load 'lispyville
+    (lispyville-set-key-theme '(operators
+                                escape
+                                s-operators
+                                additional-movement
+                                slurp/barf-cp
+                                additional
+                                mark)))
+
 
   ;; (add-hook 'clojurescript-mode-hook #'poly-cljs-glsl-mode)
 
