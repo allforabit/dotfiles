@@ -53,12 +53,6 @@ values."
       org-latex-to-pdf-process (list "latexmk -pdf %f")
       org-enable-reveal-js-support t
       org-reveal-root "file:///Users/kevin/Googl %20Drive/reveal.js"
-      org-ref-bibliography-entry-format '(("article" . "%a, %t, <i>%j</i>, <b>%v(%n)</b>, %p (%y). <a href=\"%U\">link</a>. <a href=\"http://dx.doi.org/%D\">doi</a>.")
-                                          ("book" . "%a, %t, %u (%y).")
-                                          ("collection" . "%a, %t, %u (%y).")
-                                          ("techreport" . "%a, %t, %i, %u (%y).")
-                                          ("proceedings" . "%e, %t in %S, %u (%y).")
-                                          ("inproceedings" . "%a, %t, %p, in %b, edited by %e, %u (%y)"))
 
       org-capture-templates '(
                               ("c" "Code composition sketch" entry (file+datetree "~/Google Drive/Projects/sketchbook/index.org")
@@ -111,7 +105,7 @@ values."
      ;; Custom
 
      lilypond
-     csound-x
+     csound
      writeroom
      parinfer
      zotero)
