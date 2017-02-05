@@ -1,0 +1,6 @@
+#key : haskell 
+#name : Add a haskell code block 
+#contributor: Kevin Nolan <kevnolan@gmail.com>
+# --
+#+BEGIN_SRC haskell
+#+END_SRC
