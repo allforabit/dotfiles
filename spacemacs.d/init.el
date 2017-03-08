@@ -101,12 +101,10 @@ values."
         (nntp "news.eternal-september.org")
         (nntp "nntp.aioe.org")
         (nntp "news.gwene.org")))
-     
-     
-
 
 
      ;; Custom
+     nyquist
      (processing :variables
                  processing-location "/usr/bin/processing-java"
                  processing-application-dir "/Applications/Processing.app"

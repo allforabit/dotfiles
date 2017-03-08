@@ -93,3 +93,5 @@ rollback () {
     exit 0
   fi
 }
+
+export ATESTVAR="yo"

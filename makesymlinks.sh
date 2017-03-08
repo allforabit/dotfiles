@@ -8,7 +8,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bashrc vimrc vim spacemacs emacs.d"          # list of files/folders to symlink in homedir
+files="zshrc vimrc vim spacemacs emacs.d"          # list of files/folders to symlink in homedir
 
 ##########
 
@@ -32,3 +32,4 @@ done
 
 git clone https://github.com/gmarik/vundle.git ~/dotfiles/vim/bundle/vundle
 vim +PluginInstall +qall
+
