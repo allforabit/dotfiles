@@ -1,7 +1,7 @@
 (defconst csound-packages
   '(
     (csound-mode :location local)
-    ;; (ob-csound :location local)
+    (ob-csound :location local)
     ))
 
 
@@ -73,12 +73,12 @@
     )
   )
 
-;; (defun csound/init-ob-csound ()
-;;   "Initialize stef elisp (csound package)"
-;;   (use-package ob-csound
-;;     :init
-;;     (progn
-;;       (message "Starting ob csound")
-;;       )
-;;     )
-;;   )
+(defun csound/init-ob-csound ()
+  "Initialize stef elisp (csound package)"
+  (use-package ob-csound
+    :init
+    (progn
+      (message "Starting ob csound")
+      )
+    )
+  )

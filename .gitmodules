@@ -1,0 +1,3 @@
+[submodule "spacemacs.d/layers/csound/local/csound-mode"]
+	path = spacemacs.d/layers/csound/local/csound-mode
+	url = git@github.com:allforabit/csound-mode.git

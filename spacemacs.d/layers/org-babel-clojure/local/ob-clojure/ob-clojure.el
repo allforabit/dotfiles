@@ -1,6 +1,8 @@
+;;; For now modified to fix incompatibility with cider
+
 ;;; ob-clojure.el --- Babel Functions for Clojure    -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2009-2016 Free Software Foundation, Inc.
+;; Copyright (C) 2009-2017 Free Software Foundation, Inc.
 
 ;; Author: Joel Boehland, Eric Schulte, Oleh Krehel, Frederick Giasson
 ;;
@@ -67,7 +69,7 @@
 If the value is nil, timeout is disabled."
   :group 'org-babel
   :type 'integer
-  :version "25.2"
+  :version "26.1"
   :package-version '(Org . "9.1")
   :safe #'wholenump)
 
@@ -103,95 +105,95 @@ If the value is nil, timeout is disabled."
 The underlying process performed by the code block can be output
 using the :show-process parameter."
   (let ((expanded (org-babel-expand-body:clojure body params))
-	(response (list 'dict))
+        (response (list 'dict))
         result)
     (cl-case org-babel-clojure-backend
       (cider
        (require 'cider)
        (let ((result-params (cdr (assq :result-params params)))
-	     (show (cdr (assq :show-process params))))
+             (show (cdr (assq :show-process params))))
          (if (member show '(nil "no"))
-	     ;; Run code without showing the process.
-	     (progn
-	       (setq response
-		     (let ((nrepl-sync-request-timeout
-			    org-babel-clojure-sync-nrepl-timeout))
-		       (nrepl-sync-request:eval expanded
-						(cider-current-connection)
-						(cider-current-session))))
-	       (setq result
-		     (concat
-		      (nrepl-dict-get response
-				      (if (or (member "output" result-params)
-					      (member "pp" result-params))
-					  "out"
-					"value"))
-		      (nrepl-dict-get response "ex")
-		      (nrepl-dict-get response "root-ex")
-		      (nrepl-dict-get response "err"))))
-	   ;; Show the process in an output buffer/window.
+             ;; Run code without showing the process.
+             (progn
+               (setq response
+                     (let ((nrepl-sync-request-timeout
+                            org-babel-clojure-sync-nrepl-timeout))
+                       (nrepl-sync-request:eval expanded
+                                                (cider-current-connection)
+                                                )))
+               (setq result
+                     (concat
+                      (nrepl-dict-get response
+                                      (if (or (member "output" result-params)
+                                              (member "pp" result-params))
+                                          "out"
+                                        "value"))
+                      (nrepl-dict-get response "ex")
+                      (nrepl-dict-get response "root-ex")
+                      (nrepl-dict-get response "err"))))
+           ;; Show the process in an output buffer/window.
            (let ((process-buffer (switch-to-buffer-other-window
-				  "*Clojure Show Process Sub Buffer*"))
-		 status)
-	     ;; Run the Clojure code in nREPL.
-	     (nrepl-request:eval
-	      expanded
-	      (lambda (resp)
-		(when (member "out" resp)
-		  ;; Print the output of the nREPL in the output buffer.
-		  (princ (nrepl-dict-get resp "out") process-buffer))
-		(when (member "ex" resp)
-		  ;; In case there is an exception, then add it to the
-		  ;; output buffer as well.
-		  (princ (nrepl-dict-get resp "ex") process-buffer)
-		  (princ (nrepl-dict-get resp "root-ex") process-buffer))
-		(when (member "err" resp)
-		  ;; In case there is an error, then add it to the
-		  ;; output buffer as well.
-		  (princ (nrepl-dict-get resp "err") process-buffer))
-		(nrepl--merge response resp)
-		;; Update the status of the nREPL output session.
-		(setq status (nrepl-dict-get response "status")))
-	      (cider-current-connection)
-	      (cider-current-session))
+                                  "*Clojure Show Process Sub Buffer*"))
+                 status)
+             ;; Run the Clojure code in nREPL.
+             (nrepl-request:eval
+              expanded
+              (lambda (resp)
+                (when (member "out" resp)
+                  ;; Print the output of the nREPL in the output buffer.
+                  (princ (nrepl-dict-get resp "out") process-buffer))
+                (when (member "ex" resp)
+                  ;; In case there is an exception, then add it to the
+                  ;; output buffer as well.
+                  (princ (nrepl-dict-get resp "ex") process-buffer)
+                  (princ (nrepl-dict-get resp "root-ex") process-buffer))
+                (when (member "err" resp)
+                  ;; In case there is an error, then add it to the
+                  ;; output buffer as well.
+                  (princ (nrepl-dict-get resp "err") process-buffer))
+                (nrepl--merge response resp)
+                ;; Update the status of the nREPL output session.
+                (setq status (nrepl-dict-get response "status")))
+              (cider-current-connection)
+              (cider-current-session))
 
-	     ;; Wait until the nREPL code finished to be processed.
-	     (while (not (member "done" status))
-	       (nrepl-dict-put response "status" (remove "need-input" status))
-	       (accept-process-output nil 0.01)
-	       (redisplay))
+             ;; Wait until the nREPL code finished to be processed.
+             (while (not (member "done" status))
+               (nrepl-dict-put response "status" (remove "need-input" status))
+               (accept-process-output nil 0.01)
+               (redisplay))
 
-	     ;; Delete the show buffer & window when the processing is
-	     ;; finalized.
-	     (mapc #'delete-window
-		   (get-buffer-window-list process-buffer nil t))
-	     (kill-buffer process-buffer)
+             ;; Delete the show buffer & window when the processing is
+             ;; finalized.
+             (mapc #'delete-window
+                   (get-buffer-window-list process-buffer nil t))
+             (kill-buffer process-buffer)
 
-	     ;; Put the output or the value in the result section of
-	     ;; the code block.
-	     (setq result
-		   (concat
-		    (nrepl-dict-get response
-				    (if (or (member "output" result-params)
-					    (member "pp" result-params))
-					"out"
-				      "value"))
-		    (nrepl-dict-get response "ex")
-		    (nrepl-dict-get response "root-ex")
-		    (nrepl-dict-get response "err")))))))
+             ;; Put the output or the value in the result section of
+             ;; the code block.
+             (setq result
+                   (concat
+                    (nrepl-dict-get response
+                                    (if (or (member "output" result-params)
+                                            (member "pp" result-params))
+                                        "out"
+                                      "value"))
+                    (nrepl-dict-get response "ex")
+                    (nrepl-dict-get response "root-ex")
+                    (nrepl-dict-get response "err")))))))
       (slime
        (require 'slime)
        (with-temp-buffer
-	 (insert expanded)
-	 (setq result
-	       (slime-eval
-		`(swank:eval-and-grab-output
-		  ,(buffer-substring-no-properties (point-min) (point-max)))
-		(cdr (assq :package params)))))))
+         (insert expanded)
+         (setq result
+               (slime-eval
+                `(swank:eval-and-grab-output
+                  ,(buffer-substring-no-properties (point-min) (point-max)))
+                (cdr (assq :package params)))))))
     (org-babel-result-cond (cdr (assq :result-params params))
       result
       (condition-case nil (org-babel-script-escape result)
-	(error result)))))
+        (error result)))))
 
 (provide 'ob-clojure)
 

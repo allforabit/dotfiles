@@ -58,7 +58,9 @@
 ;; possibly require modes required for your language
 
 ;; optionally define a file extension for this language
-(add-to-list 'org-babel-tangle-lang-exts '("csound" . "tmp"))
+(add-to-list 'org-babel-tangle-lang-exts '("csound" . "csd"))
+(add-to-list 'org-babel-tangle-lang-exts '("csound" . "orc"))
+(add-to-list 'org-babel-tangle-lang-exts '("csound" . "sco"))
 
 ;; optionally declare default header arguments for this language
 (defvar org-babel-default-header-args:csound '())
@@ -68,14 +70,16 @@
 ;; be called by the `org-babel-execute:csound' function below.
 (defun org-babel-expand-body:csound (body params &optional processed-params)
   "Expand BODY according to PARAMS, return the expanded body."
-  (require 'inf-csound)
-  (let ((vars (nth 1 (or processed-params (org-babel-process-params params)))))
-    (concat
-     (mapconcat ;; define any variables
-      (lambda (pair)
-        (format "%s=%S"
-                (car pair) (org-babel-csound-var-to-csound (cdr pair))))
-      vars "\n") "\n" body "\n")))
+  ;; (require 'inf-csound)
+  ;; (let ((vars (nth 1 (or processed-params (org-babel-process-params params)))))
+  ;;   (concat
+  ;;    (mapconcat ;; define any variables
+  ;;     (lambda (pair)
+  ;;       (format "%s=%S"
+  ;;               (car pair) (org-babel-csound-var-to-csound (cdr pair))))
+  ;;     vars "\n") "\n" body "\n"))
+  (message "Expand body csound")
+  "Hello from csound")
 
 ;; This is the main function which is called to evaluate a code
 ;; block.
@@ -99,10 +103,10 @@
 (defun org-babel-execute:csound (body params)
   "Execute a block of Csound code with org-babel.
 This function is called by `org-babel-execute-src-block'"
-  (message "executing Csound source code block")
-  (let* ((processed-params (org-babel-process-params params))
+
+  (let* ((processed-params (org-babel-variable-assignments:csound params))
          ;; set the session if the session variable is non-nil
-         (session (org-babel-csound-initiate-session (first processed-params)))
+         ;; (session (org-babel-csound-initiate-session (first processed-params)))
          ;; variables assigned for use in the block
          (vars (second processed-params))
          (result-params (third processed-params))
@@ -111,6 +115,10 @@ This function is called by `org-babel-execute-src-block'"
          ;; expand the body with `org-babel-expand-body:csound'
          (full-body (org-babel-expand-body:csound
                      body params processed-params)))
+
+    ;; (with-temp-file in-file
+    ;;   (insert (org-babel-expand-body:generic body params)))
+
     ;; actually execute the source-code block either in a session or
     ;; possibly by dropping it to a temporary file and evaluating the
     ;; file.
@@ -125,18 +133,48 @@ This function is called by `org-babel-execute-src-block'"
     ;; other language, please preprocess any file names involved with
     ;; the function `org-babel-process-file-name'. (See the way that
     ;; function is used in the language files)
-    ))
+
+    (if
+        (equal (alist-get :type params) "sco")
+        (csoundReadScore csound body)
+      (csoundCompileOrc csound body)
+      )
+
+    )
+  "Csound process hello")
 
 ;; This function should be used to assign any variables in params in
 ;; the context of the session environment.
 (defun org-babel-prep-session:csound (session params)
-  "Prepare SESSION according to the header arguments specified in PARAMS."
-  )
+  "Prepare SESSION according to the header arguments specified in PARAMS.")
+
+(defun org-babel-variable-assignments:csound (params)
+  "Return a list of Python statements assigning the block's variables."
+
+  (setq kn-assign
+        (mapcar
+         (lambda (pair)
+           (format "%s"
+                   ;; (car pair)
+                   (org-babel-csound-var-to-csound (cdr pair))))
+         (org-babel--get-vars params)))
+
+  params)
+
 
 (defun org-babel-csound-var-to-csound (var)
-  "Convert an elisp var into a string of csound source code
-specifying a var of the same value."
-  (format "%S" var))
+  "Convert an elisp value to a python variable.
+Convert an elisp value, VAR, into a string of python source code
+specifying a variable of the same value."
+  (if (listp var)
+      (if (equal (type-of (car var)) 'cons)
+          ;; No i at start for list of lists
+          (concat (mapconcat #'org-babel-csound-var-to-csound var " ") "\n")
+        (concat "i " (mapconcat #'org-babel-csound-var-to-csound var " ") "\n"))
+    ;;
+    (format
+     (if (and (stringp var) (string-match "[\n\r]" var)) "\"\"%S\"\"" "%S")
+     (if (stringp var) (substring-no-properties var) var))))
 
 (defun org-babel-csound-table-or-string (results)
   "If the results look like a table, then convert them into an

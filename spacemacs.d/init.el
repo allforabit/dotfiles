@@ -38,10 +38,11 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
+     auto-completion
      (auto-completion
       :variables
-      auto-completion-enable-snippets-in-popup t     auto-completion
-      )
+      auto-completion-enable-snippets-in-popup t
+      yas-snippet-dirs '("/Users/kevin/.spacemacs.d/snippets" yas-installed-snippets-dir "/Users/kevin/.emacs.d/layers/+completion/auto-completion/local/snippets"))
      better-defaults
      emacs-lisp
      python
@@ -50,18 +51,26 @@ values."
      markdown
      (org
       :variables
+      org-babel-clojure-backend 'cider
       org-latex-to-pdf-process (list "latexmk -pdf %f")
       org-enable-reveal-js-support t
       org-reveal-root "file:///Users/kevin/Google%20Drive/reveal.js"
+      org-id-link-to-org-use-id t
+      org-confirm-babel-evaluate nil
+      org-confirm-babel-evaluate t
+      helm-org-format-outline-path t
 
       org-capture-templates '(
                               ("c" "Code composition sketch" entry (file+datetree "~/Google Drive/Projects/sketchbook/index.org")
                                "* %?\nEntered on %U\n  %i\n  %a")
 
                               ("j" "Journal entry" plain (file+datetree "~/Google Drive/org/personal/journal.org")
-                               "* %?\nEntered on %U\n  %i\n  %a")
-                              )
-      )
+                               "* %?\nEntered on %U\n  %i\n  %a")))
+     pandoc
+     ;; (pdf-tools
+     ;;  :variables
+     ;;  pdf-tools-handle-upgrades nil
+     ;;  pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo")
 
      ;; Bibtex
      ;; For now configured for thesis
@@ -83,20 +92,19 @@ values."
      haskell
      ruby
      faust
+     (gnus
+      :variables
+      gnus-secondary-select-methods
+      '(
+        (nntp "gmane"
+              (nntp-address "news.gmane.org"))
+        (nntp "news.eternal-september.org")
+        (nntp "nntp.aioe.org")
+        (nntp "news.gwene.org")))
+     
+     
 
-     ;; o-blog
 
-     ;; TODO remove layer
-     ;; (org-page
-     ;;  :variables
-     ;;  op/repository-directory "~/Google Drive/Projects/my-new-website"
-     ;;  ;;; for commenting, you can choose either disqus or duoshuo
-     ;;  op/site-domain "http://mynewwebsite.com/"
-     ;;  op/personal-disqus-shortname "allforabit"
-     ;;  op/personal-duoshuo-shortname "allforabit"
-     ;; ;;; the configuration below are optional
-     ;;  ;; op/personal-google-analytics-id "your_google_analytics_id"
-     ;;  )
 
      ;; Custom
      (processing :variables
@@ -108,15 +116,23 @@ values."
      csound
      writeroom
      parinfer
-     zotero)
+     zotero
+     ;; Contains fix
+     org-babel-clojure)
+   
 
+   
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '()
+
+
+
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
+
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -349,8 +365,16 @@ It is called immediately after `dotspacemacs/init', before layer configuration
 executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
-`dotspacemacs/user-config' first."
-  )
+`dotspacemacs/user-config' first.")
+
+
+(defun a4b-translate-C-i (_prompt)
+  (if (and (= (length (this-command-keys-vector)) 1)
+           (= (aref (this-command-keys-vector) 0) ?\C-i)
+           (bound-and-true-p evil-mode)
+           (eq evil-state 'normal))
+      (kbd "<C-i>")
+    (kbd "TAB")))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -360,17 +384,43 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; Fix <C-i> to make it jump forward properly vi style
+  ;; TODO submit as fix to evil-mode???
+  (define-key key-translation-map (kbd "TAB") 'a4b-translate-C-i)
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "<C-i>") 'evil-jump-forward))
+
   (add-hook 'org-mode-hook #'visual-line-mode)
   (add-hook 'org-mode-hook #'spacemacs/toggle-visual-line-navigation-on)
+
+  ;; Fix pdflatex export problem
+  (defun set-exec-path-from-shell-PATH ()
+    "Sets the exec-path to the same value used by the user shell"
+    (let ((path-from-shell
+           (replace-regexp-in-string
+            "[[:space:]\n]*$" ""
+            (shell-command-to-string "$SHELL -l -c 'echo $PATH'"))))
+      (setenv "PATH" path-from-shell)
+      (setq exec-path (split-string path-from-shell path-separator))))
+
+  ;; call function now
+  (set-exec-path-from-shell-PATH)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((haskell . t)
+     (emacs-lisp . t)
      (lilypond . t)
-     ;; (csound . t)
+     (csound . t)
+     (clojure . t)
+     ;; (javascript . t)
      (python . t)))
 
-  )
+  ;; Backup files
+  (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,temporary-file-directory t))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -379,27 +429,13 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(cscsd-SFDIR "~/Desktop/csound")
- '(org-capture-templates
-   (quote
-    (("c" "Code composition sketch" entry
-      (file+datetree "~/Google Drive/Projects/sketchbook/index.org")
-      "* %?
-Entered on %U
-  %i
-  %a" :jump-to-captured t)
-     ("j" "Journal entry" plain
-      (file+datetree "~/Google Drive/org/personal/journal.org")
-      "* %?
-Entered on %U
-  %i
-  %a"))) t)
  '(package-selected-packages
    (quote
-    (processing-mode js2-mode js-doc company-tern dash-functional tern coffee-mode faust-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl zotelo org-ref key-chord ivy helm-bibtex parsebib biblio biblio-core o-blog org-page git mustache simple-httpd ht web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal parinfer writeroom-mode visual-fill-column xterm-color smeargle shell-pop orgit mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company-anaconda company clojure-snippets auto-yasnippet auto-dictionary ac-ispell auto-complete org-projectile org-present org org-pomodoro alert log4e gntp org-download htmlize gnuplot clj-refactor inflections edn multiple-cursors paredit yasnippet peg cider-eval-sexp-fu cider queue clojure-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (pdf-tools tablist pandoc-mode ox-pandoc seq goto-chg undo-tree f diminish powerline smooth-scrolling hydra spinner page-break-lines org-repo-todo s leuven-theme parent-mode projectile pkg-info epl flx smartparens iedit anzu highlight company-quickhelp buffer-move bracketed-paste packed dash helm avy helm-core async popup package-build bind-key bind-map evil processing-mode js2-mode js-doc company-tern dash-functional tern coffee-mode faust-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl zotelo org-ref key-chord ivy helm-bibtex parsebib biblio biblio-core o-blog org-page git mustache simple-httpd ht web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal parinfer writeroom-mode visual-fill-column xterm-color smeargle shell-pop orgit mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company-anaconda company clojure-snippets auto-yasnippet auto-dictionary ac-ispell auto-complete org-projectile org-present org org-pomodoro alert log4e gntp org-download htmlize gnuplot clj-refactor inflections edn multiple-cursors paredit yasnippet peg cider-eval-sexp-fu cider queue clojure-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

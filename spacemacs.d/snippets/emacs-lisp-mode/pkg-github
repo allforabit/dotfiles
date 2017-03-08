@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : Github package 
+#key : pkg-g
+#contributor : Kevin Nolan
+# --
+($1 '(:location (recipe
+                          :fetcher github
+                          :repo "$0")))

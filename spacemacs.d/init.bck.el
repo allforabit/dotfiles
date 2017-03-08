@@ -341,8 +341,8 @@ you should place your code here."
     (define-key evil-motion-state-map (kbd "<C-i>") 'evil-jump-forward))
 
   ;; Search backwards
-  ;; (define-key evil-normal-state-map
-  ;;   (kbd "\\") 'evil-repeat-find-char-reverse)
+  (define-key evil-normal-state-map
+    (kbd "\\") 'evil-repeat-find-char-reverse)
 
   ;; Lispy mode
   (add-hook 'clojure-mode-hook #'lispy-mode)

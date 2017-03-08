@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+#name : hw
+#key : hw
+#contributor : Kevin Nolan
+# --
+
+instr 1
+aSin      poscil    0dbfs/4, $1 
+          out       aSin
+endin
