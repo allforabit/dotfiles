@@ -58,6 +58,9 @@ Each entry is either:
       - A list beginning with the symbol `recipe' is a melpa
         recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
 
+;; TODO move this to a better place, possibly variables.el
+(defvar org-babel-processing-processing-js-filename "https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.6/processing.js"
+  "Filename of the processing.js file.")
 
 ;;; packages.el ends here
 
@@ -67,4 +70,5 @@ Each entry is either:
   (use-package processing-mode
     :init
     (progn
-      (message "Starting processing mode"))))
+      (spacemacs/set-leader-keys-for-major-mode 'processing-mode
+        "cc" 'processing-sketch-run))))

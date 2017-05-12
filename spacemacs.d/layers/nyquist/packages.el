@@ -32,7 +32,6 @@
 (defconst nyquist-packages
   '(
     (nyquist-mode :location local))
-    
   "The list of Lisp packages required by the nyquist layer.
 
 Each entry is either:

@@ -1,4 +1,5 @@
 ;;; For now modified to fix incompatibility with cider
+;;; https://emacs.stackexchange.com/questions/30857/clojure-code-evaluation-in-org-mode-produces-no-output/31169#31169
 
 ;;; ob-clojure.el --- Babel Functions for Clojure    -*- lexical-binding: t; -*-
 

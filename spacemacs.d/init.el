@@ -31,12 +31,12 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     ;; javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     javascript
      helm
      auto-completion
      (auto-completion
@@ -46,7 +46,9 @@ values."
      better-defaults
      emacs-lisp
      python
-     clojure
+     (clojure
+      :variables
+      cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
      git
      markdown
      (org
@@ -57,7 +59,7 @@ values."
       org-reveal-root "file:///Users/kevin/Google%20Drive/reveal.js"
       org-id-link-to-org-use-id t
       org-confirm-babel-evaluate nil
-      org-confirm-babel-evaluate t
+      org-src-window-setup 'current-window
       helm-org-format-outline-path t
 
       org-capture-templates '(
@@ -72,12 +74,13 @@ values."
      ;;  pdf-tools-handle-upgrades nil
      ;;  pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo")
 
+     latex
      ;; Bibtex
      ;; For now configured for thesis
      (bibtex :variables
-             org-ref-default-bibliography '("~/Google Drive/Projects/mmt-thesis/references.bib")
+             org-ref-default-bibliography '("~/Google Drive/bibliography/references.bib")
              org-ref-pdf-directory "~/Google Drive/Projects/mmt-thesis/ref/"
-             org-ref-bibliography-notes "~/Google Drive/Projects/mmt-thesis/notes.org")
+             org-ref-bibliography-notes "~/Google Drive/bibliography/notes.org")
 
      (shell :variables
             shell-default-height 30
@@ -103,34 +106,37 @@ values."
         (nntp "news.gwene.org")))
 
 
+     graphviz
+
+     ;; To improve dired (tpope)
+     vinegar
+     mu4e
+
+     ;; Extra languages (including arduino)
+     extra-langs
+
+
+
      ;; Custom
      nyquist
+     a4b-lisp
      (processing :variables
-                 processing-location "/usr/bin/processing-java"
+                 processing-location "/usr/local/bin/processing-java"
                  processing-application-dir "/Applications/Processing.app"
                  processing-sketchbook-dir "~/Documents/Processing")
 
      lilypond
      csound
      writeroom
-     parinfer
      zotero
-     ;; Contains fix
-     org-babel-clojure)
-   
-
-   
+     )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
-
-
-
+   dotspacemacs-additional-packages '(leuven-theme)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
-
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -201,7 +207,7 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+                         leuven)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -279,7 +285,7 @@ values."
    dotspacemacs-helm-use-fuzzy 'always
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-transient-state t
+   dotspacemacs-enable-paste-transient-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -320,8 +326,18 @@ values."
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
-   ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
-   ;; derivatives. If set to `relative', also turns on relative line numbers.
+   ;; Control line numbers activation.
+   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
+   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; This variable can also be set to a property list for finer control:
+   ;; '(:relative nil
+   ;;   :disabled-for-modes dired-mode
+   ;;                       doc-view-mode
+   ;;                       markdown-mode
+   ;;                       org-mode
+   ;;                       pdf-view-mode
+   ;;                       text-mode
+   ;;   :size-limit-kb 1000)
    ;; (default nil)
    dotspacemacs-line-numbers nil
    ;; Code folding method. Possible values are `evil' and `origami'.
@@ -357,15 +373,17 @@ values."
    dotspacemacs-whitespace-cleanup nil
    ))
 
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
 executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
-`dotspacemacs/user-config' first.")
+`dotspacemacs/user-config' first."
+  )
 
-
+;; TODO move
 (defun a4b-translate-C-i (_prompt)
   (if (and (= (length (this-command-keys-vector)) 1)
            (= (aref (this-command-keys-vector) 0) ?\C-i)
@@ -381,6 +399,16 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (spacemacs/set-leader-keys-for-major-mode 'processing-mode
+    "cc" 'processing-sketch-run)
+
+  (define-key org-src-mode-map (kbd "C-]") 'forward-char)
+
+  (spacemacs/set-leader-keys-for-minor-mode 'org-src-mode
+    "fs" 'org-edit-src-save)
+
+  (add-hook 'before-save-hook (lambda () (message "save yo")))
+  (setq compilation-read-command nil)
 
   ;; Fix <C-i> to make it jump forward properly vi style
   ;; TODO submit as fix to evil-mode???
@@ -388,29 +416,26 @@ you should place your code here."
   (with-eval-after-load 'evil-maps
     (define-key evil-motion-state-map (kbd "<C-i>") 'evil-jump-forward))
 
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode
+    "vt" 'org-babel-tangle)
+
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "<C-i>") 'evil-jump-forward))
+
   (add-hook 'org-mode-hook #'visual-line-mode)
   (add-hook 'org-mode-hook #'spacemacs/toggle-visual-line-navigation-on)
-
-  ;; Fix pdflatex export problem
-  (defun set-exec-path-from-shell-PATH ()
-    "Sets the exec-path to the same value used by the user shell"
-    (let ((path-from-shell
-           (replace-regexp-in-string
-            "[[:space:]\n]*$" ""
-            (shell-command-to-string "$SHELL -l -c 'echo $PATH'"))))
-      (setenv "PATH" path-from-shell)
-      (setq exec-path (split-string path-from-shell path-separator))))
-
-  ;; call function now
-  (set-exec-path-from-shell-PATH)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((haskell . t)
      (emacs-lisp . t)
      (lilypond . t)
+     (ruby . t)
      (csound . t)
      (clojure . t)
+     (dot . t)
+     (latex . t)
+     (processing . t)
      ;; (javascript . t)
      (python . t)))
 
@@ -418,7 +443,8 @@ you should place your code here."
   (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
-        `((".*" ,temporary-file-directory t))))
+        `((".*" ,temporary-file-directory t)))
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -429,11 +455,10 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (pdf-tools tablist pandoc-mode ox-pandoc seq goto-chg undo-tree f diminish powerline smooth-scrolling hydra spinner page-break-lines org-repo-todo s leuven-theme parent-mode projectile pkg-info epl flx smartparens iedit anzu highlight company-quickhelp buffer-move bracketed-paste packed dash helm avy helm-core async popup package-build bind-key bind-map evil processing-mode js2-mode js-doc company-tern dash-functional tern coffee-mode faust-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl zotelo org-ref key-chord ivy helm-bibtex parsebib biblio biblio-core o-blog org-page git mustache simple-httpd ht web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal parinfer writeroom-mode visual-fill-column xterm-color smeargle shell-pop orgit mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company-anaconda company clojure-snippets auto-yasnippet auto-dictionary ac-ispell auto-complete org-projectile org-present org org-pomodoro alert log4e gntp org-download htmlize gnuplot clj-refactor inflections edn multiple-cursors paredit yasnippet peg cider-eval-sexp-fu cider queue clojure-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (leuven-theme zotelo yapfify xterm-color writeroom-mode visual-fill-column wolfram-mode web-mode web-beautify unfill thrift tagedit stan-mode smeargle slim-mode shell-pop scss-mode scad-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder rbenv rake qml-mode pyvenv pytest pyenv-mode py-isort pug-mode processing-mode pip-requirements pbcopy parinfer pandoc-mode ox-reveal ox-pandoc osx-trash osx-dictionary orgit org-ref key-chord org-projectile org-present org-pomodoro org-download mwim multi-term mu4e-maildirs-extension mu4e-alert ht alert log4e gntp mmm-mode minitest matlab-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd live-py-mode lispy zoutline swiper ivy less-css-mode launchctl julia-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc intero hy-mode htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss helm-company helm-c-yasnippet helm-bibtex parsebib haskell-snippets haml-mode graphviz-dot-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck-haskell flycheck faust-mode evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-ghci company-ghc ghc haskell-mode company-cabal company-auctex company-anaconda company coffee-mode cmm-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode chruby bundler inf-ruby biblio biblio-core auto-yasnippet yasnippet auto-dictionary auctex arduino-mode anaconda-mode pythonic ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+ )

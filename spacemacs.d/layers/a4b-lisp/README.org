@@ -1,0 +1,68 @@
+#+TITLE: a4b-lisp layer
+
+# The maximum height of the logo should be 200 pixels.
+[[img/a4b-lisp.png]]
+
+# TOC links should be GitHub style anchors.
+* Table of Contents                                        :TOC_4_gh:noexport:
+ - [[#description][Description]]
+   - [[#to-be-remappedre-thought-out-06][To be remapped/re-thought out]]
+   - [[#existing-keymaps-for-primary-functions][Existing keymaps for primary functions]]
+ - [[#install][Install]]
+ - [[#key-bindings][Key bindings]]
+
+* Description
+This layer converts vims linewise motion and editing keys to work better with lisp code.
+
+It attempts to maintain the semantics of vim keyboard shortcuts but adapted for
+use with the s-expression structure of lisp code.
+
+It uses the following projects:
+- Lispy by abo-abo
+- Parinfer by Doglooksgood
+
+It takes influence from the following projects:
+- Cleverparens
+- Lispy
+- Lispyville
+- Vim sexp (and better sexp mappings by Tim Pope)
+- Spacemacs conventions for structured editing
+- Spacemacs lisp mode
+
+The aim is to make it the structured nature of the parentheses be the dominant 
+navigational and editing paradigm and to move line by line and word by word
+editing to the background.
+
+** To be remapped/re-thought out [0/6]
+- [ ] f/F - find in line
+- [ ] o/O - open line
+- [ ] a/A - Append
+- [ ] j/k/l/h - Movements
+- [ ] quickly jumping to function
+- [ ] ace jumping - combo lispy/spacemacs style
+- [ ] raising
+- [ ] cloning
+- [ ] moving clojure list pairs up and down
+
+** Existing keymaps for primary functions
+
+| Function | Lispy | Vim Sexp                      | Cleverparens | Lispyville | Spacemacs  |
+|----------+-------+-------------------------------+--------------+------------+------------|
+| Raise    | r     | <LocalLeader>o/<LocalLeader>O | M-r          | -          | <leader> r |
+
+
+* Install
+To use this configuration layer, add it to your =~/.spacemacs=. You will need to
+add =a4b-lisp= to the existing =dotspacemacs-configuration-layers= list in this
+file.
+
+* Key bindings
+
+| Key Binding | Description    |
+|-------------+----------------|
+| ~SPC x x x~ | Does thing01   |
+# Use GitHub URLs if you wish to link a Spacemacs documentation file or its heading.
+# Examples:
+# [[https://github.com/syl20bnr/spacemacs/blob/master/doc/VIMUSERS.org#sessions]]
+# [[https://github.com/syl20bnr/spacemacs/blob/master/layers/%2Bfun/emoji/README.org][Link to Emoji layer README.org]]
+# If space-doc-mode is enabled, Spacemacs will open a local copy of the linked file.
