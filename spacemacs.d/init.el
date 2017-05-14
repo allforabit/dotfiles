@@ -48,7 +48,9 @@ values."
      python
      (clojure
       :variables
-      cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+      cider-cljs-lein-repl "(do (start) (cljs))")
+     react
+     html
      git
      markdown
      (org
