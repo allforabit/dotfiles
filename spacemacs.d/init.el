@@ -36,7 +36,9 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     javascript
+     (javascript
+      :variables
+      js-indent-level 2)
      helm
      auto-completion
      (auto-completion
@@ -55,6 +57,7 @@ values."
      markdown
      (org
       :variables
+      ;; org-bullets-bullet-list '("■" "◆" "▲" "▶")
       org-babel-clojure-backend 'cider
       org-latex-to-pdf-process (list "latexmk -pdf %f")
       org-enable-reveal-js-support t
@@ -77,7 +80,6 @@ values."
      ;;  pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo")
 
      latex
-     ;; Bibtex
      ;; For now configured for thesis
      (bibtex :variables
              org-ref-default-bibliography '("~/Google Drive/bibliography/references.bib")
@@ -88,12 +90,12 @@ values."
             shell-default-height 30
             shell-default-position 'bottom)
 
-     spell-checking
+     ;; spell-checking
      syntax-checking
      version-control
      html
-     (osx :variables
-          mac-right-option-modifier nil)
+     ;; (osx :variables
+     ;;      mac-right-option-modifier nil)
      haskell
      ruby
      faust
@@ -261,7 +263,7 @@ values."
    dotspacemacs-display-default-layout nil
    ;; If non nil then the last auto saved layouts are resume automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts nil
+   dotspacemacs-auto-resume-layouts t
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
@@ -395,6 +397,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (kbd "<C-i>")
     (kbd "TAB")))
 
+;; Tangle Org files when we save them
+(defun tangle-on-save-org-mode-file()
+  (when (string= (message "%s" major-mode) "org-mode")
+    (org-babel-tangle)))
+
+
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -402,13 +410,25 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
+
+  (setenv "PATH"
+          (concat
+           "C:\\cygwin64\\bin" ";"
+           (getenv "PATH")))
+
   (spacemacs/set-leader-keys-for-major-mode 'processing-mode
     "cc" 'processing-sketch-run)
 
   (define-key org-src-mode-map (kbd "C-]") 'forward-char)
 
-  (spacemacs/set-leader-keys-for-minor-mode 'org-src-mode
-    "fs" 'org-edit-src-save)
+  ;; (spacemacs/set-leader-keys-for-minor-mode 'org-src-mode
+  ;;   "fs" 'org-edit-src-save)
+
+  ;; Overwrite spacemacs file save as
+  (add-hook 'org-src-mode-hook (spacemacs/set-leader-keys
+                                 "fs" 'org-edit-src-save))
 
   (add-hook 'before-save-hook (lambda () (message "save yo")))
   (setq compilation-read-command nil)
@@ -446,8 +466,8 @@ you should place your code here."
   (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
-        `((".*" ,temporary-file-directory t)))
-  )
+        `((".*" ,temporary-file-directory t))))
+  
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
