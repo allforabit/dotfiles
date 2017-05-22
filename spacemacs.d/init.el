@@ -413,6 +413,18 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+
+  ;; Temporary fix for figwheel with org babel
+  ;; TODO report on figwheel issue queue
+  ;; -----------------------------------------------------
+  (defun a4b-figwheel-temp-fix (orig-fun &rest args)
+    (message "delete called %S" args)
+    (let ((res (apply orig-fun args)))
+      res))
+
+  (advice-add 'delete-file :around #'a4b-figwheel-temp-fix)
+  ;; -----------------------------------------------------
+
   (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
 
   (setenv "PATH"
