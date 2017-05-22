@@ -437,16 +437,9 @@ you should place your code here."
 
   (define-key org-src-mode-map (kbd "C-]") 'forward-char)
 
-  ;; (spacemacs/set-leader-keys-for-minor-mode 'org-src-mode
-  ;;   "fs" 'org-edit-src-save)
+  (spacemacs/set-leader-keys-for-minor-mode 'org-src-mode
+    "fs" 'org-edit-src-save)
 
-  ;; Overwrite spacemacs file save as
-  ;; (add-hook 'org-src-mode-hook (spacemacs/set-leader-keys
-  (add-hook 'org-src-mode-hook (spacemacs/set-leader-keys
-                                 "fs" 'org-edit-src-save))
-  ;;                                "fs" 'org-edit-src-save))
-
-  (add-hook 'before-save-hook (lambda () (message "save yo")))
   (setq compilation-read-command nil)
 
   ;; Fix <C-i> to make it jump forward properly vi style
