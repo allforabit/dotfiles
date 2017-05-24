@@ -51,7 +51,9 @@ values."
      python
      (clojure
       :variables
-      cider-cljs-lein-repl "(do (start) (cljs))")
+      cider-cljs-lein-repl "(do (start) (cljs))"
+      clojure-enable-fancify-symbols t
+      )
      react
      html
      git
@@ -211,8 +213,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(doom-one
-                         spacemacs-dark
+   dotspacemacs-themes '(spacemacs-dark
                          leuven)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -403,6 +404,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (when (string= (message "%s" major-mode) "org-mode")
     (org-babel-tangle)))
 
+;; Temporary fix for figwheel with org babel
+;; TODO report on figwheel issue queue
+;; -----------------------------------------------------
+(defun a4b-figwheel-temp-fix (orig-fun &rest args)
+  ;; (write-region " " nil (first args) 'append)
+  (let ((res (apply orig-fun args))
+        res)))
+
+;; -----------------------------------------------------
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -412,17 +422,7 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-
-  ;; Temporary fix for figwheel with org babel
-  ;; TODO report on figwheel issue queue
-  ;; -----------------------------------------------------
-  (defun a4b-figwheel-temp-fix (orig-fun &rest args)
-    (message "delete called %S" args)
-    (let ((res (apply orig-fun args)))
-      res))
-
   (advice-add 'delete-file :around #'a4b-figwheel-temp-fix)
-  ;; -----------------------------------------------------
 
   (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
 
