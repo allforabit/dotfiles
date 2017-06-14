@@ -37,9 +37,11 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     colors
      (javascript
       :variables
-      js-indent-level 2)
+      js-indent-level 2
+      )
      helm
      auto-completion
      (auto-completion
@@ -52,7 +54,7 @@ values."
      (clojure
       :variables
       cider-cljs-lein-repl "(do (start) (cljs))"
-      clojure-enable-fancify-symbols t
+      clojure-enable-fancify-symbols nil
       )
      react
      html
@@ -67,11 +69,13 @@ values."
       org-reveal-root "file:///Users/kevin/Google%20Drive/reveal.js"
       org-id-link-to-org-use-id t
       org-confirm-babel-evaluate nil
-      org-src-window-setup 'current-window
+      org-src-window-setup 'other-window
+      org-agenda-files '("~/Google Drive/Projects/sonicsketch/README.org"
+                         "~/Google Drive/Projects/sonicsketch/src/sonicsketch/core.org")
+      org-agenda-window-setup 'current-window
       helm-org-format-outline-path t
 
-      org-capture-templates '(
-                              ("c" "Code composition sketch" entry (file+datetree "~/Google Drive/Projects/sketchbook/index.org")
+      org-capture-templates '(("c" "Code composition sketch" entry (file+datetree "~/Google Drive/Projects/sketchbook/index.org")
                                "* %?\nEntered on %U\n  %i\n  %a")
 
                               ("j" "Journal entry" plain (file+datetree "~/Google Drive/org/personal/journal.org")
@@ -113,7 +117,14 @@ values."
         (nntp "news.gwene.org")))
 
 
+     (plantuml :variables
+               org-plantuml-jar-path (expand-file-name "~/.spacemacs.d/plantuml.jar")
+               plantuml-jar-path (expand-file-name "~/.spacemacs.d/plantuml.jar"))
+
      graphviz
+
+     spacemacs-purpose
+
 
      ;; To improve dired (tpope)
      vinegar
@@ -127,6 +138,8 @@ values."
      nyquist
      a4b-lisp
      a4b-clojure
+     a4b-org-babel
+     a4b-outshine
      (processing :variables
                  processing-location "/usr/local/bin/processing-java"
                  processing-application-dir "/Applications/Processing.app"
@@ -136,12 +149,82 @@ values."
      csound
      writeroom
      zotero
+     polymode
      )
+   )
+  ;; ----------------------------------------------------------------
+  ;; These list layers to load on specific platforms or systems
+  ;; ----------------------------------------------------------------
+  (setq
+   ;; Layers to be loaded only on Microsoft Windows
+   a4b--windows-nt-layers
+   '(
+     (javascript
+      :variables
+      js-indent-level 2
+      ;; tern-command '("node.exe" "c:/Users/Admin/AppData/Roaming/npm/tern.cmd")
+      )
+     )
+   ;; Layers to be loaded only on Macintosh
+   a4b--darwin-layers
+   '(
+     (javascript
+      :variables
+      js-indent-level 2
+      )
+     )
+   ;; Layers to be loaded only on GNU/Linux
+   a4b--gnu/linux-layers
+   '(
+     )
+   ;; Layers common to Unix systems
+   a4b--nix-layers
+   '(
+     )
+   ;; Layers to be loaded only on Work computers
+   a4b--work-layers
+   '(
+     )
+   ;; A list of system-names I use at work
+   ;; Whenever I install spacemacs to a new system, add it's `system-name'
+   a4b--work-systems
+   '()
+   )
+  ;; ----------------------------------------------------------------
+  ;; now append the layers lists depending on what the system is
+  ;; ----------------------------------------------------------------
+
+  ;; arrange layers lists first
+  (setq  a4b--layers dotspacemacs-configuration-layers)
+  (setq a4b--darwin-layers
+        (append a4b--darwin-layers a4b--nix-layers)
+        a4b--gnu/linux-layers
+        (append a4b--gnu/linux-layers a4b--nix-layers))
+
+  (cond ((eq system-type 'windows-nt)
+         (setq a4b--layers (append a4b--layers a4b--windows-nt-layers)))
+        ((eq system-type 'darwin)
+         (setq a4b--layers (append a4b--layers a4b--darwin-layers)))
+        ((eq system-type 'gnu/linux)
+         (setq a4b--layers (append a4b--layers a4b--gnu/linux-layers))))
+  (when (member (car (split-string system-name "\\.")) a4b--work-systems)
+    (setq a4b--layers (append a4b--layers a4b--work-layers)))
+
+  (setq-default
+   ;; ----------------------------------------------------------------
+   ;; Now just set the master layers list from `a4b-layers' appended above
+   ;; ----------------------------------------------------------------
+   dotspacemacs-configuration-layers a4b--layers
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(leuven-theme)
+   dotspacemacs-switch-to-buffer-prefers-purpose t
+   ;; List of additional packages that will be installed without being
+   ;; wrapped in a layer. If you need some configuration for these
+   ;; packages, then consider creating a layer. You can also put the
+   ;; configuration in `dotspacemacs/user-config'.
+   dotspacemacs-additional-packages '(lentic auto-dim-other-buffers)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -197,14 +280,17 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
+   dotspacemacs-startup-lists '((agenda . 5)
+                                (todos . 5)
+                                (bookmarks . 5)
+                                (recents . 5)
                                 (projects . 7))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
@@ -265,7 +351,7 @@ values."
    dotspacemacs-display-default-layout nil
    ;; If non nil then the last auto saved layouts are resume automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts t
+   dotspacemacs-auto-resume-layouts nil
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
@@ -411,8 +497,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (write-region " " nil (first args) 'append)
   (let ((res (apply orig-fun args))
         res)))
-
 ;; -----------------------------------------------------
+
+
+(defun a4b-save-buffer-always ()
+  "Save the buffer even if it is not modified."
+  (interactive)
+  (set-buffer-modified-p t)
+  (save-buffer))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -421,6 +513,22 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  ;; Make image refresh work (e.g. for plantuml mode)
+  ;; https://emacs.stackexchange.com/questions/2303/making-an-image-ie-image-mode-auto-reload-changes-from-disk
+  (add-hook 'image-mode-hook (lambda ()
+                               (auto-revert-mode 1)
+                               (auto-image-file-mode 1)))
+
+  (set-language-environment 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (setq locale-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+
+  (add-to-list 'purpose-user-mode-purposes '(cider-repl-mode . repl))
+  (purpose-compile-user-configuration) ; activates your changes
 
   (advice-add 'delete-file :around #'a4b-figwheel-temp-fix)
 
@@ -438,6 +546,8 @@ you should place your code here."
 
   (spacemacs/set-leader-keys-for-minor-mode 'org-src-mode
     "fs" 'org-edit-src-save)
+
+  (spacemacs/set-leader-keys "fa" 'a4b-save-buffer-always)
 
   (setq compilation-read-command nil)
 
@@ -465,6 +575,7 @@ you should place your code here."
      (csound . t)
      (clojure . t)
      (dot . t)
+     (plantuml . t)
      (latex . t)
      (processing . t)
      ;; (javascript . t)
@@ -486,7 +597,28 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (leuven-theme zotelo yapfify xterm-color writeroom-mode visual-fill-column wolfram-mode web-mode web-beautify unfill thrift tagedit stan-mode smeargle slim-mode shell-pop scss-mode scad-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder rbenv rake qml-mode pyvenv pytest pyenv-mode py-isort pug-mode processing-mode pip-requirements pbcopy parinfer pandoc-mode ox-reveal ox-pandoc osx-trash osx-dictionary orgit org-ref key-chord org-projectile org-present org-pomodoro org-download mwim multi-term mu4e-maildirs-extension mu4e-alert ht alert log4e gntp mmm-mode minitest matlab-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd live-py-mode lispy zoutline swiper ivy less-css-mode launchctl julia-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc intero hy-mode htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss helm-company helm-c-yasnippet helm-bibtex parsebib haskell-snippets haml-mode graphviz-dot-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck-haskell flycheck faust-mode evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-ghci company-ghc ghc haskell-mode company-cabal company-auctex company-anaconda company coffee-mode cmm-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode chruby bundler inf-ruby biblio biblio-core auto-yasnippet yasnippet auto-dictionary auctex arduino-mode anaconda-mode pythonic ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (rainbow-mode rainbow-identifiers color-identifiers-mode auctex-latexmk ahk-mode navi-mode outshine outorg plantuml-mode auto-dim-other-buffers pdf-tools tablist sublimity lentic m-buffer polymode helm-purpose window-purpose imenu-list leuven-theme zotelo yapfify xterm-color writeroom-mode visual-fill-column wolfram-mode web-mode web-beautify unfill thrift tagedit stan-mode smeargle slim-mode shell-pop scss-mode scad-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder rbenv rake qml-mode pyvenv pytest pyenv-mode py-isort pug-mode processing-mode pip-requirements pbcopy parinfer pandoc-mode ox-reveal ox-pandoc osx-trash osx-dictionary orgit org-ref key-chord org-projectile org-present org-pomodoro org-download mwim multi-term mu4e-maildirs-extension mu4e-alert ht alert log4e gntp mmm-mode minitest matlab-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd live-py-mode lispy zoutline swiper ivy less-css-mode launchctl julia-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc intero hy-mode htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss helm-company helm-c-yasnippet helm-bibtex parsebib haskell-snippets haml-mode graphviz-dot-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck-haskell flycheck faust-mode evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-ghci company-ghc ghc haskell-mode company-cabal company-auctex company-anaconda company coffee-mode cmm-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode chruby bundler inf-ruby biblio biblio-core auto-yasnippet yasnippet auto-dictionary auctex arduino-mode anaconda-mode pythonic ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+ '(safe-local-variable-values
+   (quote
+    ((eval save-excursion
+           (org-babel-goto-named-src-block "startup")
+           (org-babel-execute-src-block))
+     (eval let nil
+           (message "hi")
+           (org-babel-goto-named-src-block "startup")
+           (org-babel-execute-src-block))
+     (eval let nil
+           (org-babel-goto-named-src-block "startup")
+           (org-babel-execute-src-block))
+     (eval a4b/execute-startup-block)
+     (httpd-root . ~/Documents/GitHub/sonicpainter-web/src/)
+     (httpd-root . c:/Users/admin/Documents/GitHub/sonicpainter-web/src/)
+     (httpd-root . default-directory)
+     (lentic-init . lentic-org-el-init)
+     (eval require
+           (quote m-buffer-macro)
+           nil t)
+     (lentic-init . lentic-orgel-org-init)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -44,8 +44,8 @@
         :off (parinfer-toggle-mode))
       (setq parinfer-extensions '(defaults pretty-parens evil smart-yank lispy)))
     :config
-    (progn
-      (define-key parinfer-mode-map (kbd "%") 'lispy-different))))
+    (progn)))
+      ;;(define-key parinfer-mode-map (kbd "%") 'lispy-different))))
 
 (defun a4b-lisp/init-lispy ()
   (use-package lispy :defer t))

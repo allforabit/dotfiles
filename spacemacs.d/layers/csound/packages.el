@@ -65,9 +65,9 @@
 
       (message "Starting csound mode")
 
-      (global-set-key (kbd "s-r") 'csound-run-csound)
-      (global-set-key (kbd "M-f") 'csound-render-csound)
-      (global-set-key (quote [f9]) 'csound-play-sound)
+      ;; (global-set-key (kbd "s-r") 'csound-run-csound)
+      ;; (global-set-key (kbd "M-f") 'csound-render-csound)
+      ;; (global-set-key (quote [f9]) 'csound-play-sound)
 
       )
     )

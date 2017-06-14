@@ -30,7 +30,7 @@
 ;;; Code:
 
 (defconst a4b-org-babel-packages
-  '()
+  '((org :location built-in))
   "The list of Lisp packages required by the a4b-org-babel layer.
 
 Each entry is either:
@@ -63,7 +63,23 @@ https://www.reddit.com/r/emacs/comments/545v9p/keybindings_strategies_in_emacs/
 
 ")
 
+(defun a4b-org-babel-src-jump (arg jump-fn)
+  (let* ((minor-modes (cl-remove-if-not (lambda (it) (and (boundp it) (symbol-value it))) minor-mode-list)))
+    (when (member 'org-src-mode minor-modes)
+      (if (equal arg '(4))
+          (org-edit-src-abort)
+        (org-edit-src-exit)))
+    (when (eq major-mode 'org-mode)
+      (funcall jump-fn)
+      (org-edit-src-code))))
 
+(defun a4b-org-babel-edit-next (arg)
+  (interactive "P")
+  (a4b-org-babel-src-jump arg #'org-babel-next-src-block))
+
+(defun a4b-org-babel-edit-previous (arg)
+  (interactive "P")
+  (a4b-org-babel-src-jump arg #'org-babel-previous-src-block))
 
 
 
@@ -78,10 +94,18 @@ https://www.reddit.com/r/emacs/comments/545v9p/keybindings_strategies_in_emacs/
   (print "exiting insert mode")
   (widen))
 
-;; (defun a4b-org-babel/post-init-org ()
-;;   (add-hook 'org-mode-hook
-;;             (lambda ()
-;;               (progn
-;;                 (add-hook 'evil-insert-state-entry-hook 'a4b-org-babel-entering-insert nil t)
-;;                 (add-hook 'evil-insert-state-exit-hook 'a4b-org-babel-exiting-insert nil t)))))
+;; (defun a4b-org-babel-setup-keys ()
+;;   (evil-local-set-key 'normal (kbd "gk") 'a4b-org-babel-edit-previous)
+;;   (evil-local-set-key 'normal (kbd "gj") 'a4b-org-babel-edit-next))
+
+(defun a4b-org-babel/post-init-org ()
+  ;; (add-hook 'evil-insert-state-entry-hook 'a4b-org-babel-entering-insert nil t)
+  ;; (add-hook 'evil-insert-state-exit-hook 'a4b-org-babel-exiting-insert nil t)
+  (evil-define-minor-mode-key 'normal 'org-src-mode
+    (kbd "gk") 'a4b-org-babel-edit-previous)
+  (evil-define-minor-mode-key 'normal 'org-src-mode
+    (kbd "gj") 'a4b-org-babel-edit-next)
+  (message "a4b org babel --------------------"))
+  ;(add-hook 'org-src-mode-hook #'a4b-org-babel-setup-keys))
+  
 
