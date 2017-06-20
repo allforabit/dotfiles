@@ -11,56 +11,44 @@
 
 ;;; Code:
 (defconst a4b-lisp-packages
-  '(parinfer lispy paxedit)
+  '(lispyville lispy)
   "The list of Lisp packages required by the a4b-lisp layer.")
 
-(defun a4b-lisp/init-parinfer ()
-  (use-package parinfer
-    :defer t
-    :diminish parinfer-mode
+(defun a4b-lisp/init-lispy ()
+  (use-package lispy
+    :diminish lispy-mode
+    ;; :defer t
     :init
     (progn
+      (message "lispy init")
+      ;; Lispyville mode
+      (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
+      (add-hook 'clojure-mode-hook 'lispy-mode)
+      (add-hook 'common-lisp-mode-hook 'lispy-mode)
+      (add-hook 'scheme-mode-hook 'lispy-mode)
+      (add-hook 'lisp-mode-hook 'lispy-mode)
+      ;; Turn off smartparens
+      (add-hook 'emacs-mode-hook #'turn-off-smartparens-mode)
+      (add-hook 'clojure-mode-hook #'turn-off-smartparens-mode)
+      (add-hook 'common-lisp-mode-hook #'turn-off-smartparens-mode)
+      (add-hook 'scheme-mode-hook #'turn-off-smartparens-mode)
+      (add-hook 'lisp-mode-hook #'turn-off-smartparens-mode))))
 
-      (add-hook 'emacs-lisp-mode-hook 'parinfer-mode)
-      (add-hook 'clojure-mode-hook 'parinfer-mode)
-      (add-hook 'common-lisp-mode-hook 'parinfer-mode)
-      (add-hook 'scheme-mode-hook 'parinfer-mode)
-      (add-hook 'lisp-mode-hook 'parinfer-mode)
-
-      (mapc (lambda (state)
-              (evil-define-key state lisp-mode-map
-                (kbd "M-r") 'parinfer-raise-sexp))
-            '(normal insert))
-
-      ;; Use normal avy keys
-      (setq lispy-avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-
-      (spacemacs|add-toggle parinfer-indent
-        :evil-leader "tP"
-        :documentation "Enable Parinfer Indent Mode."
-        :if (bound-and-true-p parinfer-mode)
-        :status (eq parinfer--mode 'indent)
-        :on (parinfer-toggle-mode)
-        :off (parinfer-toggle-mode))
-      (setq parinfer-extensions '(defaults pretty-parens evil smart-yank lispy)))
+(defun a4b-lisp/init-lispyville ()
+  (use-package lispyville
+    :diminish lispyville-mode
+    ;; :defer t
+    :init
+    (progn
+      (message "lispyville init")
+      (add-hook 'lispy-mode-hook #'lispyville-mode))
     :config
-    (progn)))
-      ;;(define-key parinfer-mode-map (kbd "%") 'lispy-different))))
-
-(defun a4b-lisp/init-lispy ()
-  (use-package lispy :defer t))
-  ;; (use-package lispy
-  ;;   :diminish lispy-mode
-  ;;   :defer t
-  ;;   :config
-  ;;   (progn
-  ;;     (mapc (lambda (state)
-  ;;             (evil-define-key state lisp-mode-map
-  ;;               (kbd "M-k") 'lispy-move-up
-  ;;               (kbd "M-j") 'lispy-move-down))
-  ;;           '(normal insert))
-  ;;     (evil-define-key 'normal lisp-mode-map
-  ;;       "gh" 'lispy-left
-  ;;       "gj" 'lispy-down
-  ;;       "gk" 'lispy-up
-  ;;       "gl" 'lispy-flow))))
+    (progn
+      (message "lispyville config")
+      (lispyville-set-key-theme '(operators
+                                  escape
+                                  s-operators
+                                  additional-movement
+                                  slurp/barf-cp
+                                  additional
+                                  mark)))))

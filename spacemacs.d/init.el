@@ -136,6 +136,7 @@ values."
 
      ;; Custom
      nyquist
+     a4b-misc
      a4b-lisp
      a4b-clojure
      a4b-org-babel
@@ -486,9 +487,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (kbd "TAB")))
 
 ;; Tangle Org files when we save them
-(defun tangle-on-save-org-mode-file()
-  (when (string= (message "%s" major-mode) "org-mode")
-    (org-babel-tangle)))
+;; (defun tangle-on-save-org-mode-file()
+;;   (when (string= (message "%s" major-mode) "org-mode")
+;;     (org-babel-tangle)))
 
 ;; Temporary fix for figwheel with org babel
 ;; TODO report on figwheel issue queue
@@ -532,7 +533,7 @@ you should place your code here."
 
   (advice-add 'delete-file :around #'a4b-figwheel-temp-fix)
 
-  (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
+  ;; (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
 
   (setenv "PATH"
           (concat
@@ -597,10 +598,78 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (rainbow-mode rainbow-identifiers color-identifiers-mode auctex-latexmk ahk-mode navi-mode outshine outorg plantuml-mode auto-dim-other-buffers pdf-tools tablist sublimity lentic m-buffer polymode helm-purpose window-purpose imenu-list leuven-theme zotelo yapfify xterm-color writeroom-mode visual-fill-column wolfram-mode web-mode web-beautify unfill thrift tagedit stan-mode smeargle slim-mode shell-pop scss-mode scad-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder rbenv rake qml-mode pyvenv pytest pyenv-mode py-isort pug-mode processing-mode pip-requirements pbcopy parinfer pandoc-mode ox-reveal ox-pandoc osx-trash osx-dictionary orgit org-ref key-chord org-projectile org-present org-pomodoro org-download mwim multi-term mu4e-maildirs-extension mu4e-alert ht alert log4e gntp mmm-mode minitest matlab-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd live-py-mode lispy zoutline swiper ivy less-css-mode launchctl julia-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc intero hy-mode htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss helm-company helm-c-yasnippet helm-bibtex parsebib haskell-snippets haml-mode graphviz-dot-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck-haskell flycheck faust-mode evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-ghci company-ghc ghc haskell-mode company-cabal company-auctex company-anaconda company coffee-mode cmm-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode chruby bundler inf-ruby biblio biblio-core auto-yasnippet yasnippet auto-dictionary auctex arduino-mode anaconda-mode pythonic ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+    (lispyville rainbow-mode rainbow-identifiers color-identifiers-mode auctex-latexmk ahk-mode navi-mode outshine outorg plantuml-mode auto-dim-other-buffers pdf-tools tablist sublimity lentic m-buffer polymode helm-purpose window-purpose imenu-list leuven-theme zotelo yapfify xterm-color writeroom-mode visual-fill-column wolfram-mode web-mode web-beautify unfill thrift tagedit stan-mode smeargle slim-mode shell-pop scss-mode scad-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder rbenv rake qml-mode pyvenv pytest pyenv-mode py-isort pug-mode processing-mode pip-requirements pbcopy parinfer pandoc-mode ox-reveal ox-pandoc osx-trash osx-dictionary orgit org-ref key-chord org-projectile org-present org-pomodoro org-download mwim multi-term mu4e-maildirs-extension mu4e-alert ht alert log4e gntp mmm-mode minitest matlab-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd live-py-mode lispy zoutline swiper ivy less-css-mode launchctl julia-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc intero hy-mode htmlize hlint-refactor hindent helm-pydoc helm-hoogle helm-gitignore helm-css-scss helm-company helm-c-yasnippet helm-bibtex parsebib haskell-snippets haml-mode graphviz-dot-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck-haskell flycheck faust-mode evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-ghci company-ghc ghc haskell-mode company-cabal company-auctex company-anaconda company coffee-mode cmm-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode chruby bundler inf-ruby biblio biblio-core auto-yasnippet yasnippet auto-dictionary auctex arduino-mode anaconda-mode pythonic ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
  '(safe-local-variable-values
    (quote
-    ((eval save-excursion
+    ((eval progn
+           (temp-mode 1)
+           (define-key temp-mode-map
+             (kbd "<f5>")
+             (lambda nil
+               (interactive)
+               (cider-interactive-eval "(re-frame.core/dispatch [:play-pause])"))))
+     (eval progn
+           (message "Setting up keyboard shortcuts")
+           (temp-mode 1)
+           (define-key temp-mode-map
+             (kbd "<f5>")
+             (lambda nil
+               (cider-interactive-eval "(println \"hello world\")")
+               (message "Hello world"))))
+     (eval progn
+           (message "Setting up keyboard shortcuts")
+           (temp-mode 1)
+           (define-key temp-mode-map
+             (kbd "<f5>")
+             (lambda
+               (cider-interactive-eval "(println \"hello world\")")
+               (message "Hello world"))))
+     (eval progn
+           (message "Setting up keyboard shortcuts")
+           (temp-mode 1)
+           (define-key temp-mode-map
+             (kbd "<f5>")
+             (progn
+               (cider-interactive-eval "(println \"hello world\")")
+               (message "Hello world"))))
+     (eval progn
+           (message "Setting up keyboard shortcuts")
+           (temp-mode 1)
+           (define-key temp-mode-map
+             (kbd "<f5>")
+             (quote
+              (progn
+                (message "Hello world")))))
+     (eval progn
+           (message "Setting up keyboard shortcuts")
+           (temp-mode 1)
+           (define-key temp-mode-map
+             (kbd "<f5>")
+             (progn
+               (message "Hello world"))))
+     (eval quote
+           (define-key temp-mode-map
+             (kbd "<f5>")
+             (progn
+               (message "Hello world"))))
+     (eval quote
+           (temp-mode 1))
+     (eval quote
+           (fset
+            (quote play)
+            (lambda
+              (&optional arg)
+              "Keyboard macro."
+              (interactive "p")
+              (kmacro-exec-ring-item
+               (quote
+                ([109 35 71 111 return 40 114 101 45 102 114 97 109 101 46 99 111 114 101 47 100 105 115 112 97 116 99 104 32 125 58 112 108 97 121 45 112 97 117 115 101 102 100 44 101 102 100 100 100 100 96 35]
+                 0 "%d"))
+               arg))))
+     (cider-cljs-lein-repl . "(do (user/run) (user/browser-repl))")
+     (cider-refresh-after-fn . "reloaded.repl/resume")
+     (cider-refresh-before-fn . "reloaded.repl/suspend")
+     (eval save-excursion
            (org-babel-goto-named-src-block "startup")
            (org-babel-execute-src-block))
      (eval let nil

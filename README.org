@@ -1,0 +1,25 @@
+#+PROPERTY: OS_ALL windows osx linux
+
+* Introduction
+* Windows
+** Apps to download
+*** Chromium
+    :PROPERTIES:
+    :DOWNLOAD_URL: http://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/478480/chrome-win32.zip
+    :OS:       windows
+    :END:
+
+**** Dirac
+     :PROPERTIES:
+     :DOWNLOAD_URL: https://github.com/binaryage/dirac/releases/download/v1.2.10/dirac-1.2.10.zip
+     :OS:       windows
+     :END:
+
+*** Emacs
+    :PROPERTIES:
+    :DOWNLOAD_URL: http://ftp.heanet.ie/mirrors/gnu/emacs/windows/emacs-25.2-x86_64.zip
+    :OS:       windows
+    :END:
+* Ideas
+** Paste javascript into clojurescript auto translate 
+Use the commandline tool 
