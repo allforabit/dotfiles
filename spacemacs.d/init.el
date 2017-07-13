@@ -33,6 +33,7 @@ values."
    dotspacemacs-configuration-layers
    '(
      dash
+     evil-snipe
      colors
      (javascript
       :variables
@@ -429,7 +430,14 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers '(:relative nil
+                               :disabled-for-modes dired-mode
+                                                   doc-view-mode
+                                                   markdown-mode
+                                                   org-mode
+                                                   pdf-view-mode
+                                                   text-mode
+                               :size-limit-kb 1000)
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -599,6 +607,17 @@ you should place your code here."
    (quote
     ((lentic-init . lentic-clojure-latex-init)
      (lentic-init lentic-orgel-org-init lentic-default-init)
+     (eval progn
+           (temp-mode 1)
+           (define-key temp-mode-map
+             (kbd "<f5>")
+             (lambda nil
+               (interactive)
+               (save-buffer)
+               (cider-interactive-eval "(re-frame.core/dispatch [:play-pause])"))))
+     (eval define-key temp-mode-map
+           (kbd "<f10>")
+           (quote function-ONE))
      (eval progn
            (temp-mode 1)
            (define-key temp-mode-map
