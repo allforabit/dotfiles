@@ -38,7 +38,9 @@
     :config
     (progn
       ;; TODO make all letters more vim like
-      (lispy-define-key lispy-mode-map "m" #'lispy-view))))
+      (lispy-set-key-theme '(lispy c-digits))
+      ;; (lispy-define-key lispy-mode-map "m" #'lispy-view)
+      )))
 
 (defun a4b-lisp/init-lispyville ()
   (use-package lispyville
@@ -55,7 +57,7 @@
       (lispyville-set-key-theme '(operators
                                   escape
                                   ;; s-operators
-                                  additional-movement
+                                  ;; additional-movement
                                   slurp/barf-cp
                                   additional
                                   mark-toggle)))))
