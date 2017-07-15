@@ -32,12 +32,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     windows-scripts
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
+     dash
      evil-snipe
      colors
      (javascript
@@ -114,8 +109,6 @@ values."
      syntax-checking
      version-control
      html
-     ;; (osx :variables
-     ;;      mac-right-option-modifier nil)
      haskell
      ruby
      faust
@@ -182,6 +175,8 @@ values."
    ;; Layers to be loaded only on Macintosh
    a4b--darwin-layers
    '(
+     (osx :variables
+          mac-right-option-modifier nil)
      (javascript
       :variables
       js-indent-level 2
@@ -238,7 +233,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(lentic auto-dim-other-buffers)
+   dotspacemacs-additional-packages '(lentic auto-dim-other-buffers npm-mode)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -608,7 +603,9 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(safe-local-variable-values
    (quote
-    ((eval progn
+    ((lentic-init . lentic-clojure-latex-init)
+     (lentic-init lentic-orgel-org-init lentic-default-init)
+     (eval progn
            (temp-mode 1)
            (define-key temp-mode-map
              (kbd "<f5>")
