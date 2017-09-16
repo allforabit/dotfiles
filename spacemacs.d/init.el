@@ -94,12 +94,14 @@ values."
      ;;  pdf-tools-handle-upgrades nil
      ;;  pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo")
 
-     latex
+     (latex
+      :variables latex-build-command "LaTeX")
+
      ;; For now configured for thesis
      (bibtex :variables
-             org-ref-default-bibliography '("~/Google Drive/bibliography/references.bib")
-             org-ref-pdf-directory "~/Google Drive/Projects/mmt-thesis/ref/"
-             org-ref-bibliography-notes "~/Google Drive/bibliography/notes.org")
+             org-ref-default-bibliography '("~/Github/mmt-thesis/bibliography/mmt-thesis-tidyup.bib")
+             org-ref-pdf-directory "~/Github/mmt-thesis/ref/"
+             org-ref-bibliography-notes "~/Github/mmt-thesis/notes/notes.org")
 
      (shell :variables
             shell-default-height 30
@@ -521,6 +523,16 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  (add-to-list 'org-latex-classes
+               '("moderncv"
+                 "\\documentclass{moderncv}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+
   ;; Make image refresh work (e.g. for plantuml mode)
   ;; https://emacs.stackexchange.com/questions/2303/making-an-image-ie-image-mode-auto-reload-changes-from-disk
   (add-hook 'image-mode-hook (lambda ()
@@ -535,16 +547,21 @@ you should place your code here."
   (prefer-coding-system 'utf-8)
 
   (add-to-list 'purpose-user-mode-purposes '(cider-repl-mode . repl))
-  (purpose-compile-user-configuration) ; activates your changes
+  (purpose-compile-user-configuration)  ; activates your changes
 
   (advice-add 'delete-file :around #'a4b-figwheel-temp-fix)
 
   ;; (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
 
-  (setenv "PATH"
-          (concat
-           "C:\\cygwin64\\bin" ";"
-           (getenv "PATH")))
+  ;; (setenv "PATH"
+  ;;         (concat
+  ;;          "/usr/local/bin/" ";"
+  ;;          (getenv "PATH")))
+
+  ;; (setenv "PATH"
+  ;;         (concat
+  ;;          "C:\\cygwin64\\bin" ";"
+  ;;          (getenv "PATH")))
 
   (spacemacs/set-leader-keys-for-major-mode 'processing-mode
     "cc" 'processing-sketch-run)
@@ -573,6 +590,7 @@ you should place your code here."
   (add-hook 'org-mode-hook #'visual-line-mode)
   (add-hook 'org-mode-hook #'spacemacs/toggle-visual-line-navigation-on)
 
+  
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((haskell . t)
@@ -601,9 +619,15 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (powerline smartparens highlight evil undo-tree avy projectile helm helm-core async hydra dash zotelo yapfify xterm-color wolfram-mode web-mode web-beautify unfill thrift tagedit stan-mode smeargle slim-mode shell-pop scss-mode scad-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder rbenv rake rainbow-mode rainbow-identifiers qml-mode pyvenv pytest pyenv-mode py-isort pug-mode processing-mode polymode plantuml-mode pip-requirements pbcopy pandoc-mode ox-reveal ox-pandoc osx-trash osx-dictionary orgit org-ref pdf-tools key-chord tablist org-projectile org-category-capture org-present org-pomodoro org-download npm-mode navi-mode outshine outorg mwim multi-term mu4e-maildirs-extension mu4e-alert ht alert log4e gntp mmm-mode minitest matlab-mode markdown-toc markdown-mode magit-gitflow macrostep livid-mode skewer-mode simple-httpd live-py-mode lispyville lispy zoutline swiper ivy less-css-mode lentic m-buffer launchctl julia-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc intero hy-mode htmlize hlint-refactor hindent helm-pydoc helm-purpose window-purpose imenu-list helm-hoogle helm-gitignore helm-css-scss helm-company helm-c-yasnippet helm-bibtex parsebib haskell-snippets haml-mode graphviz-dot-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck-haskell flycheck faust-mode evil-snipe evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-ghci company-ghc ghc haskell-mode company-cabal company-auctex company-anaconda company color-identifiers-mode coffee-mode cmm-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode chruby bundler inf-ruby biblio biblio-core auto-yasnippet yasnippet auto-dim-other-buffers auto-compile packed auctex arduino-mode anaconda-mode pythonic ahk-mode ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-dash helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu dumb-jump define-word dash-at-point column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(safe-local-variable-values
    (quote
-    ((lentic-init . lentic-clojure-latex-init)
+    ((eval save-excursion
+           (org-babel-goto-named-src-block "start-block")
+           (org-babel-execute-src-block))
+     (lentic-init . lentic-clojure-latex-init)
      (lentic-init lentic-orgel-org-init lentic-default-init)
      (eval progn
            (temp-mode 1)
