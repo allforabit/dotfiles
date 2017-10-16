@@ -39,8 +39,8 @@
     (progn
       ;; TODO make all letters more vim like
       (lispy-set-key-theme '(lispy c-digits))
-      ;; (lispy-define-key lispy-mode-map "m" #'lispy-view)
-      )))
+
+      (lispy-define-key lispy-mode-map "_" #'lispy-underscore))))
 
 (defun a4b-lisp/init-lispyville ()
   (use-package lispyville
