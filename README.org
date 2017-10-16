@@ -1,9 +1,24 @@
-#+PROPERTY: OS_ALL windows osx linux
+#+STARTUP: indent
 
-* Introduction
-* Windows
-** Apps to download
-*** Chromium
+* Introduction [0/1]
+:todo:
+ - [ ] Fix doom link
+:END:
+Cross platform config that uses org mode to keep track of all apps to be
+installed as well as the configuration for these apps. Setting up on a new
+computer should be a matter of running a single installation command to:
+ - Download all apps and dependencies
+ - Tangle code from this file
+ - Do any symlinking that is required
+N.B. Symlinking may not be required and org tangle may the only thing that is
+needed!!!
+
+Makefile ala [[http://github.com/doom/doom][Doom]] may be used to run the scripts.
+
+* Gui apps                                                          :gui:app:
+  These are gui apps and aren't used in the commandline
+** Cross platform                                         :windows:osx:linux:
+*** Chromium                                                       :chromium:
     :PROPERTIES:
     :DOWNLOAD_URL: http://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/478480/chrome-win32.zip
     :OS:       windows
@@ -15,16 +30,131 @@
      :OS:       windows
      :END:
 
-*** Emacs
-    :PROPERTIES:
-    :DOWNLOAD_URL: http://ftp.heanet.ie/mirrors/gnu/emacs/windows/emacs-25.2-x86_64.zip
-    :OS:       windows
-    :END:
-* Ideas
-** Paste javascript into clojurescript auto translate
-Use the commandline tool
+** Windows                                                          :windows:
+*** Rapid environment editor
+*** Autoit
+** Non Free OS                                                  :osx:windows:
+*** Audio                                                             :audio:
+**** Ableton Live
+**** Adobe Audition
+* Commandline apps
+  Can be used on the commandline but may also be used in a GUI
+** Cross platform                                         :windows:osx:linux:
+*** Distributions                                     :distributions:dotfile:
+**** Thoughtbot
+*** Text editor                                                 :text_editor:
+**** Emacs                                                            :emacs:
+     :PROPERTIES:
+     :DOWNLOAD_URL: http://ftp.heanet.ie/mirrors/gnu/emacs/windows/emacs-25.2-x86_64.zip
+     :OS:       windows
+     :END:
+***** Distributions                                      :distribution:
+****** Spacemacs
+****** Doom
+**** Vim
+***** Distributions                                            :distribution:
+****** Spacevim
+*** Git
+*** Node.js                                                          :nodejs:
+**** Installation
+***** OSX
+Something like this...
+#+BEGIN_SRC sh
+brew install nodejs
+#+END_SRC
+***** Windows
+#+BEGIN_SRC sh
+pacman -S nodejs
+#+END_SRC
+**** Package managers
+***** NPM
+***** Yarn
+****** Installation
+******* OSX
+#+BEGIN_SRC sh
+brew install yarn
+#+END_SRC
+**** Packages
+***** Gatsby.js
+*** GNU Stow
+*** Lein
+**** Profiles.clj [0/1]
+:TODO:
+ - [ ] What's slamhound?
+:END:
+#+BEGIN_SRC clojure :tangle ~/.lein/profiles.clj
+{:user {:plugins [[lein-pprint "1.1.1"]]
+        :dependencies [[slamhound "1.3.1"]]}}
+#+END_SRC
+** OSX                                                                 :osx:
+*** Brew
+Primary package manager for osx
+* Installation
+Provide some sort of installation steps. Use org tangle, git, git sub modules.
+** Make symlinks
+This the script from original dotfiles:
 
+#+BEGIN_SRC sh :tangle
+#!/bin/bash
+############################
+# .make.sh
+# This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
+############################
 
-* TODOs
-** Add this to agenda
-** TODO Rename autoit >> autohotkey
+########## Variables
+
+dir=~/dotfiles                    # dotfiles directory
+olddir=~/dotfiles_old             # old dotfiles backup directory
+files="zshrc vimrc vim spacemacs emacs.d"          # list of files/folders to symlink in homedir
+
+##########
+
+# create dotfiles_old in homedir
+echo -n "Creating $olddir for backup of any existing dotfiles in ~ ..."
+mkdir -p $olddir
+echo "done"
+
+# change to the dotfiles directory
+echo -n "Changing to the $dir directory ..."
+cd $dir
+echo "done"
+
+# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
+for file in $files; do
+  echo "Moving any existing dotfiles from ~ to $olddir"
+  mv ~/.$file ~/dotfiles_old/
+  echo "Creating symlink to $file in home directory."
+  ln -s $dir/$file ~/.$file
+done
+
+git clone https://github.com/gmarik/vundle.git ~/dotfiles/vim/bundle/vundle
+vim +PluginInstall +qall
+
+#+END_SRC
+** A test sh file
+#+BEGIN_SRC sh
+cd ~/dotfiles/
+ls -la
+#+END_SRC
+
+#+RESULTS:
+| total       | 136 |       |       |       |     |    |       |                                  |    |                                |
+| drwxr-xr-x  |  19 | kevin | staff |   646 | Oct |  1 | 14:24 | 0                                |    |                                |
+| lrwxr-xr-x  |   1 | kevin | staff |    30 | Oct |  1 | 14:24 | .#README.org                     | -> | kevin@MacBook-Air-4.local.2271 |
+| drwxr-xr-x@ | 260 | kevin | staff |  8840 | Oct |  1 | 13:52 | ..                               |    |                                |
+| -rw-r--r--@ |   1 | kevin | staff | 12292 | Aug |  4 | 10:51 | .DS_Store                        |    |                                |
+| drwxr-xr-x  |  17 | kevin | staff |   578 | Oct |  1 | 14:24 | .git                             |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |    71 | Sep | 16 | 14:01 | .gitignore                       |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |   158 | Mar |  8 |  2017 | .gitmodules                      |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |  3233 | Oct |  1 | 14:24 | README.org                       |    |                                |
+| drwxr-xr-x  |   5 | kevin | staff |   170 | Jul | 15 | 18:32 | autoit                           |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |  2968 | Mar |  8 |  2017 | bashrc                           |    |                                |
+| drwxr-xr-x  |   4 | kevin | staff |   136 | Jun | 29 |  2014 | gt8_patches                      |    |                                |
+| -rw-r--r--@ |   1 | kevin | staff |   341 | Feb | 26 |  2017 | instruments.xml                  |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |   587 | Jul | 15 | 18:32 | jsbeautifyrc                     |    |                                |
+| -rwxr-xr-x  |   1 | kevin | staff |  1129 | Mar |  8 |  2017 | makesymlinks.sh                  |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |  1821 | Jun | 10 |  2016 | midi_program_change_to_note.mipi |    |                                |
+| drwxr-xr-x  |   9 | kevin | staff |   306 | Sep | 16 | 14:39 | spacemacs.d                      |    |                                |
+| drwxr-xr-x  |   9 | kevin | staff |   306 | Mar |  8 |  2017 | vim                              |    |                                |
+| -rw-r--r--  |   1 | kevin | staff | 10793 | Jun | 10 |  2016 | vimrc                            |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |  1024 | Sep | 23 | 15:37 | zshrc                            |    |                                |
