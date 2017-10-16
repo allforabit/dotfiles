@@ -590,7 +590,6 @@ you should place your code here."
   (add-hook 'org-mode-hook #'visual-line-mode)
   (add-hook 'org-mode-hook #'spacemacs/toggle-visual-line-navigation-on)
 
-  
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((haskell . t)
