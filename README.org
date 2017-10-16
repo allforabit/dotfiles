@@ -21,5 +21,10 @@
     :OS:       windows
     :END:
 * Ideas
-** Paste javascript into clojurescript auto translate 
-Use the commandline tool 
+** Paste javascript into clojurescript auto translate
+Use the commandline tool
+
+
+* TODOs
+** Add this to agenda
+** TODO Rename autoit >> autohotkey
