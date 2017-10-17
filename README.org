@@ -646,7 +646,7 @@ the next line. And then we go on and on, bla bla bla!!!!
      :desc "Insert snippet"        :nv "i" #'yas-insert-snippet
      :desc "Find snippet for mode" :n  "s" #'yas-visit-snippet-file
      :desc "Find snippet"          :n  "S" #'+hlissner/find-in-snippets)
-   
+
    (:desc "toggle" :prefix "t"
      :desc "Flyspell"               :n "s" #'flyspell-mode
      :desc "Flycheck"               :n "f" #'flycheck-mode
