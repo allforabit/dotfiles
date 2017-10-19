@@ -155,7 +155,7 @@ the next line. And then we go on and on, bla bla bla!!!!
       ;markdown        ; writing docs for people to ignore
       ;ocaml           ; an objective camel
       ;perl            ; write code no one else can comprehend
-      ;php             ; make php less awful to work with
+      php             ; make php less awful to work with
       ;plantuml        ; diagrams for confusing people more
       ;purescript      ; javascript, but functional
       ;python          ; beautiful is better than ugly
@@ -199,7 +199,6 @@ the next line. And then we go on and on, bla bla bla!!!!
 
         #+RESULTS:
         : Doom modules initialized
-
 ******* Private init
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/init.el" :mkdirp yes
 ;;; private/hlissner/init.el -*- lexical-binding: t; -*-
@@ -239,11 +238,25 @@ the next line. And then we go on and on, bla bla bla!!!!
 #+END_SRC
 
 #+RESULTS:
+******* Packages
 
+        #+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/packages.el" :mkdirp yes
+(package! drupal-mode)
+        #+END_SRC
+
+        #+RESULTS:
+        | drupal-mode |
 ******* Config
+#+NAME: doom-drupal
+#+BEGIN_SRC emacs-lisp 
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes
 ;;; private/hlissner/config.el -*- lexical-binding: t; -*-
 
+;; from modules/completion/company/config.el
+;; Drupal mode
+(def-package! drupal-mode)
 
 (when (featurep! :feature evil)
   (load! +bindings)  ; my key bindings
@@ -360,6 +373,27 @@ the next line. And then we go on and on, bla bla bla!!!!
  :nmvo doom-leader-key nil
  :nmvo doom-localleader-key nil)
 
+
+(defun spacemacs/helm-jump-in-buffer ()
+  "Jump in buffer using `imenu' facilities and helm."
+  (interactive)
+  (call-interactively
+   (cond
+    ((eq major-mode 'org-mode) 'helm-org-in-buffer-headings)
+    (t 'helm-semantic-or-imenu))))
+
+(defun spacemacs/alternate-buffer (&optional window)
+  "Switch back and forth between current and last buffer in the
+current window."
+  (interactive)
+  (let ((current-buffer (window-buffer window)))
+    ;; if no window is found in the windows history, `switch-to-buffer' will
+    ;; default to calling `other-buffer'.
+    (switch-to-buffer
+     (cl-find-if (lambda (buffer)
+                   (not (eq buffer current-buffer)))
+                 (mapcar #'car (window-prev-buffers window))))))
+
 (map!
  ;; --- Global keybindings ---------------------------
  ;; Make M-x available everywhere
@@ -434,6 +468,8 @@ the next line. And then we go on and on, bla bla bla!!!!
    :desc "Blink cursor line"       :n "DEL" #'+doom/blink-cursor
    :desc "Jump to bookmark"        :n "RET" #'bookmark-jump
 
+   :desc "Jump to bookmark"        :n "'" #'+eshell/open-popup
+
    ;; C-u is used by evil
    :desc "Universal argument"    :n "u"  #'universal-argument
    :desc "window"                :n "w"  evil-window-map
@@ -449,7 +485,7 @@ the next line. And then we go on and on, bla bla bla!!!!
    :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
    :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last
 
-   :desc "Switch to last buffer" :n "TAB"   #'+workspace/switch-to-last
+   :desc "Switch to last buffer" :n "TAB"   #'spacemacs/alternate-buffer
 
 
    (:desc "previous..." :prefix "["
@@ -473,38 +509,6 @@ the next line. And then we go on and on, bla bla bla!!!!
      :desc "Smart jump"          :nv "l" #'smart-forward
      :desc "Spelling error"      :nv "s" #'evil-next-flyspell-error
      :desc "Spelling correction" :n  "S" #'flyspell-correct-word-generic)
-
-   (:desc "search" :prefix "/"
-     :desc "Swiper"                :nv "/" #'helm-swoop
-     :desc "Imenu"                 :nv "i" #'imenu
-     :desc "Imenu across buffers"  :nv "I" #'imenu-anywhere
-     :desc "Online providers"      :nv "o" #'+jump/online-select)
-
-;; Change to spacemacs prefix
-   (:desc "workspace" :prefix "l"
-     :desc "Display tab bar"          :n "TAB" #'+workspace/display
-     :desc "New workspace"            :n "n"   #'+workspace/new
-     :desc "Restore workspace from file" :n "r"   #'+workspace/load
-     :desc "Restore last session"        :n "R"   (λ! (+workspace/load-session))
-     :desc "Save workspace to file"   :n "s"   #'+workspace/save
-     :desc "Autosave current session" :n "S"   #'+workspace/save-session
-     :desc "Switch workspace"         :n "l"   #'+workspace/switch-to
-     :desc "Kill all buffers"         :n "x"   #'doom/kill-all-buffers
-     :desc "Delete session"           :n "X"   #'+workspace/kill-session
-     :desc "Delete this workspace"    :n "d"   #'+workspace/delete
-     :desc "Load session"             :n "L"   #'+workspace/load-session
-     :desc "Next workspace"           :n "]"   #'+workspace/switch-right
-     :desc "Previous workspace"       :n "["   #'+workspace/switch-left
-     :desc "Switch to 1st workspace"  :n "1"   (λ! (+workspace/switch-to 0))
-     :desc "Switch to 2nd workspace"  :n "2"   (λ! (+workspace/switch-to 1))
-     :desc "Switch to 3rd workspace"  :n "3"   (λ! (+workspace/switch-to 2))
-     :desc "Switch to 4th workspace"  :n "4"   (λ! (+workspace/switch-to 3))
-     :desc "Switch to 5th workspace"  :n "5"   (λ! (+workspace/switch-to 4))
-     :desc "Switch to 6th workspace"  :n "6"   (λ! (+workspace/switch-to 5))
-     :desc "Switch to 7th workspace"  :n "7"   (λ! (+workspace/switch-to 6))
-     :desc "Switch to 8th workspace"  :n "8"   (λ! (+workspace/switch-to 7))
-     :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
-     :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last)
 
    (:desc "buffer" :prefix "b"
      :desc "New empty buffer"        :n "n" #'evil-buffer-new
@@ -588,6 +592,36 @@ the next line. And then we go on and on, bla bla bla!!!!
      :desc "From kill-ring" :nv "y" #'counsel-yank-pop
      :desc "From snippet"   :nv "s" #'yas-insert-snippet)
 
+   (:desc "insert" :prefix "j"
+     :desc "Jump in" :nv "i" #'spacemacs/helm-jump-in-buffer)
+
+   ;; Change to spacemacs prefix
+   (:desc "workspace" :prefix "l"
+     :desc "Display tab bar"          :n "TAB" #'+workspace/display
+     :desc "New workspace"            :n "n"   #'+workspace/new
+     :desc "Restore workspace from file" :n "r"   #'+workspace/load
+     :desc "Restore last session"        :n "R"   (λ! (+workspace/load-session))
+     :desc "Save workspace to file"   :n "s"   #'+workspace/save
+     :desc "Autosave current session" :n "S"   #'+workspace/save-session
+     :desc "Switch workspace"         :n "l"   #'+workspace/switch-to
+     :desc "Kill all buffers"         :n "x"   #'doom/kill-all-buffers
+     :desc "Delete session"           :n "X"   #'+workspace/kill-session
+     :desc "Delete this workspace"    :n "d"   #'+workspace/delete
+     :desc "Load session"             :n "L"   #'+workspace/load-session
+     :desc "Next workspace"           :n "]"   #'+workspace/switch-right
+     :desc "Previous workspace"       :n "["   #'+workspace/switch-left
+     :desc "Switch to 1st workspace"  :n "1"   (λ! (+workspace/switch-to 0))
+     :desc "Switch to 2nd workspace"  :n "2"   (λ! (+workspace/switch-to 1))
+     :desc "Switch to 3rd workspace"  :n "3"   (λ! (+workspace/switch-to 2))
+     :desc "Switch to 4th workspace"  :n "4"   (λ! (+workspace/switch-to 3))
+     :desc "Switch to 5th workspace"  :n "5"   (λ! (+workspace/switch-to 4))
+     :desc "Switch to 6th workspace"  :n "6"   (λ! (+workspace/switch-to 5))
+     :desc "Switch to 7th workspace"  :n "7"   (λ! (+workspace/switch-to 6))
+     :desc "Switch to 8th workspace"  :n "8"   (λ! (+workspace/switch-to 7))
+     :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
+     :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last)
+
+
    (:desc "notes" :prefix "n"
      :desc "Find file in notes"    :n "n" #'+hlissner/find-in-notes
      :desc "Browse notes"          :n "N" #'+hlissner/browse-notes
@@ -641,11 +675,14 @@ the next line. And then we go on and on, bla bla bla!!!!
      :desc "Browse remote files"    :n "." #'+upload/browse
      :desc "Detect remote changes"  :n ">" #'+upload/check-remote)
 
-   (:desc "snippets" :prefix "s"
-     :desc "New snippet"           :n  "n" #'yas-new-snippet
-     :desc "Insert snippet"        :nv "i" #'yas-insert-snippet
-     :desc "Find snippet for mode" :n  "s" #'yas-visit-snippet-file
-     :desc "Find snippet"          :n  "S" #'+hlissner/find-in-snippets)
+   (:desc "search" :prefix "s"
+     :desc "Helm swoop"                :nv "s" #'helm-swoop)
+
+   ;; (:desc "snippets" :prefix "s"
+   ;;   :desc "New snippet"           :n  "n" #'yas-new-snippet
+   ;;   :desc "Insert snippet"        :nv "i" #'yas-insert-snippet
+   ;;   :desc "Find snippet for mode" :n  "s" #'yas-visit-snippet-file
+   ;;   :desc "Find snippet"          :n  "S" #'+hlissner/find-in-snippets)
    
    (:desc "toggle" :prefix "t"
      :desc "Flyspell"               :n "s" #'flyspell-mode
@@ -903,9 +940,9 @@ the next line. And then we go on and on, bla bla bla!!!!
      "C-k"      #'helm-previous-line
      "C-h"      #'helm-next-source
      "C-S-h"      #'describe-key
-     "C-l"      (kbd "RET")
+     "C-l"      #'helm-execute-persistent-action
      "C-u"        #'helm-delete-minibuffer-contents
-     "C-w"        #'backward-kill-word
+     "C-h"        #'backward-kill-word
      "C-r"        #'evil-paste-from-register ; Evil registers in helm! Glorious!
      "C-b"        #'backward-word
      [left]       #'backward-char
@@ -915,10 +952,11 @@ the next line. And then we go on and on, bla bla bla!!!!
 
    (:after helm-files
      (:map helm-generic-files-map
-       :e "ESC"     #'helm-keyboard-quit)
+       "C-l"     #'helm-execute-persistent-action
+       "C-h"     #'helm-find-files-up-one-level)
      (:map helm-find-files-map
-       "C-w" #'helm-find-files-up-one-level
-       "TAB" #'helm-execute-persistent-action))
+       "C-h" #'helm-find-files-up-one-level
+       "C-l" #'helm-execute-persistent-action))
 
    (:after helm-ag
      (:map helm-ag-map
@@ -1191,7 +1229,6 @@ the next line. And then we go on and on, bla bla bla!!!!
 
         #+RESULTS:
         : View-quit-all
-
 ******* Commands
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/+commands.el" :mkdirp yes
 ;;; private/hlissner/+commands.el -*- lexical-binding: t; -*-

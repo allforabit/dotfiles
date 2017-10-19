@@ -4,3 +4,5 @@ backups
 bundle/*
 vim/bundle/*
 /spacemacs.d/init.bck.el
+/nil
+/README.el
