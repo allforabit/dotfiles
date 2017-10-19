@@ -351,9 +351,8 @@ the next line. And then we go on and on, bla bla bla!!!!
       (mu4e-compose-signature . "---\nKevin Nolan")))
   )
         #+END_SRC
-******* Bindings
+******* TODO Bindings
 :PROPERTIES:
-:F:        spacemacs/buffer-alternate
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -365,11 +364,15 @@ the next line. And then we go on and on, bla bla bla!!!!
 | Bindings | Global | Leader | TAB |
 
 
-******** Global 
 
-******** Leader 
 
-********* TAB :tab_key:
+
+
+******** TODO Global 
+
+******** TODO Leader 
+
+********* TODO TAB :tab_key:
 :PROPERTIES:
 :K: tab
 :F: spacemacs/buffer-alternate
