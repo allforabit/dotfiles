@@ -52,8 +52,8 @@ the next line. And then we go on and on, bla bla bla!!!!
      :OS:       windows
      :END:
 ***** Distributions                                      :distribution:
-****** Spacemacs
-****** Doom
+****** Spacemacs :spacemacs:
+****** Doom :doom_emacs:
 ******* Doom init
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/init.el" :mkdirp yes
 ;;; init.el -*- lexical-binding: t; -*-
@@ -1511,3 +1511,4 @@ ls -la
 | drwxr-xr-x  |   9 | kevin | staff |   306 | Mar |  8 |  2017 | vim                              |    |                                |
 | -rw-r--r--  |   1 | kevin | staff | 10793 | Jun | 10 |  2016 | vimrc                            |    |                                |
 | -rw-r--r--  |   1 | kevin | staff |  1024 | Sep | 23 | 15:37 | zshrc                            |    |                                |
+
