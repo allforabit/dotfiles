@@ -89,6 +89,15 @@ the next line. And then we go on and on, bla bla bla!!!!
 
 (setq user-login-name "allforabit")
 
+;; Setup path (windows only for now)
+(when (string-equal system-type "windows-nt")
+  (setenv "PATH"
+    (concat
+    "C:/msys64/mingw64/bin" ";"
+    "C:/msys64/usr/bin" ";"
+    (getenv "PATH"))))
+
+
 (doom! :feature
        evil            ; come to the dark side, we have cookies
        jump            ; helping you get around
@@ -356,29 +365,116 @@ the next line. And then we go on and on, bla bla bla!!!!
 :END:
 
 #+BEGIN_SRC emacs-lisp
-(org-map-entries
-      '(org-entry-get nil "ITEM"))
+
+;; (org-element-map (org-element-parse-buffer) '(example-block src-block) #'identity)
+
+(defun unflatten (xs &optional fn-value fn-level)
+  "Unflatten a list XS into a tree, e.g. (1 2 3 1) => (1 (2 (3)) 1).
+FN-VALUE specifies how to extract the values from each element, which
+are included in the output tree, FN-LEVEL tells how to extract the
+level of each element. By default these are the `identity' function so
+it will work on a list of numbers."
+  (let* ((level 1)
+         (tree (cons nil nil))
+         (start tree)
+         (stack nil)
+         (fn-value (or fn-value #'identity))
+         (fn-level (or fn-level #'identity)))
+    (dolist (x xs)
+      (let ((x-value (funcall fn-value x))
+            (x-level (funcall fn-level x)))
+        (cond ((> x-level level)
+               (setcdr tree (cons (cons x-value nil) nil))
+               (setq tree (cdr tree))
+               (push tree stack)
+               (setq tree (car tree))
+               (setq level x-level))
+              ((= x-level level)
+               (setcdr tree (cons x-value nil))
+               (setq tree (cdr tree)))
+              ((< x-level level)
+               (while (< x-level level)
+                 (setq tree (pop stack))
+                 (setq level (- level 1)))
+               (setcdr tree (cons x-value nil))
+               (setq tree (cdr tree))
+               (setq level x-level)))))
+      (cdr start)))
+
+; eg (unflatten '(1 2 3 2 3 4)) => '(1 (2 (3) 2 (3 (4))))
+
+(defun org-get-header-list (&optional buffer) 
+  "Get the headers of an org buffer as a flat list of headers and levels.
+Buffer will default to the current buffer."
+  (interactive)
+  (with-current-buffer (or buffer (current-buffer))
+    (let ((tree (org-element-parse-buffer 'headline)))
+      (org-element-map 
+          tree 
+          'headline
+        (lambda (el) (list 
+                 (org-element-property :raw-value el) ; get header title without tags etc
+                 (org-element-property :level el) ; get depth
+                 (org-element-property :F el)
+                 (org-element-property :K el)
+                 ;; >> could add other properties here
+                 )) nil nil '(headline)))))
+
+; eg (org-get-header-list) => (("pok" 1) ("lkm" 1) (("cedar" 2) ("yr" 2)) ("kjn" 1))
+
+
+(defun org-get-header-tree (&optional buffer)
+  "Get the headers of the given org buffer as a tree."
+  (interactive)
+  (let* ((headers (org-get-header-list buffer))
+         (header-tree (unflatten headers  
+                 (lambda (hl) (list (car hl) (nth 2 hl) (nth 3 hl)))  ; extract information to include in tree
+                 (lambda (hl) (cadr hl))
+)))  ; extract item level
+    header-tree))
+
+(org-get-header-tree)
+
 #+END_SRC
 
 #+RESULTS:
-| Bindings | Global | Leader | TAB |
+| Introduction [0/1] | nil | nil |
+| Gui apps           | nil | nil |
+| Commandline apps   | nil | nil |
+| Installation       | nil | nil |
 
 
+#+BEGIN_SRC emacs-lisp
+(org-element-map (org-element-parse-buffer) 'paragraph
+  (lambda (paragraph)
+    (let ((parent (org-element-property :parent paragraph)))
+      (and (eq (org-element-type parent) 'section)
+           (let ((first-child (car (org-element-contents parent))))
+             (eq first-child paragraph))
+           ;; Return value.
+           paragraph))))
+#+END_SRC
+
+#+RESULTS:
+| paragraph | (:begin 1 :end 47 :contents-begin 1 :contents-end 47 :post-blank 0 :post-affiliated 1 :parent (section (:begin 1 :end 47 :contents-begin 1 :contents-end 47 :post-blank 0 :post-affiliated 1 :parent (org-data nil #1 (headline (:raw-value Introduction [0/1] :begin 47 :end 815 :pre-blank 0 :contents-begin 68 :contents-end 814 :level 1 :priority nil :tags nil :todo-keyword nil :todo-type nil :post-blank 1 :footnote-section-p nil :archivedp nil :commentedp nil :post-affiliated 47 :title (Introduction  (statistics-cookie (:begin 62 :end 67 :value [0/1] :post-blank 0 :parent #4))) :parent #3) (section (:begin 68 :end 815 :contents-begin 68 :contents-end 814 :post-blank 1 :post-affiliated 68 :parent #4) (drawer (:begin 68 :end 102 :drawer-name todo :contents-begin 75 :contents-end 96 :post-blank 0 :post-affiliated 68 :parent #5) (plain-list (:type unordered :begin 75 :end 96 :contents-begin 75 :contents-end 96 :structure ((75 1 -  nil [ ] nil 96)) :post-blank 0 :post-affiliated 75 :parent #6) (item (:bullet -  :begin 75 :end 96 :contents-begin 82 :contents-end 96 :checkbox off :counter nil :structure ((75 1 -  nil [ ] nil 96)) :post-blank 0 :post-affiliated 75 :tag nil :parent #7) (paragraph (:begin 82 :end 96 :contents-begin 82 :contents-end 96 :post-blank 0 :post-affiliated 82 :parent #8) Fix doom link |
 
 
+#+BEGIN_SRC emacs-lisp
+(save-excursion
+  (outline-up-heading 1) 
+  (org-element-map (org-element-parse-buffer) 'section
+     (lambda (section)
+          (org-element-property :value section))))
+#+END_SRC
 
-
+#+RESULTS:
 ******** TODO Global 
-
 ******** TODO Leader 
-
 ********* TODO TAB :tab_key:
 :PROPERTIES:
 :K: tab
 :F: spacemacs/buffer-alternate
 :END:
-
-
 
 ******** Raw 
 
