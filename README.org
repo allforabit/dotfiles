@@ -351,8 +351,38 @@ the next line. And then we go on and on, bla bla bla!!!!
       (mu4e-compose-signature . "---\nKevin Nolan")))
   )
         #+END_SRC
-******* Bindings
-        #+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/+bindings.el" :mkdirp yes
+******* TODO Bindings
+:PROPERTIES:
+:END:
+
+#+BEGIN_SRC emacs-lisp
+(org-map-entries
+      '(org-entry-get nil "ITEM"))
+#+END_SRC
+
+#+RESULTS:
+| Bindings | Global | Leader | TAB |
+
+
+
+
+
+
+******** TODO Global 
+
+******** TODO Leader 
+
+********* TODO TAB :tab_key:
+:PROPERTIES:
+:K: tab
+:F: spacemacs/buffer-alternate
+:END:
+
+
+
+******** Raw 
+
+#+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/+bindings.el" :mkdirp yes
 
 ;;; private/hlissner/+bindings.el -*- lexical-binding: t; -*-
 
