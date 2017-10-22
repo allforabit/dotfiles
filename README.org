@@ -256,15 +256,20 @@ the next line. And then we go on and on, bla bla bla!!!!
         #+RESULTS:
         | drupal-mode |
 ******* Config
+This is loaded last.
+
 #+NAME: doom-drupal
 #+BEGIN_SRC emacs-lisp 
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes
-;;; private/hlissner/config.el -*- lexical-binding: t; -*-
+;;; private/allforabit/config.el -*- lexical-binding: t; -*-
 
+;; Make it possible to add hashes and euro symbols
+(setq mac-right-option-modifier nil)
 ;; from modules/completion/company/config.el
 ;; Drupal mode
+
 (def-package! drupal-mode)
 
 (when (featurep! :feature evil)
@@ -867,8 +872,8 @@ current window."
    "C-r"     #'winner-redo
    "o"       #'doom/window-enlargen
    ;; Delete window
-   "c"       #'+workspace/close-window-or-workspace
-   "C-C"     #'ace-delete-window)
+   "d"       #'+workspace/close-window-or-workspace
+   "D"     #'ace-delete-window)
 
 
  ;; --- Plugin bindings ------------------------------
