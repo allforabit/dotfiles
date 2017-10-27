@@ -1,0 +1,1456 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=Edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Dotfiles</title><style>*{box-sizing:border-box}.cxs-display-table{display:table}.cxs-183745076 a:hover{text-decoration:underline}.cxs-3954183383{font-size:24px}.cxs-3377994344{}.cxs-4066908388{clear:both}.cxs-799160745{font-size:48px}.cxs-1246195080{margin-left:-8px;margin-right:-8px}.cxs-183745076{}.cxs-183745076 h1{font-weight:500;letter-spacing:-0.01em;font-size:48px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h2{font-weight:500;letter-spacing:-0.01em;font-size:24px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h3{font-weight:500;letter-spacing:-0.01em;font-size:20px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h4{font-weight:500;letter-spacing:-0.01em;font-size:16px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h5{font-weight:500;letter-spacing:-0.01em;font-size:14px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h6{font-weight:500;letter-spacing:-0.01em;font-size:12px;margin-top:32px;margin-bottom:8px}.cxs-183745076 p{overflow-x:auto;margin-top:0px;margin-bottom:16px}.cxs-183745076 code{font-family:Menlo, monospace;font-size:14px;padding:4px;background-color:#f5f5f5;border-radius:2px}.cxs-183745076 pre{font-family:Menlo, monospace;font-size:14px;overflow-x:auto;padding:16px;margin-top:8px;margin-bottom:32px;background-color:#f5f5f5;border-radius:2px}.cxs-183745076 pre .hljs-keyword{color:#2196f3}.cxs-183745076 pre .hljs-built_in{color:#1565c0}.cxs-183745076 pre .hljs-type{color:#1565c0}.cxs-183745076 pre .hljs-literal{color:#2196f3}.cxs-183745076 pre .hljs-number{color:#ff4081}.cxs-183745076 pre .hljs-regexp{color:#2196f3}.cxs-183745076 pre .hljs-string{color:#1565c0}.cxs-183745076 pre .hljs-subst{color:#1565c0}.cxs-183745076 pre .hljs-symbol{color:#2196f3}.cxs-183745076 pre .hljs-class{color:#2196f3}.cxs-183745076 pre .hljs-function{color:#ff4081}.cxs-183745076 pre .hljs-title{color:#2196f3}.cxs-183745076 pre .hljs-params{color:#1565c0}.cxs-183745076 pre .hljs-comment{color:#1565c0}.cxs-183745076 pre .hljs-doctag{color:#1565c0}.cxs-183745076 pre .hljs-meta{color:#1565c0}.cxs-183745076 pre .hljs-meta-keyword{color:#2196f3}.cxs-183745076 pre .hljs-meta-string{color:#2196f3}.cxs-183745076 hr{margin-top:48px;margin-bottom:48px;border:0px;border-bottom-style:solid;border-bottom-width:1px;border-bottom:2px solid #e0e0e0}.cxs-183745076 table{border-collapse:separate;border-spacing:0px;max-width:100%;width:100%}.cxs-183745076 th{text-align:left;line-height:inherit;vertical-align:bottom}.cxs-183745076 td{vertical-align:top;line-height:inherit}.cxs-183745076 img{max-width: 100%;height: auto;margin-top:16px;margin-bottom:16px}.cxs-183745076 a{color:#2196f3;text-decoration: none}.cxs-3147789143{margin-left:-16px;margin-right:-16px}.cxs-183745076 ul{padding-left:32px;margin-top:0px;margin-bottom:16px}.cxs-291348840{font-size:20px;line-height:1.625}.cxs-291348840 h1{font-weight:400;text-transform:uppercase;letter-spacing:0.1em;font-size:48px;margin-top:48px;margin-bottom:8px}.cxs-291348840 h2{font-weight:400;text-transform:uppercase;letter-spacing:0.1em;font-size:24px;margin-top:48px;margin-bottom:8px}.cxs-291348840 h3{font-weight:400;text-transform:uppercase;letter-spacing:0.1em;font-size:20px;margin-top:48px;margin-bottom:8px}.cxs-291348840 h4{font-weight:400;text-transform:uppercase;letter-spacing:0.1em;font-size:16px;margin-top:32px;margin-bottom:8px}.cxs-291348840 h5{font-weight:400;text-transform:uppercase;letter-spacing:0.1em;font-size:14px;margin-top:32px;margin-bottom:8px}.cxs-291348840 h6{font-weight:400;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;margin-top:32px;margin-bottom:8px}.cxs-291348840 p{overflow-x:auto;font-size:20px;margin-top:0px;margin-bottom:16px}.cxs-291348840 code{font-family:Menlo, monospace;font-size:14px;color:#005499}.cxs-291348840 pre{font-family:Menlo, monospace;font-size:14px;overflow-x:auto;padding-left:16px;margin-top:8px;margin-bottom:32px;border-left:2px solid #ddd}.cxs-291348840 pre .hljs-keyword{color:#ee5544}.cxs-291348840 pre .hljs-built_in{color:#005499}.cxs-291348840 pre .hljs-type{color:#005499}.cxs-291348840 pre .hljs-literal{color:#ee5544}.cxs-291348840 pre .hljs-number{color:#00bd78}.cxs-291348840 pre .hljs-regexp{color:#ee5544}.cxs-291348840 pre .hljs-string{color:#005499}.cxs-291348840 pre .hljs-subst{color:#005499}.cxs-291348840 pre .hljs-symbol{color:#ee5544}.cxs-291348840 pre .hljs-class{color:#ee5544}.cxs-291348840 pre .hljs-function{color:#00bd78}.cxs-291348840 pre .hljs-title{color:#ee5544}.cxs-291348840 pre .hljs-params{color:#005499}.cxs-291348840 pre .hljs-comment{color:#005499}.cxs-291348840 pre .hljs-doctag{color:#005499}.cxs-291348840 pre .hljs-meta{color:#005499}.cxs-291348840 pre .hljs-meta-keyword{color:#ee5544}.cxs-291348840 pre .hljs-meta-string{color:#ee5544}.cxs-291348840 hr{margin-top:48px;margin-bottom:48px;border:0px;border-bottom:2px solid #ddd}.cxs-291348840 table{border-collapse:separate;border-spacing:0px;max-width:100%;width:100%}.cxs-291348840 th{text-align:left;line-height:inherit;vertical-align:bottom}.cxs-291348840 td{vertical-align:top;line-height:inherit}.cxs-291348840 img{max-width: 100%;height: auto;margin-top:16px;margin-bottom:16px}.cxs-291348840 a{color:inherit}.cxs-291348840 a:hover{color:#ee5544}.cxs-291348840 ul{padding-left:32px;margin-top:0px;margin-bottom:16px}.cxs-3377994344:hover{box-shadow:inset 0 0 0 999px rgba(0, 0, 0, .125)}@media screen and (min-width: 52em) { .cxs-799160745{font-size:72px} }@media screen and (min-width: 52em) { .cxs-3954183383{} }</style></head><body style="margin:0;"><div class="Xv" style="font-family:Athelas, Georgia, serif;font-weight:400;line-height:1.5;color:#121212;background-color:#fff;"><nav style="display:flex;align-items:center;padding-top:8px;padding-bottom:8px;padding-left:16px;padding-right:16px;background-color:#fff;"><a href="https://github.com/allforabit/dotfiles" class="Link" style="box-sizing:border-box;color:inherit;display:inline-block;font-size:14px;line-height:16px;padding-left:16px;padding-right:16px;padding-top:16px;padding-bottom:16px;font-weight:600;text-decoration:none;">GitHub</a></nav><header class="BannerHeader" style="display:flex;align-items:center;justify-content:center;text-align:left;min-height:100vh;color:#121212;background-color:#f3f3f3;background-image:url(undefined);background-size:cover;background-position:center;"><div style="box-sizing:border-box;width:100%;max-width:768px;margin-left:auto;margin-right:auto;padding-top:48px;padding-bottom:48px;padding-left:32px;padding-right:32px;"><h1 class="cxs-799160745" style="box-sizing:border-box;font-weight:400;text-transform:uppercase;letter-spacing:0.1em;margin:0;">dotfiles</h1><div class="cxs-1246195080" style="box-sizing:border-box;padding-top:16px;padding-bottom:16px;"><iframe src="https://platform.twitter.com/widgets/tweet_button.html?text=dotfiles%3A%20&amp;url=&amp;via=&amp;hashtags=&amp;size=" height="20" allowtransparency="true" frameborder="0" scrolling="no" style="box-sizing:border-box;width:61px;overflow:hidden;margin:8px;"></iframe><iframe src="https://ghbtns.com/github-btn.html?type=star&amp;count=true&amp;user=allforabit&amp;repo=dotfiles&amp;size=" height="20" frameborder="0" scrolling="no" style="box-sizing:border-box;width:100px;overflow:hidden;margin:8px;"></iframe><div class="cxs-4066908388 cxs-display-table"></div></div></div></header><div class="cxs-291348840" style="box-sizing:border-box;max-width:768px;margin-left:auto;margin-right:auto;padding-top:32px;padding-bottom:32px;padding-left:32px;padding-right:32px;"><article style="box-sizing:border-box;"><div><p>;; -<em>- after-save-hook: org-babel-tangle; -</em>-</p>
+<ul>
+<li>Introduction [0/1]
+:todo:<ul>
+<li>[ ] Fix doom link
+:END:
+Cross platform config that uses org mode to keep track of all apps to be
+installed as well as the configuration for these apps. Setting up on a new
+computer should be a matter of running a single installation command to:</li>
+<li>Download all apps and dependencies</li>
+<li>Tangle code from this file</li>
+<li>Do any symlinking that is required
+N.B. Symlinking may not be required and org tangle may the only thing that is
+needed!!!</li>
+</ul>
+</li>
+</ul>
+<p>Makefile ala [[<a href="http://github.com/doom/doom][Doom">http://github.com/doom/doom][Doom</a>]] may be used to run the scripts.</p>
+<p>This is the beginning of a very long sentence that shall scarcely ever be
+completed this another bit of the line and when it does it should wrap around to
+the next line. And then we go on and on, bla bla bla!!!!</p>
+<ul>
+<li>Gui apps                                                          :gui:app:
+These are gui apps and aren't used in the commandline
+<strong> Cross platform                                         :windows:osx:linux:
+*</strong> Chromium                                                       :chromium:
+  :PROPERTIES:
+  :DOWNLOAD_URL: <a href="http://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/478480/chrome-win32.zip">http://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/478480/chrome-win32.zip</a>
+  :OS:       windows
+  :END:</li>
+</ul>
+<p><em>**</em> Dirac
+     :PROPERTIES:
+     :DOWNLOAD_URL: <a href="https://github.com/binaryage/dirac/releases/download/v1.2.10/dirac-1.2.10.zip">https://github.com/binaryage/dirac/releases/download/v1.2.10/dirac-1.2.10.zip</a>
+     :OS:       windows
+     :END:</p>
+<p><strong> Windows                                                          :windows:
+*</strong> Rapid environment editor
+<strong>* Autoit
+</strong> Non Free OS                                                  :osx:windows:
+<strong><em> Audio                                                             :audio:
+*</em></strong> Ableton Live
+<em>**</em> Adobe Audition</p>
+<ul>
+<li>Commandline apps
+Can be used on the commandline but may also be used in a GUI
+<strong> Cross platform                                         :windows:osx:linux:
+*</strong> Distributions                                     :distributions:dotfile:
+<strong><em>* Thoughtbot
+</em></strong> Text editor                                                 :text_editor:
+<strong><strong> Emacs                                                            :emacs:
+   :PROPERTIES:
+   :DOWNLOAD_URL: <a href="http://ftp.heanet.ie/mirrors/gnu/emacs/windows/emacs-25.2-x86_64.zip">http://ftp.heanet.ie/mirrors/gnu/emacs/windows/emacs-25.2-x86_64.zip</a>
+   :OS:       windows
+   :END:
+*</strong></strong> Distributions                                      :distribution:
+<strong>**</strong> Spacemacs :spacemacs:
+<strong>**</strong> Doom :doom_emacs:
+<strong><em>*</em></strong> Doom init
+#+BEGIN<em>SRC emacs-lisp :tangle &quot;~/Github/doom-emacs/init.el&quot; :mkdirp yes
+;;; init.el -<em>- lexical-binding: t; -</em>-
+;;
+;; Author:  Henrik Lissner <a href="mailto:henrik@lissner.net">henrik@lissner.net</a>
+;; URL:     <a href="https://github.com/hlissner/.emacs.d">https://github.com/hlissner/.emacs.d</a>
+;;
+;;   =================     ===============     ===============   ========  ========
+;;   \ . . . . . . .\   //. . . . . . .\   //. . . . . . .\  \. . .\// . . //
+;;   ||. . .<em>__</em></em>. . .|| ||. . .<strong>_</strong>. . .|| ||. . .<strong>_</strong>. . .|| || . . .\/ . . .||
+;;   || . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||
+;;   ||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||
+;;   || . .||   ||. <em>-|| ||-</em> .||   ||. . || || . .||   ||. <em>-|| ||-</em>.|\ . . . . ||
+;;   ||. . ||   ||-'  || ||  <code>-||   || . .|| ||. . ||   ||-'  || ||</code>|_ . .|. .||
+;;   || . <em>||   ||    || ||    ||   ||</em> . || || . <em>||   ||    || ||   |\ `-</em>/| . ||
+;;   ||<em>-' ||  .|/    || ||    |.  || `-</em>|| ||<em>-' ||  .|/    || ||   | \  / |-</em>.||
+;;   ||    ||<em>-'      || ||      `-</em>||    || ||    ||<em>-'      || ||   | \  / |  <code>||
+;;   ||</code>'         || ||         <code>'    || ||</code>'         || ||   | \  / |   ||
+;;   ||            .===' <code>===.         .==='.</code>===.         .===' /==. |  \/  |   ||
+;;   ||         .=='   \</em>|-<em> `===. .==='   </em>|<em>   `===. .===' </em>-|/   <code>==  \/  |   ||
+;;   ||      .=='    _-'</code>-<em>  `='    </em>-'   <code>-_</code>='  <em>-'   `-</em>  /|  \/  |   ||
+;;   ||   .=='    <em>-'          '-__.</em>-'         '-<em>./__-'         `' |. /|  |   ||
+;;   ||.=='    </em>-'                                                     <code>' |  /==.||
+;;   =='    _-'                                                            \/</code>==
+;;   \   <em>-'                                                                `-</em>   /
+;;    `''                                                                      ``'
+;;
+;; These demons are not part of GNU Emacs.
+;;
+;;; License: MIT</li>
+</ul>
+<p>(require 'core (concat user-emacs-directory &quot;core/core&quot;))</p>
+<p>(setq user-login-name &quot;allforabit&quot;)</p>
+<p>;; Setup path (windows only for now)
+(when (string-equal system-type &quot;windows-nt&quot;)
+  (setenv &quot;PATH&quot;
+    (concat
+    &quot;C:/msys64/mingw64/bin&quot; &quot;;&quot;
+    &quot;C:/msys64/usr/bin&quot; &quot;;&quot;
+    (getenv &quot;PATH&quot;))))</p>
+<p>(doom! :feature
+       evil            ; come to the dark side, we have cookies
+       jump            ; helping you get around
+       snippets        ; my elves. They type so I don't have to
+       file-templates  ; auto-snippets for empty files
+       hydra           ; keybindings that stick around
+       spellcheck      ; tasing you for misspelling mispelling
+       syntax-checker  ; tasing you for every semicolon you forget
+       version-control ; remember, remember that commit in November
+       workspaces      ; tab emulation, persistence &amp; separate workspaces
+       eval            ; repls, runners 'n builders; run code, run
+      ;debug           ; FIXME stepping through code, to help you add bugs</p>
+<pre>   :completion
+   company         <span class="hljs-comment">; the ultimate code completion backend</span>
+   <span class="hljs-comment">;ivy             ; a search engine for love and life</span>
+  helm            <span class="hljs-comment">; the *other* search engine for love and life</span>
+  <span class="hljs-comment">;ido             ; the other *other* search engine...</span>
+
+   :ui
+   doom            <span class="hljs-comment">; what makes DOOM look the way it does</span>
+   doom-dashboard  <span class="hljs-comment">; a nifty splash screen for Emacs</span>
+   doom-modeline   <span class="hljs-comment">; a snazzy Atom-inspired mode-line</span>
+   doom-quit       <span class="hljs-comment">; DOOM quit-message prompts when you quit Emacs</span>
+   hl-todo         <span class="hljs-comment">; highlight TODO/FIXME/NOTE tags</span>
+   nav-flash       <span class="hljs-comment">; blink the current line after jumping</span>
+   evil-goggles    <span class="hljs-comment">; display visual hints when editing in evil</span>
+  <span class="hljs-comment">;unicode         ; extended unicode support for various languages</span>
+  <span class="hljs-comment">;tabbar          ; FIXME an (incomplete) tab bar for Emacs</span>
+
+   :tools
+   <span class="hljs-keyword">dired </span>          <span class="hljs-comment">; making dired pretty [functional]</span>
+   electric-indent <span class="hljs-comment">; smarter, keyword-based electric-indent</span>
+   eshell          <span class="hljs-comment">; a consistent, cross-platform shell (WIP)</span>
+   gist            <span class="hljs-comment">; interacting with github gists</span>
+   impatient-mode  <span class="hljs-comment">; show off code over HTTP</span>
+  <span class="hljs-comment">;macos           ; MacOS-specific commands</span>
+   neotree         <span class="hljs-comment">; a project drawer, like NERDTree for vim</span>
+   password-store  <span class="hljs-comment">; password manager for nerds</span>
+   prodigy         <span class="hljs-comment">; manage external services from within emacs</span>
+   rotate-text     <span class="hljs-comment">; cycle region at point between text candidates</span>
+   term            <span class="hljs-comment">; terminals in Emacs</span>
+   tmux            <span class="hljs-comment">; an API for interacting with tmux</span>
+   upload          <span class="hljs-comment">; map local to remote projects via ssh/ftp</span>
+
+   :lang
+  <span class="hljs-comment">;assembly        ; assembly for fun or debugging</span>
+  <span class="hljs-comment">;cc              ; C/C++/Obj-C madness</span>
+  <span class="hljs-comment">;crystal         ; ruby at the speed of c</span>
+  <span class="hljs-comment">;csharp          ; unity, .NET, and mono shenanigans</span>
+  <span class="hljs-comment">;data            ; config/data formats</span>
+  <span class="hljs-comment">;elixir          ; erlang done right</span>
+  <span class="hljs-comment">;elm             ; care for a cup of TEA?</span>
+   emacs-lisp      <span class="hljs-comment">; drown in parentheses</span>
+  <span class="hljs-comment">;go              ; the hipster dialect</span>
+  <span class="hljs-comment">;haskell         ; a language that's lazier than I am</span>
+  <span class="hljs-comment">;hy              ; readability of scheme w/ speed of python</span>
+  <span class="hljs-comment">;java            ; the poster child for carpal tunnel syndrome</span>
+  <span class="hljs-comment">;javascript      ; all(hope(abandon(ye(who(enter(here))))))</span>
+  <span class="hljs-comment">;julia           ; a better, faster MATLAB</span>
+  <span class="hljs-comment">;latex           ; writing papers in Emacs has never been so fun</span>
+  <span class="hljs-comment">;ledger          ; an accounting system in Emacs</span>
+  <span class="hljs-comment">;lua             ; one-based indices? one-based indices</span>
+  <span class="hljs-comment">;markdown        ; writing docs for people to ignore</span>
+  <span class="hljs-comment">;ocaml           ; an objective camel</span>
+  <span class="hljs-comment">;perl            ; write code no one else can comprehend</span>
+  php             <span class="hljs-comment">; make php less awful to work with</span>
+  <span class="hljs-comment">;plantuml        ; diagrams for confusing people more</span>
+  <span class="hljs-comment">;purescript      ; javascript, but functional</span>
+  <span class="hljs-comment">;python          ; beautiful is better than ugly</span>
+  <span class="hljs-comment">;rest            ; Emacs as a REST client</span>
+  <span class="hljs-comment">;ruby            ; 1.step do {|i| p &quot;Ruby is #{i.even? ? 'love' : 'life'}&quot;}</span>
+  <span class="hljs-comment">;rust            ; Fe2O3.unwrap().unwrap().unwrap().unwrap()</span>
+  <span class="hljs-comment">;scala           ; java, but good</span>
+  <span class="hljs-comment">;sh              ; she sells (ba|z)sh shells on the C xor</span>
+  <span class="hljs-comment">;swift           ; who asked for emoji variables?</span>
+  <span class="hljs-comment">;typescript      ; javascript, but better</span>
+  <span class="hljs-comment">;web             ; the tubes</span>
+
+   :<span class="hljs-keyword">org
+</span>   <span class="hljs-keyword">org </span>            <span class="hljs-comment">; organize your plain life in plain text</span>
+   <span class="hljs-keyword">org-babel </span>      <span class="hljs-comment">; executable code snippets in org-mode</span>
+   <span class="hljs-keyword">org-attach </span>     <span class="hljs-comment">; a simpler attachment system</span>
+   <span class="hljs-keyword">org-capture </span>    <span class="hljs-comment">; a better org-capture, in or outside of Emacs</span>
+   <span class="hljs-keyword">org-export </span>     <span class="hljs-comment">; a custom, centralized export system</span>
+   <span class="hljs-keyword">org-notebook </span>   <span class="hljs-comment">; org-mode as a notebook</span>
+   <span class="hljs-keyword">org-present </span>    <span class="hljs-comment">; using org-mode for presentations</span>
+  <span class="hljs-comment">;org-sync        ; TODO sync with mobile</span>
+  <span class="hljs-comment">;org-publish     ; TODO org + blogs</span>
+
+   <span class="hljs-comment">;; Applications are complex and opinionated modules that transform Emacs</span>
+   <span class="hljs-comment">;; toward a specific purpose. They may have additional dependencies and</span>
+   <span class="hljs-comment">;; should be loaded last.</span>
+   :app
+   email           <span class="hljs-comment">; emacs as an email client</span>
+   irc             <span class="hljs-comment">; how neckbeards socialize</span>
+   rss             <span class="hljs-comment">; emacs as an RSS reader</span>
+   twitter         <span class="hljs-comment">; twitter client https://twitter.com/vnought</span>
+   write           <span class="hljs-comment">; emacs as a word processor (latex + org + markdown)</span>
+
+   <span class="hljs-comment">;; Private modules named after your username are loaded automatically.</span>
+   <span class="hljs-comment">;; Leaving this here is harmless though. Also, they are omitted from</span>
+   <span class="hljs-comment">;; source control (except for mine; use it as a reference).</span>
+   <span class="hljs-comment">;; original value: hlissner</span>
+   :private allforabit)
+
+    <span class="hljs-comment">#+END_SRC</span>
+
+    <span class="hljs-comment">#+RESULTS:</span>
+    : Doom modules initialized</pre><p><strong><em>*</em></strong> Private init</p>
+<p>#+BEGIN_SRC emacs-lisp :tangle &quot;~/Github/doom-emacs/modules/private/allforabit/init.el&quot; :mkdirp yes
+;;; private/hlissner/init.el -<em>- lexical-binding: t; -</em>-</p>
+<p>;; I've swapped these keys on my keyboard
+(setq x-super-keysym 'alt
+      x-alt-keysym   'meta</p>
+<pre>  <span class="hljs-keyword">user</span>-mail-address <span class="hljs-string">&quot;henrik@lissner.net&quot;</span>
+  <span class="hljs-keyword">user</span>-full-name    <span class="hljs-string">&quot;Henrik Lissner&quot;</span>)</pre><p>;; Org stuff
+(setq +org-dir &quot;~/Bitbucket/org/&quot;)
+(setq-default org-ellipsis &quot;…&quot;)</p>
+<p>(setq org-default-notes-file (concat +org-dir &quot;notes.org&quot;)
+      org-capture-templates
+      '((&quot;t&quot; &quot;Todo&quot; entry
+         (file+headline (expand-file-name &quot;gtd.org&quot; +org-dir) &quot;Inbox&quot;)
+         &quot;<em> [ ] %?\n%i&quot; :prepend t :kill-buffer t)
+        (&quot;c&quot; &quot;Code journal&quot; entry (file+olp+datetree &quot;~/Bitbucket/org/code.org&quot; &quot;Journal&quot;)
+         &quot;</em> %?\nEntered on %U\n  %i\n  %a&quot;
+         :jump-to-captured t)
+        (&quot;n&quot; &quot;Notes&quot; entry
+         (file+headline org-default-notes-file &quot;Inbox&quot;)
+         &quot;* %u %?\n%i&quot; :prepend t :kill-buffer t)))</p>
+<p>;; An extra measure to prevent the flash of unstyled mode-line while Emacs is
+;; booting up (when Doom is byte-compiled).
+(setq-default mode-line-format nil)</p>
+<p>(set! :font &quot;Source Code Pro&quot; :size 13)
+(set! :variable-font &quot;Georgia&quot; :size 13)
+(set! :unicode-font &quot;Symbola&quot; :size 13)</p>
+<p>#+END_SRC</p>
+<p>#+RESULTS:
+<strong><em>*</em></strong> Packages</p>
+<pre>    #+<span class="hljs-keyword">BEGIN_SRC </span>emacs-lisp :tangle  <span class="hljs-string">&quot;~/Github/doom-emacs/modules/private/allforabit/packages.el&quot;</span> :mkdirp yes</pre><p>(package! drupal-mode)</p>
+<pre>    <span class="hljs-comment">#+END_SRC</span>
+
+    <span class="hljs-comment">#+RESULTS:</span>
+    |<span class="hljs-string"> drupal-mode </span>|</pre><p><strong><em>*</em></strong> Config
+This is loaded last.</p>
+<p>#+NAME: doom-drupal</p>
+<p>#+BEGIN_SRC emacs-lisp </p>
+<p>#+END_SRC</p>
+<p>#+BEGIN_SRC emacs-lisp :tangle &quot;~/Github/doom-emacs/modules/private/allforabit/config.el&quot; :mkdirp yes
+;;; private/allforabit/config.el -<em>- lexical-binding: t; -</em>-</p>
+<p>;; Make it possible to add hashes and euro symbols
+(setq mac-right-option-modifier nil)
+;; from modules/completion/company/config.el
+;; Drupal mode</p>
+<p>(def-package! drupal-mode)</p>
+<p>(when (featurep! :feature evil)
+  (load! +bindings)  ; my key bindings
+  (load! +commands)) ; my custom ex commands</p>
+<p>(defvar +hlissner-dir (file-name-directory load-file-name))
+(defvar +hlissner-snippets-dir (expand-file-name &quot;snippets/&quot; +hlissner-dir))</p>
+<p>(setq epa-file-encrypt-to user-mail-address
+      auth-sources (list (expand-file-name &quot;.authinfo.gpg&quot; +hlissner-dir))
+      +doom-modeline-buffer-file-name-style 'relative-from-project)</p>
+<p>(defun +hlissner<em>no-authinfo-for-tramp (orig-fn &amp;rest args)
+  &quot;Don't look into .authinfo for local sudo TRAMP buffers.&quot;
+  (let ((auth-sources (if (equal tramp-current-method &quot;sudo&quot;) nil auth-sources)))
+    (apply orig-fn args)))
+(advice-add #'tramp-read-passwd :around #'+hlissner</em>no-authinfo-for-tramp)</p>
+<p>;;
+(after! smartparens
+  ;; Auto-close more conservatively
+  (let ((unless-list '(sp-point-before-word-p
+                       sp-point-after-word-p
+                       sp-point-before-same-p)))
+    (sp-pair &quot;'&quot;  nil :unless unless-list)
+    (sp-pair &quot;\&quot;&quot; nil :unless unless-list))
+  (sp-pair &quot;{&quot; nil :post-handlers '((&quot;||\n[i]&quot; &quot;RET&quot;) (&quot;| &quot; &quot; &quot;))
+           :unless '(sp-point-before-word-p sp-point-before-same-p))
+  (sp-pair &quot;(&quot; nil :post-handlers '((&quot;||\n[i]&quot; &quot;RET&quot;) (&quot;| &quot; &quot; &quot;))
+           :unless '(sp-point-before-word-p sp-point-before-same-p))
+  (sp-pair &quot;[&quot; nil :post-handlers '((&quot;| &quot; &quot; &quot;))
+           :unless '(sp-point-before-word-p sp-point-before-same-p)))</p>
+<p>;;
+(after! doom-themes
+  ;; Since Fira Mono doesn't have an italicized variant, highlight it instead
+  (set-face-attribute 'italic nil
+                      :weight 'ultra-light
+                      :foreground &quot;#ffffff&quot;
+                      :background (doom-color 'current-line)))</p>
+<p>(after! evil-mc
+  ;; if I'm in insert mode, chances are I want cursors to resume
+  (add-hook! 'evil-mc-before-cursors-created
+    (add-hook 'evil-insert-state-entry-hook #'evil-mc-resume-cursors nil t))
+  (add-hook! 'evil-mc-after-cursors-deleted
+    (remove-hook 'evil-insert-state-entry-hook #'evil-mc-resume-cursors t)))</p>
+<p>(after! evil-escape
+  (setq evil-escape-excluded-states '(normal visual multiedit emacs motion)
+        evil-escape-excluded-major-modes '(neotree-mode)
+        evil-escape-key-sequence &quot;fd&quot;
+        evil-escape-delay 0.25))</p>
+<p>;; Don't use default snippets, use mine.
+(after! yasnippet
+  (setq yas-snippet-dirs
+        (append (list '+hlissner-snippets-dir)
+                (delq 'yas-installed-snippets-dir yas-snippet-dirs))))</p>
+<p>;; app/irc
+;; (after! circe
+;;   (setq +irc-notifications-watch-strings '(&quot;v0&quot; &quot;vnought&quot; &quot;hlissner&quot;))</p>
+<p>;;   (set! :irc &quot;irc.snoonet.org&quot;
+;;     `(:tls t
+;;       :nick &quot;v0&quot;
+;;       :port 6697
+;;       :sasl-username ,(+pass-get-user &quot;irc/snoonet.org&quot;)
+;;       :sasl-password ,(+pass-get-secret &quot;irc/snoonet.org&quot;)
+;;       :channels (:after-auth &quot;#ynought&quot;))))</p>
+<p>;; app/email
+(after! mu4e
+  (setq smtpmail-stream-type 'starttls
+        smtpmail-default-smtp-server &quot;smtp.gmail.com&quot;
+        smtpmail-smtp-server &quot;smtp.gmail.com&quot;
+        smtpmail-smtp-service 587)</p>
+<p>  (set! :email &quot;gmail.com&quot;
+    '((mu4e-sent-folder       . &quot;/gmail.com/Sent Mail&quot;)
+      (mu4e-drafts-folder     . &quot;/gmail.com/Drafts&quot;)
+      (mu4e-trash-folder      . &quot;/gmail.com/Trash&quot;)
+      (mu4e-refile-folder     . &quot;/gmail.com/All Mail&quot;)
+      (smtpmail-smtp-user     . &quot;kevnolan&quot;)
+      (user-mail-address      . &quot;kevnolan@gmail.com&quot;)
+      (mu4e-compose-signature . &quot;---\nKevin Nolan&quot;)))
+  )</p>
+<pre>    <span class="hljs-meta">#+END_SRC</span></pre><p><strong><em>*</em></strong> TODO Bindings
+:PROPERTIES:
+:END:</p>
+<p>#+BEGIN_SRC emacs-lisp</p>
+<p>;; (org-element-map (org-element-parse-buffer) '(example-block src-block) #'identity)</p>
+<p>(defun unflatten (xs &amp;optional fn-value fn-level)
+  &quot;Unflatten a list XS into a tree, e.g. (1 2 3 1) =&gt; (1 (2 (3)) 1).
+FN-VALUE specifies how to extract the values from each element, which
+are included in the output tree, FN-LEVEL tells how to extract the
+level of each element. By default these are the `identity' function so
+it will work on a list of numbers.&quot;
+  (let* ((level 1)
+         (tree (cons nil nil))
+         (start tree)
+         (stack nil)
+         (fn-value (or fn-value #'identity))
+         (fn-level (or fn-level #'identity)))
+    (dolist (x xs)
+      (let ((x-value (funcall fn-value x))
+            (x-level (funcall fn-level x)))
+        (cond ((&gt; x-level level)
+               (setcdr tree (cons (cons x-value nil) nil))
+               (setq tree (cdr tree))
+               (push tree stack)
+               (setq tree (car tree))
+               (setq level x-level))
+              ((= x-level level)
+               (setcdr tree (cons x-value nil))
+               (setq tree (cdr tree)))
+              ((&lt; x-level level)
+               (while (&lt; x-level level)
+                 (setq tree (pop stack))
+                 (setq level (- level 1)))
+               (setcdr tree (cons x-value nil))
+               (setq tree (cdr tree))
+               (setq level x-level)))))
+      (cdr start)))</p>
+<p>; eg (unflatten '(1 2 3 2 3 4)) =&gt; '(1 (2 (3) 2 (3 (4))))</p>
+<p>(defun org-get-header-list (&amp;optional buffer) 
+  &quot;Get the headers of an org buffer as a flat list of headers and levels.
+Buffer will default to the current buffer.&quot;
+  (interactive)
+  (with-current-buffer (or buffer (current-buffer))
+    (let ((tree (org-element-parse-buffer 'headline)))
+      (org-element-map 
+          tree 
+          'headline
+        (lambda (el) (list 
+                 (org-element-property :raw-value el) ; get header title without tags etc
+                 (org-element-property :level el) ; get depth
+                 (org-element-property :F el)
+                 (org-element-property :K el)
+                 ;; &gt;&gt; could add other properties here
+                 )) nil nil '(headline)))))</p>
+<p>; eg (org-get-header-list) =&gt; ((&quot;pok&quot; 1) (&quot;lkm&quot; 1) ((&quot;cedar&quot; 2) (&quot;yr&quot; 2)) (&quot;kjn&quot; 1))</p>
+<p>(defun org-get-header-tree (&amp;optional buffer)
+  &quot;Get the headers of the given org buffer as a tree.&quot;
+  (interactive)
+  (let* ((headers (org-get-header-list buffer))
+         (header-tree (unflatten headers<br />                 (lambda (hl) (list (car hl) (nth 2 hl) (nth 3 hl)))  ; extract information to include in tree
+                 (lambda (hl) (cadr hl))
+)))  ; extract item level
+    header-tree))</p>
+<p>(org-get-header-tree)</p>
+<p>#+END_SRC</p>
+<p>#+RESULTS:
+| Introduction [0/1] | nil | nil |
+| Gui apps           | nil | nil |
+| Commandline apps   | nil | nil |
+| Installation       | nil | nil |</p>
+<p>#+BEGIN_SRC emacs-lisp
+(org-element-map (org-element-parse-buffer) 'paragraph
+  (lambda (paragraph)
+    (let ((parent (org-element-property :parent paragraph)))
+      (and (eq (org-element-type parent) 'section)
+           (let ((first-child (car (org-element-contents parent))))
+             (eq first-child paragraph))
+           ;; Return value.
+           paragraph))))</p>
+<p>#+END_SRC</p>
+<p>#+RESULTS:
+| paragraph | (:begin 1 :end 47 :contents-begin 1 :contents-end 47 :post-blank 0 :post-affiliated 1 :parent (section (:begin 1 :end 47 :contents-begin 1 :contents-end 47 :post-blank 0 :post-affiliated 1 :parent (org-data nil #1 (headline (:raw-value Introduction [0/1] :begin 47 :end 815 :pre-blank 0 :contents-begin 68 :contents-end 814 :level 1 :priority nil :tags nil :todo-keyword nil :todo-type nil :post-blank 1 :footnote-section-p nil :archivedp nil :commentedp nil :post-affiliated 47 :title (Introduction  (statistics-cookie (:begin 62 :end 67 :value [0/1] :post-blank 0 :parent #4))) :parent #3) (section (:begin 68 :end 815 :contents-begin 68 :contents-end 814 :post-blank 1 :post-affiliated 68 :parent #4) (drawer (:begin 68 :end 102 :drawer-name todo :contents-begin 75 :contents-end 96 :post-blank 0 :post-affiliated 68 :parent #5) (plain-list (:type unordered :begin 75 :end 96 :contents-begin 75 :contents-end 96 :structure ((75 1 -  nil [ ] nil 96)) :post-blank 0 :post-affiliated 75 :parent #6) (item (:bullet -  :begin 75 :end 96 :contents-begin 82 :contents-end 96 :checkbox off :counter nil :structure ((75 1 -  nil [ ] nil 96)) :post-blank 0 :post-affiliated 75 :tag nil :parent #7) (paragraph (:begin 82 :end 96 :contents-begin 82 :contents-end 96 :post-blank 0 :post-affiliated 82 :parent #8) Fix doom link |</p>
+<p>#+BEGIN_SRC emacs-lisp
+(save-excursion
+  (outline-up-heading 1) 
+  (org-element-map (org-element-parse-buffer) 'section
+     (lambda (section)
+          (org-element-property :value section))))</p>
+<p>#+END_SRC</p>
+<p>#+RESULTS:
+<strong><em>**</em></strong> TODO Global 
+<strong><em>**</em></strong> TODO Leader 
+<strong><strong>*</strong></strong> TODO TAB :tab_key:
+:PROPERTIES:
+:K: tab
+:F: spacemacs/buffer-alternate
+:END:</p>
+<p><strong><em>**</em></strong> Raw </p>
+<p>#+BEGIN_SRC emacs-lisp :tangle  &quot;~/Github/doom-emacs/modules/private/allforabit/+bindings.el&quot; :mkdirp yes</p>
+<p>;;; private/hlissner/+bindings.el -<em>- lexical-binding: t; -</em>-</p>
+<p>(defmacro find-file-in! (path &amp;optional project-p)
+  &quot;Returns an interactive function for searching files.&quot;
+  `(lambda () (interactive)
+     (let ((default-directory ,path))
+       (call-interactively
+        ',(command-remapping
+           (if project-p</p>
+<pre>           #<span class="hljs-symbol">'projectile</span>-find-<span class="hljs-keyword">file</span>
+         #<span class="hljs-symbol">'find</span>-<span class="hljs-keyword">file</span>))))))</pre><p>(map!
+ [remap evil-jump-to-tag] #'projectile-find-tag
+ [remap find-tag]         #'projectile-find-tag
+ ;; ensure there are no conflicts
+ :nmvo doom-leader-key nil
+ :nmvo doom-localleader-key nil)</p>
+<p>(defun spacemacs/helm-jump-in-buffer ()
+  &quot;Jump in buffer using `imenu' facilities and helm.&quot;
+  (interactive)
+  (call-interactively
+   (cond
+    ((eq major-mode 'org-mode) 'helm-org-in-buffer-headings)
+    (t 'helm-semantic-or-imenu))))</p>
+<p>(defun spacemacs/alternate-buffer (&amp;optional window)
+  &quot;Switch back and forth between current and last buffer in the
+current window.&quot;
+  (interactive)
+  (let ((current-buffer (window-buffer window)))
+    ;; if no window is found in the windows history, <code>switch-to-buffer' will
+    ;; default to calling</code>other-buffer'.
+    (switch-to-buffer
+     (cl-find-if (lambda (buffer)
+                   (not (eq buffer current-buffer)))
+                 (mapcar #'car (window-prev-buffers window))))))</p>
+<p>(map!
+ ;; --- Global keybindings ---------------------------
+ ;; Make M-x available everywhere
+ :nvime &quot;M-x&quot; #'execute-extended-command
+ :nvime &quot;A-x&quot; #'execute-extended-command
+ ;; Emacs debug utilities
+ &quot;M-;&quot;        #'eval-expression
+ :nvime &quot;M-;&quot; #'eval-expression
+ &quot;M-:&quot;        #'doom/open-scratch-buffer
+ :nvime &quot;M-:&quot; #'doom/open-scratch-buffer
+ ;; Text-scaling
+ &quot;M-+&quot;    (λ! (text-scale-set 0))
+ &quot;M-=&quot;    #'text-scale-increase
+ &quot;M--&quot;    #'text-scale-decrease
+ ;; Simple window navigation/manipulation
+ &quot;C-`&quot;    #'doom/popup-toggle
+ &quot;C-~&quot;    #'doom/popup-raise
+ &quot;M-t&quot;    #'+workspace/new
+ &quot;M-T&quot;    #'+workspace/display
+ &quot;M-w&quot;    #'delete-window
+ &quot;M-W&quot;    #'+workspace/close-workspace-or-frame
+ &quot;M-n&quot;    #'evil-buffer-new
+ &quot;M-N&quot;    #'make-frame
+ &quot;M-1&quot;    (λ! (+workspace/switch-to 0))
+ &quot;M-2&quot;    (λ! (+workspace/switch-to 1))
+ &quot;M-3&quot;    (λ! (+workspace/switch-to 2))
+ &quot;M-4&quot;    (λ! (+workspace/switch-to 3))
+ &quot;M-5&quot;    (λ! (+workspace/switch-to 4))
+ &quot;M-6&quot;    (λ! (+workspace/switch-to 5))
+ &quot;M-7&quot;    (λ! (+workspace/switch-to 6))
+ &quot;M-8&quot;    (λ! (+workspace/switch-to 7))
+ &quot;M-9&quot;    (λ! (+workspace/switch-to 8))
+ &quot;M-0&quot;    #'+workspace/switch-to-last
+ ;; Other sensible, textmate-esque global bindings
+ &quot;M-r&quot;    #'+eval/buffer
+ &quot;M-R&quot;    #'+eval/region-and-replace
+ &quot;M-b&quot;    #'+eval/build
+ &quot;M-a&quot;    #'mark-whole-buffer
+ &quot;M-c&quot;    #'evil-yank
+ &quot;M-q&quot;    (if (daemonp) #'delete-frame #'save-buffers-kill-emacs)
+ &quot;M-s&quot;    #'save-buffer
+ &quot;M-v&quot;    #'clipboard-yank
+ &quot;M-f&quot;    #'helm-swoop
+ &quot;C-M-f&quot;  #'doom/toggle-fullscreen
+ :m &quot;A-j&quot; #'+hlissner:multi-next-line
+ :m &quot;A-k&quot; #'+hlissner:multi-previous-line
+ :nv &quot;C-SPC&quot; #'+evil:fold-toggle
+ ;; Easier window navigation
+ ;; :en &quot;C-h&quot;    #'evil-window-left
+ ;; :en &quot;C-j&quot;    #'evil-window-down
+ ;; :en &quot;C-k&quot;    #'evil-window-up
+ ;; :en &quot;C-l&quot;    #'evil-window-right</p>
+<p> (:prefix &quot;C-x&quot;
+   &quot;p&quot; #'doom/other-popup)</p>
+<p> ;; ---  -------------------------------------
+ (:leader
+   :desc &quot;Ex command&quot;  :nv &quot;;&quot;   #'evil-ex
+   :desc &quot;M-x&quot;         :nv &quot;:&quot;   #'execute-extended-command
+   :desc &quot;Pop up scratch buffer&quot;   :nv &quot;x&quot;  #'doom/open-scratch-buffer
+   :desc &quot;Org Capture&quot;             :nv &quot;X&quot;  #'+org-capture/open</p>
+<p>   ;; Most commonly used
+   :desc &quot;Find file in project&quot;    :n &quot;SPC&quot; #'execute-extended-command
+   :desc &quot;Switch workspace buffer&quot; :n &quot;,&quot;   #'persp-switch-to-buffer
+   :desc &quot;Switch buffer&quot;           :n &quot;&lt;&quot;   #'switch-to-buffer
+   :desc &quot;Browse files&quot;            :n &quot;.&quot;   #'find-file
+   :desc &quot;Toggle last popup&quot;       :n &quot;~&quot;   #'doom/popup-toggle
+   :desc &quot;Eval expression&quot;         :n &quot;`&quot;   #'eval-expression
+   :desc &quot;Blink cursor line&quot;       :n &quot;DEL&quot; #'+doom/blink-cursor
+   :desc &quot;Jump to bookmark&quot;        :n &quot;RET&quot; #'bookmark-jump</p>
+<p>   :desc &quot;Jump to bookmark&quot;        :n &quot;'&quot; #'+eshell/open-popup</p>
+<p>   ;; C-u is used by evil
+   :desc &quot;Universal argument&quot;    :n &quot;u&quot;  #'universal-argument
+   :desc &quot;window&quot;                :n &quot;w&quot;  evil-window-map</p>
+<p>   :desc &quot;Switch to 1st workspace&quot;  :n &quot;1&quot;   (λ! (+workspace/switch-to 0))
+   :desc &quot;Switch to 2nd workspace&quot;  :n &quot;2&quot;   (λ! (+workspace/switch-to 1))
+   :desc &quot;Switch to 3rd workspace&quot;  :n &quot;3&quot;   (λ! (+workspace/switch-to 2))
+   :desc &quot;Switch to 4th workspace&quot;  :n &quot;4&quot;   (λ! (+workspace/switch-to 3))
+   :desc &quot;Switch to 5th workspace&quot;  :n &quot;5&quot;   (λ! (+workspace/switch-to 4))
+   :desc &quot;Switch to 6th workspace&quot;  :n &quot;6&quot;   (λ! (+workspace/switch-to 5))
+   :desc &quot;Switch to 7th workspace&quot;  :n &quot;7&quot;   (λ! (+workspace/switch-to 6))
+   :desc &quot;Switch to 8th workspace&quot;  :n &quot;8&quot;   (λ! (+workspace/switch-to 7))
+   :desc &quot;Switch to 9th workspace&quot;  :n &quot;9&quot;   (λ! (+workspace/switch-to 8))
+   :desc &quot;Switch to last workspace&quot; :n &quot;0&quot;   #'+workspace/switch-to-last</p>
+<p>   :desc &quot;Switch to last buffer&quot; :n &quot;TAB&quot;   #'spacemacs/alternate-buffer</p>
+<p>   (:desc &quot;previous...&quot; :prefix &quot;[&quot;
+     :desc &quot;Text size&quot;           :nv &quot;[&quot; #'text-scale-decrease
+     :desc &quot;Buffer&quot;              :nv &quot;b&quot; #'doom/previous-buffer
+     :desc &quot;Diff Hunk&quot;           :nv &quot;d&quot; #'git-gutter:previous-hunk
+     :desc &quot;Todo&quot;                :nv &quot;t&quot; #'hl-todo-previous
+     :desc &quot;Error&quot;               :nv &quot;e&quot; #'previous-error
+     :desc &quot;Workspace&quot;           :nv &quot;w&quot; #'+workspace/switch-left
+     :desc &quot;Smart jump&quot;          :nv &quot;h&quot; #'smart-backward
+     :desc &quot;Spelling error&quot;      :nv &quot;s&quot; #'evil-prev-flyspell-error
+     :desc &quot;Spelling correction&quot; :n  &quot;S&quot; #'flyspell-correct-previous-word-generic)</p>
+<p>   (:desc &quot;next...&quot; :prefix &quot;]&quot;
+     :desc &quot;Text size&quot;           :nv &quot;]&quot; #'text-scale-increase
+     :desc &quot;Buffer&quot;              :nv &quot;b&quot; #'doom/next-buffer
+     :desc &quot;Diff Hunk&quot;           :nv &quot;d&quot; #'git-gutter:next-hunk
+     :desc &quot;Todo&quot;                :nv &quot;t&quot; #'hl-todo-next
+     :desc &quot;Error&quot;               :nv &quot;e&quot; #'next-error
+     :desc &quot;Workspace&quot;           :nv &quot;w&quot; #'+workspace/switch-right
+     :desc &quot;Smart jump&quot;          :nv &quot;l&quot; #'smart-forward
+     :desc &quot;Spelling error&quot;      :nv &quot;s&quot; #'evil-next-flyspell-error
+     :desc &quot;Spelling correction&quot; :n  &quot;S&quot; #'flyspell-correct-word-generic)</p>
+<p>   (:desc &quot;buffer&quot; :prefix &quot;b&quot;
+     :desc &quot;New empty buffer&quot;        :n &quot;n&quot; #'evil-buffer-new
+     :desc &quot;Switch workspace buffer&quot; :n &quot;b&quot; #'persp-switch-to-buffer
+     :desc &quot;Switch buffer&quot;           :n &quot;B&quot; #'switch-to-buffer
+     :desc &quot;Kill buffer&quot;             :n &quot;d&quot; #'doom/kill-this-buffer
+     :desc &quot;Kill buffer&quot;             :n &quot;k&quot; #'doom/kill-this-buffer
+     :desc &quot;Kill other buffers&quot;      :n &quot;o&quot; #'doom/kill-other-buffers
+     :desc &quot;Save buffer&quot;             :n &quot;s&quot; #'save-buffer
+     :desc &quot;Pop scratch buffer&quot;      :n &quot;x&quot; #'doom/open-scratch-buffer
+     :desc &quot;Bury buffer&quot;             :n &quot;z&quot; #'bury-buffer
+     :desc &quot;Next buffer&quot;             :n &quot;]&quot; #'doom/next-buffer
+     :desc &quot;Previous buffer&quot;         :n &quot;[&quot; #'doom/previous-buffer
+     :desc &quot;Sudo edit this file&quot;     :n &quot;S&quot; #'doom/sudo-this-file)</p>
+<p>   (:desc &quot;code&quot; :prefix &quot;c&quot;
+     :desc &quot;List errors&quot;               :n  &quot;x&quot; #'flycheck-list-errors
+     :desc &quot;Evaluate buffer/region&quot;    :n  &quot;e&quot; #'+eval/buffer
+                                       :v  &quot;e&quot; #'+eval/region
+     :desc &quot;Evaluate &amp; replace region&quot; :nv &quot;E&quot; #'+eval:replace-region
+     :desc &quot;Build tasks&quot;               :nv &quot;b&quot; #'+eval/build
+     :desc &quot;Jump to definition&quot;        :n  &quot;d&quot; #'+jump/definition
+     :desc &quot;Jump to references&quot;        :n  &quot;D&quot; #'+jump/references
+     :desc &quot;Open REPL&quot;                 :n  &quot;r&quot; #'+eval/open-repl
+                                       :v  &quot;r&quot; #'+eval:repl)</p>
+<p>   (:desc &quot;code&quot; :prefix &quot;e&quot;
+     :desc &quot;Revert buffer&quot;               :n  &quot;x&quot; #'revert-buffer)</p>
+<p>   (:desc &quot;file&quot; :prefix &quot;f&quot;
+     :desc &quot;File file&quot;                 :n &quot;f&quot; #'find-file
+     :desc &quot;Save file&quot;                 :n &quot;s&quot; #'save-buffer
+     :desc &quot;Sudo find file&quot;            :n &quot;&gt;&quot; #'doom/sudo-find-file
+     :desc &quot;Find file in project&quot;      :n &quot;/&quot; #'projectile-find-file
+     :desc &quot;Find file from here&quot;       :n &quot;?&quot; #'counsel-file-jump
+     :desc &quot;Find other file&quot;           :n &quot;a&quot; #'projectile-find-other-file
+     :desc &quot;Open project editorconfig&quot; :n &quot;c&quot; #'editorconfig-find-current-editorconfig
+     :desc &quot;Find file in dotfiles&quot;     :n &quot;d&quot; #'+hlissner/find-in-dotfiles
+     :desc &quot;Browse dotfiles&quot;           :n &quot;D&quot; #'+hlissner/browse-dotfiles
+     :desc &quot;Find file in emacs.d&quot;      :n &quot;e&quot; #'+hlissner/find-in-emacsd
+     :desc &quot;Browse emacs.d&quot;            :n &quot;E&quot; #'+hlissner/browse-emacsd
+     :desc &quot;Recent files&quot;              :n &quot;r&quot; #'helm-recentf
+     :desc &quot;Recent project files&quot;      :n &quot;R&quot; #'projectile-recentf
+     :desc &quot;Yank filename&quot;             :n &quot;y&quot; #'+hlissner/yank-buffer-filename)</p>
+<p>   (:desc &quot;git&quot; :prefix &quot;g&quot;
+     :desc &quot;Git status&quot;        :n  &quot;S&quot; #'magit-status
+     :desc &quot;Git blame&quot;         :n  &quot;b&quot; #'magit-blame
+     :desc &quot;Git time machine&quot;  :n  &quot;t&quot; #'git-timemachine-toggle
+     :desc &quot;Git stage hunk&quot;    :n  &quot;s&quot; #'git-gutter:stage-hunk
+     :desc &quot;Git revert hunk&quot;   :n  &quot;r&quot; #'git-gutter:revert-hunk
+     :desc &quot;Git revert buffer&quot; :n  &quot;R&quot; #'vc-revert
+     :desc &quot;List gists&quot;        :n  &quot;g&quot; #'+gist:list
+     :desc &quot;Next hunk&quot;         :nv &quot;]&quot; #'git-gutter:next-hunk
+     :desc &quot;Previous hunk&quot;     :nv &quot;[&quot; #'git-gutter:previous-hunk)</p>
+<p>   (:desc &quot;help&quot; :prefix &quot;h&quot;
+     :n &quot;h&quot; help-map
+     :desc &quot;Apropos&quot;               :n &quot;a&quot; #'apropos
+     :desc &quot;Reload theme&quot;          :n &quot;R&quot; #'doom/reload-theme
+     :desc &quot;Find library&quot;          :n &quot;l&quot; #'find-library
+     :desc &quot;Toggle Emacs log&quot;      :n &quot;m&quot; #'doom/popup-toggle-messages
+     :desc &quot;Command log&quot;           :n &quot;L&quot; #'global-command-log-mode
+     :desc &quot;Describe function&quot;     :n &quot;f&quot; #'describe-function
+     :desc &quot;Describe key&quot;          :n &quot;k&quot; #'describe-key
+     :desc &quot;Describe char&quot;         :n &quot;c&quot; #'describe-char
+     :desc &quot;Describe mode&quot;         :n &quot;M&quot; #'describe-mode
+     :desc &quot;Describe variable&quot;     :n &quot;v&quot; #'describe-variable
+     :desc &quot;Describe face&quot;         :n &quot;F&quot; #'describe-face
+     :desc &quot;Describe DOOM setting&quot; :n &quot;s&quot; #'doom/describe-setting
+     :desc &quot;Describe DOOM module&quot;  :n &quot;d&quot; #'doom/describe-module
+     :desc &quot;Find definition&quot;       :n &quot;.&quot; #'+jump/definition
+     :desc &quot;Find references&quot;       :n &quot;/&quot; #'+jump/references
+     :desc &quot;Find documentation&quot;    :n &quot;h&quot; #'+jump/documentation
+     :desc &quot;What face&quot;             :n &quot;'&quot; #'doom/what-face
+     :desc &quot;What minor modes&quot;      :n &quot;;&quot; #'doom/what-minor-mode
+     :desc &quot;Info&quot;                  :n &quot;i&quot; #'info
+     :desc &quot;Toggle profiler&quot;       :n &quot;p&quot; #'doom/toggle-profiler)</p>
+<p>   (:desc &quot;insert&quot; :prefix &quot;i&quot;
+     :desc &quot;From kill-ring&quot; :nv &quot;y&quot; #'counsel-yank-pop
+     :desc &quot;From snippet&quot;   :nv &quot;s&quot; #'yas-insert-snippet)</p>
+<p>   (:desc &quot;insert&quot; :prefix &quot;j&quot;
+     :desc &quot;Jump in&quot; :nv &quot;i&quot; #'spacemacs/helm-jump-in-buffer)</p>
+<p>   ;; Change to spacemacs prefix
+   (:desc &quot;workspace&quot; :prefix &quot;l&quot;
+     :desc &quot;Display tab bar&quot;          :n &quot;TAB&quot; #'+workspace/display
+     :desc &quot;New workspace&quot;            :n &quot;n&quot;   #'+workspace/new
+     :desc &quot;Restore workspace from file&quot; :n &quot;r&quot;   #'+workspace/load
+     :desc &quot;Restore last session&quot;        :n &quot;R&quot;   (λ! (+workspace/load-session))
+     :desc &quot;Save workspace to file&quot;   :n &quot;s&quot;   #'+workspace/save
+     :desc &quot;Autosave current session&quot; :n &quot;S&quot;   #'+workspace/save-session
+     :desc &quot;Switch workspace&quot;         :n &quot;l&quot;   #'+workspace/switch-to
+     :desc &quot;Kill all buffers&quot;         :n &quot;x&quot;   #'doom/kill-all-buffers
+     :desc &quot;Delete session&quot;           :n &quot;X&quot;   #'+workspace/kill-session
+     :desc &quot;Delete this workspace&quot;    :n &quot;d&quot;   #'+workspace/delete
+     :desc &quot;Load session&quot;             :n &quot;L&quot;   #'+workspace/load-session
+     :desc &quot;Next workspace&quot;           :n &quot;]&quot;   #'+workspace/switch-right
+     :desc &quot;Previous workspace&quot;       :n &quot;[&quot;   #'+workspace/switch-left
+     :desc &quot;Switch to 1st workspace&quot;  :n &quot;1&quot;   (λ! (+workspace/switch-to 0))
+     :desc &quot;Switch to 2nd workspace&quot;  :n &quot;2&quot;   (λ! (+workspace/switch-to 1))
+     :desc &quot;Switch to 3rd workspace&quot;  :n &quot;3&quot;   (λ! (+workspace/switch-to 2))
+     :desc &quot;Switch to 4th workspace&quot;  :n &quot;4&quot;   (λ! (+workspace/switch-to 3))
+     :desc &quot;Switch to 5th workspace&quot;  :n &quot;5&quot;   (λ! (+workspace/switch-to 4))
+     :desc &quot;Switch to 6th workspace&quot;  :n &quot;6&quot;   (λ! (+workspace/switch-to 5))
+     :desc &quot;Switch to 7th workspace&quot;  :n &quot;7&quot;   (λ! (+workspace/switch-to 6))
+     :desc &quot;Switch to 8th workspace&quot;  :n &quot;8&quot;   (λ! (+workspace/switch-to 7))
+     :desc &quot;Switch to 9th workspace&quot;  :n &quot;9&quot;   (λ! (+workspace/switch-to 8))
+     :desc &quot;Switch to last workspace&quot; :n &quot;0&quot;   #'+workspace/switch-to-last)</p>
+<p>   (:desc &quot;notes&quot; :prefix &quot;n&quot;
+     :desc &quot;Find file in notes&quot;    :n &quot;n&quot; #'+hlissner/find-in-notes
+     :desc &quot;Browse notes&quot;          :n &quot;N&quot; #'+hlissner/browse-notes
+     :desc &quot;Org capture&quot;           :n &quot;x&quot; #'+org-capture/open
+     :desc &quot;Browse mode notes&quot;     :n &quot;m&quot; #'+org/browse-notes-for-major-mode
+     :desc &quot;Browse project notes&quot;  :n &quot;p&quot; #'+org/browse-notes-for-project)</p>
+<p>   (:desc &quot;open&quot; :prefix &quot;o&quot;
+     :desc &quot;Default browser&quot;     :n  &quot;b&quot; #'browse-url-of-file
+     :desc &quot;Debugger&quot;            :n  &quot;d&quot; #'+debug/open
+     :desc &quot;REPL&quot;                :n  &quot;r&quot; #'+eval/open-repl
+                                 :v  &quot;r&quot; #'+eval:repl
+     :desc &quot;Neotree&quot;             :n  &quot;n&quot; #'+neotree/toggle
+     :desc &quot;Terminal&quot;            :n  &quot;t&quot; #'+term/open-popup
+     :desc &quot;Terminal in project&quot; :n  &quot;T&quot; #'+term/open-popup-in-project</p>
+<pre> ;; applications
+ <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;APP: elfeed&quot;</span>  <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;E&quot;</span> <span class="hljs-comment">#'=rss</span>
+ <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;APP: email&quot;</span>   <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;M&quot;</span> <span class="hljs-comment">#'=email</span>
+ <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;APP: twitter&quot;</span> <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;T&quot;</span> <span class="hljs-comment">#'=twitter</span>
+ <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;APP: regex&quot;</span>   <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;X&quot;</span> <span class="hljs-comment">#'=regex</span>
+
+ ;; macos
+ (<span class="hljs-symbol">:when</span> IS-MAC
+   <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;Reveal in Finder&quot;</span>          <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;o&quot;</span> <span class="hljs-comment">#'+macos/reveal-in-finder</span>
+   <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;Reveal project in Finder&quot;</span>  <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;O&quot;</span> <span class="hljs-comment">#'+macos/reveal-project-in-finder</span>
+   <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;Send to Transmit&quot;</span>          <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;u&quot;</span> <span class="hljs-comment">#'+macos/send-to-transmit</span>
+   <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;Send project to Transmit&quot;</span>  <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;U&quot;</span> <span class="hljs-comment">#'+macos/send-project-to-transmit</span>
+   <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;Send to Launchbar&quot;</span>         <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;l&quot;</span> <span class="hljs-comment">#'+macos/send-to-launchbar</span>
+   <span class="hljs-symbol">:desc</span> <span class="hljs-string">&quot;Send project to Launchbar&quot;</span> <span class="hljs-symbol">:n</span> <span class="hljs-string">&quot;L&quot;</span> <span class="hljs-comment">#'+macos/send-project-to-launchbar))</span></pre><p>   (:desc &quot;project&quot; :prefix &quot;p&quot;
+     :desc &quot;Browse project&quot;          :n  &quot;.&quot; (find-file-in! (doom-project-root))
+     :desc &quot;Find file in project&quot;    :n  &quot;/&quot; #'projectile-find-file
+     :desc &quot;Run cmd in project root&quot; :nv &quot;!&quot; #'projectile-run-shell-command-in-root
+     :desc &quot;Switch project&quot;          :n  &quot;p&quot; #'projectile-switch-project
+     :desc &quot;Recent project files&quot;    :n  &quot;r&quot; #'projectile-recentf
+     :desc &quot;List project tasks&quot;      :n  &quot;t&quot; #'+ivy/tasks
+     :desc &quot;Pop term in project&quot;     :n  &quot;o&quot; #'+term/open-popup-in-project
+     :desc &quot;Invalidate cache&quot;        :n  &quot;x&quot; #'projectile-invalidate-cache)</p>
+<p>   (:desc &quot;quit&quot; :prefix &quot;q&quot;
+     :desc &quot;Quit&quot;                    :n &quot;q&quot; #'evil-save-and-quit
+     :desc &quot;Quit (forget session)&quot;   :n &quot;Q&quot; #'+workspace/kill-session-and-quit)</p>
+<p>   (:desc &quot;remote&quot; :prefix &quot;r&quot;
+     :desc &quot;Upload local&quot;           :n &quot;u&quot; #'+upload/local
+     :desc &quot;Upload local (force)&quot;   :n &quot;U&quot; (λ! (+upload/local t))
+     :desc &quot;Download remote&quot;        :n &quot;d&quot; #'+upload/remote-download
+     :desc &quot;Diff local &amp; remote&quot;    :n &quot;D&quot; #'+upload/diff
+     :desc &quot;Browse remote files&quot;    :n &quot;.&quot; #'+upload/browse
+     :desc &quot;Detect remote changes&quot;  :n &quot;&gt;&quot; #'+upload/check-remote)</p>
+<p>   (:desc &quot;search&quot; :prefix &quot;s&quot;
+     :desc &quot;Helm swoop&quot;                :nv &quot;s&quot; #'helm-swoop)</p>
+<p>   ;; (:desc &quot;snippets&quot; :prefix &quot;s&quot;
+   ;;   :desc &quot;New snippet&quot;           :n  &quot;n&quot; #'yas-new-snippet
+   ;;   :desc &quot;Insert snippet&quot;        :nv &quot;i&quot; #'yas-insert-snippet
+   ;;   :desc &quot;Find snippet for mode&quot; :n  &quot;s&quot; #'yas-visit-snippet-file
+   ;;   :desc &quot;Find snippet&quot;          :n  &quot;S&quot; #'+hlissner/find-in-snippets)</p>
+<p>   (:desc &quot;toggle&quot; :prefix &quot;t&quot;
+     :desc &quot;Flyspell&quot;               :n &quot;s&quot; #'flyspell-mode
+     :desc &quot;Flycheck&quot;               :n &quot;f&quot; #'flycheck-mode
+     :desc &quot;Line numbers&quot;           :n &quot;l&quot; #'doom/toggle-line-numbers
+     :desc &quot;Fullscreen&quot;             :n &quot;f&quot; #'doom/toggle-fullscreen
+     :desc &quot;Indent guides&quot;          :n &quot;i&quot; #'highlight-indentation-mode
+     :desc &quot;Indent guides (column)&quot; :n &quot;I&quot; #'highlight-indentation-current-column-mode
+     :desc &quot;Impatient mode&quot;         :n &quot;h&quot; #'+impatient-mode/toggle
+     :desc &quot;Big mode&quot;               :n &quot;b&quot; #'doom-big-font-mode
+     :desc &quot;Evil goggles&quot;           :n &quot;g&quot; #'+evil-goggles/toggle))</p>
+<p> ;; --- Personal vim-esque bindings ------------------
+ :n  &quot;zx&quot; #'doom/kill-this-buffer
+ :n  &quot;ZX&quot; #'bury-buffer
+ :n  &quot;]b&quot; #'doom/next-buffer
+ :n  &quot;[b&quot; #'doom/previous-buffer
+ :n  &quot;]w&quot; #'+workspace/switch-right
+ :n  &quot;[w&quot; #'+workspace/switch-left
+ :m  &quot;gt&quot; #'+workspace/switch-right
+ :m  &quot;gT&quot; #'+workspace/switch-left
+ :m  &quot;gd&quot; #'+jump/definition
+ :m  &quot;gD&quot; #'+jump/references
+ :m  &quot;gh&quot; #'+jump/documentation
+ :n  &quot;gp&quot; #'+evil/reselect-paste
+ :n  &quot;gr&quot; #'+eval:region
+ :n  &quot;gR&quot; #'+eval/buffer
+ :v  &quot;gR&quot; #'+eval:replace-region
+ :v  &quot;@&quot;  #'+evil:macro-on-all-lines
+ :n  &quot;g@&quot; #'+evil:macro-on-all-lines
+ ;; repeat in visual mode (FIXME buggy)
+ :v  &quot;.&quot;  #'evil-repeat
+ ;; don't leave visual mode after shifting
+ :v  &quot;&lt;&quot;  #'+evil/visual-dedent  ; vnoremap &lt; &lt;gv
+ :v  &quot;&gt;&quot;  #'+evil/visual-indent  ; vnoremap &gt; &gt;gv
+ ;; paste from recent yank register (which isn't overwritten)
+ :v  &quot;C-p&quot; &quot;\&quot;0p&quot;</p>
+<p> (:map evil-window-map ; prefix &quot;C-w&quot;
+   ;; Navigation
+   &quot;C-h&quot;     #'evil-window-left
+   &quot;C-j&quot;     #'evil-window-down
+   &quot;C-k&quot;     #'evil-window-up
+   &quot;C-l&quot;     #'evil-window-right
+   &quot;C-w&quot;     #'ace-window
+   ;; Swapping windows
+   &quot;H&quot;       #'+evil/window-move-left
+   &quot;J&quot;       #'+evil/window-move-down
+   &quot;K&quot;       #'+evil/window-move-up
+   &quot;L&quot;       #'+evil/window-move-right
+   &quot;C-S-w&quot;   #'ace-swap-window
+   ;; Window undo/redo
+   &quot;u&quot;       #'winner-undo
+   &quot;C-u&quot;     #'winner-undo
+   &quot;C-r&quot;     #'winner-redo
+   &quot;o&quot;       #'doom/window-enlargen
+   ;; Delete window
+   &quot;d&quot;       #'+workspace/close-window-or-workspace
+   &quot;D&quot;     #'ace-delete-window)</p>
+<p> ;; --- Plugin bindings ------------------------------
+ ;; auto-yasnippet
+ :i  [C-tab] #'aya-expand
+ :nv [C-tab] #'aya-create</p>
+<p> ;; company-mode (vim-like omnicompletion)
+ :i &quot;C-SPC&quot;  #'+company/complete
+ (:prefix &quot;C-x&quot;
+   :i &quot;C-l&quot;   #'+company/whole-lines
+   :i &quot;C-k&quot;   #'+company/dict-or-keywords
+   :i &quot;C-f&quot;   #'company-files
+   :i &quot;C-]&quot;   #'company-etags
+   :i &quot;s&quot;     #'company-ispell
+   :i &quot;C-s&quot;   #'company-yasnippet
+   :i &quot;C-o&quot;   #'company-capf
+   :i &quot;C-n&quot;   #'company-dabbrev-code
+   :i &quot;C-p&quot;   #'+company/dabbrev-code-previous)
+ (:after company
+   (:map company-active-map
+     ;; Don't interfere with <code>evil-delete-backward-word' in insert mode
+     &quot;C-w&quot;        nil
+     &quot;C-o&quot;        #'company-search-kill-others
+     &quot;C-n&quot;        #'company-select-next
+     &quot;C-p&quot;        #'company-select-previous
+     &quot;C-h&quot;        #'company-quickhelp-manual-begin
+     &quot;C-S-h&quot;      #'company-show-doc-buffer
+     &quot;C-S-s&quot;      #'company-search-candidates
+     &quot;C-s&quot;        #'company-filter-candidates
+     &quot;C-SPC&quot;      #'company-complete-common
+     &quot;C-h&quot;        #'company-quickhelp-manual-begin
+     [tab]        #'company-complete-common-or-cycle
+     [backtab]    #'company-select-previous
+     [escape]     (λ! (company-abort) (evil-normal-state 1)))
+   ;; Automatically applies to</code>company-filter-map'
+   (:map company-search-map
+     &quot;C-n&quot;        #'company-search-repeat-forward
+     &quot;C-p&quot;        #'company-search-repeat-backward
+     &quot;C-s&quot;        (λ! (company-search-abort) (company-filter-candidates))
+     [escape]     #'company-search-abort))</p>
+<p> ;; counsel
+ (:after counsel
+   (:map counsel-ag-map
+     [backtab]  #'+ivy/wgrep-occur  ; search/replace on results
+     &quot;C-SPC&quot;    #'counsel-git-grep-recenter   ; preview
+     &quot;M-RET&quot;    (+ivy-do-action! #'+ivy-git-grep-other-window-action)))</p>
+<p> ;; evil-commentary
+ :n  &quot;gc&quot;  #'evil-commentary</p>
+<p> ;; evil-exchange
+ :n  &quot;gx&quot;  #'evil-exchange</p>
+<p> ;; evil-matchit
+ :nv [tab] #'+evil/matchit-or-toggle-fold</p>
+<p> ;; evil-magit
+ (:after evil-magit
+   :map (magit-status-mode-map magit-revision-mode-map)
+   :n &quot;C-j&quot; nil
+   :n &quot;C-k&quot; nil)</p>
+<p> ;; evil-mc
+ (:prefix &quot;gz&quot;
+   :nv &quot;m&quot; #'evil-mc-make-all-cursors
+   :nv &quot;u&quot; #'evil-mc-undo-all-cursors
+   :nv &quot;z&quot; #'+evil/mc-make-cursor-here
+   :nv &quot;t&quot; #'+evil/mc-toggle-cursors
+   :nv &quot;n&quot; #'evil-mc-make-and-goto-next-cursor
+   :nv &quot;p&quot; #'evil-mc-make-and-goto-prev-cursor
+   :nv &quot;N&quot; #'evil-mc-make-and-goto-last-cursor
+   :nv &quot;P&quot; #'evil-mc-make-and-goto-first-cursor
+   :nv &quot;d&quot; #'evil-mc-make-and-goto-next-match
+   :nv &quot;D&quot; #'evil-mc-make-and-goto-prev-match)
+ (:after evil-mc
+   :map evil-mc-key-map
+   :nv &quot;C-n&quot; #'evil-mc-make-and-goto-next-cursor
+   :nv &quot;C-N&quot; #'evil-mc-make-and-goto-last-cursor
+   :nv &quot;C-p&quot; #'evil-mc-make-and-goto-prev-cursor
+   :nv &quot;C-P&quot; #'evil-mc-make-and-goto-first-cursor)</p>
+<p> ;; evil-multiedit
+ :v  &quot;R&quot;     #'evil-multiedit-match-all
+ :n  &quot;M-d&quot;   #'evil-multiedit-match-symbol-and-next
+ :n  &quot;M-D&quot;   #'evil-multiedit-match-symbol-and-prev
+ :v  &quot;M-d&quot;   #'evil-multiedit-match-and-next
+ :v  &quot;M-D&quot;   #'evil-multiedit-match-and-prev
+ :nv &quot;C-M-d&quot; #'evil-multiedit-restore
+ (:after evil-multiedit
+   (:map evil-multiedit-state-map
+     &quot;M-d&quot; #'evil-multiedit-match-and-next
+     &quot;M-D&quot; #'evil-multiedit-match-and-prev
+     &quot;RET&quot; #'evil-multiedit-toggle-or-restrict-region)
+   (:map (evil-multiedit-state-map evil-multiedit-insert-state-map)
+     &quot;C-n&quot; #'evil-multiedit-next
+     &quot;C-p&quot; #'evil-multiedit-prev))</p>
+<p> ;; evil-snipe
+ (:after evil-snipe
+   ;; Binding to switch to evil-easymotion/avy after a snipe
+   :map evil-snipe-parent-transient-map
+   &quot;C-;&quot; (λ! (require 'evil-easymotion)
+             (call-interactively
+              (evilem-create #'evil-snipe-repeat
+                             :bind ((evil-snipe-scope 'whole-buffer)
+                                    (evil-snipe-enable-highlight)
+                                    (evil-snipe-enable-incremental-highlight))))))</p>
+<p> ;; evil-surround
+ :v  &quot;S&quot;  #'evil-surround-region
+ :o  &quot;s&quot;  #'evil-surround-edit
+ :o  &quot;S&quot;  #'evil-Surround-edit</p>
+<p> ;; expand-region
+ :v  &quot;v&quot;  #'er/expand-region
+ :v  &quot;V&quot;  #'er/contract-region</p>
+<p> ;; flycheck
+ :m  &quot;]e&quot; #'next-error
+ :m  &quot;[e&quot; #'previous-error
+ (:after flycheck
+   :map flycheck-error-list-mode-map
+   :n &quot;C-n&quot; #'flycheck-error-list-next-error
+   :n &quot;C-p&quot; #'flycheck-error-list-previous-error
+   :n &quot;j&quot;   #'flycheck-error-list-next-error
+   :n &quot;k&quot;   #'flycheck-error-list-previous-error
+   :n &quot;RET&quot; #'flycheck-error-list-goto-error)</p>
+<p> ;; flyspell
+ :m  &quot;]S&quot; #'flyspell-correct-word-generic
+ :m  &quot;[S&quot; #'flyspell-correct-previous-word-generic</p>
+<p> ;; git-gutter
+ :m  &quot;]d&quot; #'git-gutter:next-hunk
+ :m  &quot;[d&quot; #'git-gutter:previous-hunk</p>
+<p> ;; git-timemachine
+ (:after git-timemachine
+   (:map git-timemachine-mode-map
+     :nv &quot;p&quot; #'git-timemachine-show-previous-revision
+     :nv &quot;n&quot; #'git-timemachine-show-next-revision
+     :nv &quot;g&quot; #'git-timemachine-show-nth-revision
+     :nv &quot;q&quot; #'git-timemachine-quit
+     :nv &quot;w&quot; #'git-timemachine-kill-abbreviated-revision
+     :nv &quot;W&quot; #'git-timemachine-kill-revision
+     :nv &quot;b&quot; #'git-timemachine-blame))</p>
+<p> ;; gist
+ (:after gist
+   :map gist-list-menu-mode-map
+   :n &quot;RET&quot; #'+gist/open-current
+   :n &quot;b&quot;   #'gist-browse-current-url
+   :n &quot;c&quot;   #'gist-add-buffer
+   :n &quot;d&quot;   #'gist-kill-current
+   :n &quot;f&quot;   #'gist-fork
+   :n &quot;q&quot;   #'quit-window
+   :n &quot;r&quot;   #'gist-list-reload
+   :n &quot;s&quot;   #'gist-star
+   :n &quot;S&quot;   #'gist-unstar
+   :n &quot;y&quot;   #'gist-print-current-url)</p>
+<p> ;; helm
+;; helm navigation on hjkl
+;; From spacemacs
+;; (defun spacemacs//helm-hjkl-navigation (style)
+;;   &quot;Set navigation on 'hjkl' for the given editing STYLE.&quot;
+;;   (cond
+;;    ((or (eq 'vim style)
+;;         (and (eq 'hybrid style)
+;;              hybrid-mode-enable-hjkl-bindings))
+;;     (define-key helm-map (kbd &quot;C-j&quot;) 'helm-next-line)
+;;     (define-key helm-map (kbd &quot;C-k&quot;) 'helm-previous-line)
+;;     (define-key helm-map (kbd &quot;C-h&quot;) 'helm-next-source)
+;;     (define-key helm-map (kbd &quot;C-S-h&quot;) 'describe-key)
+;;     (define-key helm-map (kbd &quot;C-l&quot;) (kbd &quot;RET&quot;))
+;;     (with-eval-after-load 'helm-files
+;;       (dolist (keymap (list helm-find-files-map helm-read-file-map))
+;;         (define-key keymap (kbd &quot;C-l&quot;) 'helm-execute-persistent-action)
+;;         (define-key keymap (kbd &quot;C-h&quot;) 'helm-find-files-up-one-level)
+;;         ;; rebind `describe-key' for convenience
+;;         (define-key keymap (kbd &quot;C-S-h&quot;) 'describe-key))))
+;;    (t
+;;     (define-key helm-map (kbd &quot;C-j&quot;) 'helm-execute-persistent-action)
+;;     (define-key helm-map (kbd &quot;C-k&quot;) 'helm-delete-minibuffer-contents)
+;;     (define-key helm-map (kbd &quot;C-h&quot;) nil)
+;;     (define-key helm-map
+;;       (kbd &quot;C-l&quot;) 'helm-recenter-top-bottom-other-window))))</p>
+<p> (:after helm
+   (:map helm-map
+     &quot;ESC&quot;        nil
+     &quot;C-j&quot;      #'helm-next-line
+     &quot;C-k&quot;      #'helm-previous-line
+     &quot;C-h&quot;      #'helm-next-source
+     &quot;C-S-h&quot;      #'describe-key
+     &quot;C-l&quot;      #'helm-execute-persistent-action
+     &quot;C-u&quot;        #'helm-delete-minibuffer-contents
+     &quot;C-h&quot;        #'backward-kill-word
+     &quot;C-r&quot;        #'evil-paste-from-register ; Evil registers in helm! Glorious!
+     &quot;C-b&quot;        #'backward-word
+     [left]       #'backward-char
+     [right]      #'forward-char
+     [escape]     #'helm-keyboard-quit
+     [tab]        #'helm-execute-persistent-action)</p>
+<p>   (:after helm-files
+     (:map helm-generic-files-map
+       &quot;C-l&quot;     #'helm-execute-persistent-action
+       &quot;C-h&quot;     #'helm-find-files-up-one-level)
+     (:map helm-find-files-map
+       &quot;C-h&quot; #'helm-find-files-up-one-level
+       &quot;C-l&quot; #'helm-execute-persistent-action))</p>
+<p>   (:after helm-ag
+     (:map helm-ag-map
+       &quot;&quot;  #'helm-ag-edit)))</p>
+<p> ;; hl-todo
+ :m  &quot;]t&quot; #'hl-todo-next
+ :m  &quot;[t&quot; #'hl-todo-previous</p>
+<p> ;; ivy
+ (:after ivy
+   :map ivy-minibuffer-map
+   [escape] #'keyboard-escape-quit
+   &quot;M-v&quot; #'yank
+   &quot;M-z&quot; #'undo
+   &quot;C-r&quot; #'evil-paste-from-register
+   &quot;C-k&quot; #'ivy-previous-line
+   &quot;C-j&quot; #'ivy-next-line
+   &quot;C-l&quot; #'ivy-alt-done
+   &quot;C-w&quot; #'ivy-backward-kill-word
+   &quot;C-u&quot; #'ivy-kill-line
+   &quot;C-b&quot; #'backward-word
+   &quot;C-f&quot; #'forward-word)</p>
+<p> ;; neotree
+ (:after neotree
+   :map neotree-mode-map
+   :n &quot;g&quot;         nil
+   :n [tab]       #'neotree-quick-look
+   :n &quot;RET&quot;       #'neotree-enter
+   :n [backspace] #'evil-window-prev
+   :n &quot;c&quot;         #'neotree-create-node
+   :n &quot;r&quot;         #'neotree-rename-node
+   :n &quot;d&quot;         #'neotree-delete-node
+   :n &quot;j&quot;         #'neotree-next-line
+   :n &quot;k&quot;         #'neotree-previous-line
+   :n &quot;n&quot;         #'neotree-next-line
+   :n &quot;p&quot;         #'neotree-previous-line
+   :n &quot;h&quot;         #'+neotree/collapse-or-up
+   :n &quot;l&quot;         #'+neotree/expand-or-open
+   :n &quot;J&quot;         #'neotree-select-next-sibling-node
+   :n &quot;K&quot;         #'neotree-select-previous-sibling-node
+   :n &quot;H&quot;         #'neotree-select-up-node
+   :n &quot;L&quot;         #'neotree-select-down-node
+   :n &quot;G&quot;         #'evil-goto-line
+   :n &quot;gg&quot;        #'evil-goto-first-line
+   :n &quot;v&quot;         #'neotree-enter-vertical-split
+   :n &quot;s&quot;         #'neotree-enter-horizontal-split
+   :n &quot;q&quot;         #'neotree-hide
+   :n &quot;R&quot;         #'neotree-refresh)</p>
+<p> ;; realgud
+ (:after realgud
+   :map realgud:shortkey-mode-map
+   :n &quot;j&quot; #'evil-next-line
+   :n &quot;k&quot; #'evil-previous-line
+   :n &quot;h&quot; #'evil-backward-char
+   :n &quot;l&quot; #'evil-forward-char
+   :m &quot;n&quot; #'realgud:cmd-next
+   :m &quot;b&quot; #'realgud:cmd-break
+   :m &quot;B&quot; #'realgud:cmd-clear
+   :n &quot;c&quot; #'realgud:cmd-continue)</p>
+<p> ;; rotate-text
+ :n  &quot;!&quot;  #'rotate-text</p>
+<p> ;; smart-forward
+ :nv &quot;K&quot;  #'smart-up
+ :m  &quot;g]&quot; #'smart-forward
+ :m  &quot;g[&quot; #'smart-backward</p>
+<p> ;; undo-tree -- undo/redo for visual regions
+ :v &quot;C-u&quot; #'undo-tree-undo
+ :v &quot;C-r&quot; #'undo-tree-redo</p>
+<p> ;; yasnippet
+ (:after yasnippet
+   (:map yas-keymap
+     &quot;C-e&quot;           #'+snippets/goto-end-of-field
+     &quot;C-a&quot;           #'+snippets/goto-start-of-field
+     &quot;&quot;     #'+snippets/goto-end-of-field
+     &quot;&quot;      #'+snippets/goto-start-of-field
+     &quot;&quot; #'+snippets/delete-to-start-of-field
+     [escape]        #'evil-normal-state
+     [backspace]     #'+snippets/delete-backward-char
+     [delete]        #'+snippets/delete-forward-char-or-field)
+   (:map yas-minor-mode-map
+     :i &quot;&quot; yas-maybe-expand
+     :v &quot;&quot; #'+snippets/expand-on-region))</p>
+<p> ;; --- Major mode bindings --------------------------
+ (:after markdown-mode
+   (:map markdown-mode-map
+     ;; fix conflicts with private bindings
+     &quot;&quot; nil
+     &quot;&quot;    nil
+     &quot;&quot;   nil))</p>
+<p> ;; --- Custom evil text-objects ---------------------
+ :textobj &quot;a&quot; #'evil-inner-arg                    #'evil-outer-arg
+ :textobj &quot;B&quot; #'evil-textobj-anyblock-inner-block #'evil-textobj-anyblock-a-block
+ :textobj &quot;i&quot; #'evil-indent-plus-i-indent         #'evil-indent-plus-a-indent
+ :textobj &quot;I&quot; #'evil-indent-plus-i-indent-up      #'evil-indent-plus-a-indent-up
+ :textobj &quot;J&quot; #'evil-indent-plus-i-indent-up-down #'evil-indent-plus-a-indent-up-down</p>
+<p> ;; --- Built-in plugins -----------------------------
+ (:after comint
+   ;; TAB auto-completion in term buffers
+   :map comint-mode-map [tab] #'company-complete)</p>
+<p> (:after debug
+   ;; For elisp debugging
+   :map debugger-mode-map
+   :n &quot;RET&quot; #'debug-help-follow
+   :n &quot;e&quot;   #'debugger-eval-expression
+   :n &quot;n&quot;   #'debugger-step-through
+   :n &quot;c&quot;   #'debugger-continue)</p>
+<p> (:map help-mode-map
+   :n &quot;[[&quot;  #'help-go-back
+   :n &quot;]]&quot;  #'help-go-forward
+   :n &quot;o&quot;   #'ace-link-help
+   :n &quot;q&quot;   #'quit-window
+   :n &quot;Q&quot;   #'+ivy-quit-and-resume)</p>
+<p> (:after vc-annotate
+   :map vc-annotate-mode-map
+   :n &quot;q&quot;   #'kill-this-buffer
+   :n &quot;d&quot;   #'vc-annotate-show-diff-revision-at-line
+   :n &quot;D&quot;   #'vc-annotate-show-changeset-diff-revision-at-line
+   :n &quot;SPC&quot; #'vc-annotate-show-log-revision-at-line
+   :n &quot;]]&quot;  #'vc-annotate-next-revision
+   :n &quot;[[&quot;  #'vc-annotate-prev-revision
+   :n &quot;TAB&quot; #'vc-annotate-toggle-annotation-visibility
+   :n &quot;RET&quot; #'vc-annotate-find-revision-at-line))</p>
+<p>;; --- Custom key functionality ---------------------
+(defmacro do-repeat! (command next-func prev-func)
+  &quot;Repeat motions with ;/,&quot;
+  (let ((fn-sym (intern (format &quot;+evil*repeat-%s&quot; command))))
+    `(progn
+       (defun ,fn-sym (&amp;rest _)
+         (define-key evil-motion-state-map (kbd &quot;;&quot;) ',next-func)
+         (define-key evil-motion-state-map (kbd &quot;,&quot;) ',prev-func))
+       (advice-add #',command :before #',fn-sym))))</p>
+<p>;; n/N
+(do-repeat! evil-ex-search-next evil-ex-search-next evil-ex-search-previous)
+(do-repeat! evil-ex-search-previous evil-ex-search-next evil-ex-search-previous)
+(do-repeat! evil-ex-search-forward evil-ex-search-next evil-ex-search-previous)
+(do-repeat! evil-ex-search-backward evil-ex-search-next evil-ex-search-previous)</p>
+<p>;; f/F/t/T/s/S
+(after! evil-snipe
+  (setq evil-snipe-repeat-keys nil
+        evil-snipe-override-evil-repeat-keys nil) ; causes problems with remapped ;</p>
+<p>  (do-repeat! evil-snipe-f evil-snipe-repeat evil-snipe-repeat-reverse)
+  (do-repeat! evil-snipe-F evil-snipe-repeat evil-snipe-repeat-reverse)
+  (do-repeat! evil-snipe-t evil-snipe-repeat evil-snipe-repeat-reverse)
+  (do-repeat! evil-snipe-T evil-snipe-repeat evil-snipe-repeat-reverse)
+  (do-repeat! evil-snipe-s evil-snipe-repeat evil-snipe-repeat-reverse)
+  (do-repeat! evil-snipe-S evil-snipe-repeat evil-snipe-repeat-reverse)
+  (do-repeat! evil-snipe-x evil-snipe-repeat evil-snipe-repeat-reverse)
+  (do-repeat! evil-snipe-X evil-snipe-repeat evil-snipe-repeat-reverse))</p>
+<p>;; */#
+(after! evil-visualstar
+  (do-repeat! evil-visualstar/begin-search-forward
+    evil-ex-search-next evil-ex-search-previous)
+  (do-repeat! evil-visualstar/begin-search-backward
+    evil-ex-search-previous evil-ex-search-next))</p>
+<p>;; evil-easymotion
+(after! evil-easymotion
+  (let ((prefix (concat doom-leader-key &quot; /&quot;)))
+    ;; NOTE `evilem-default-keybinds' unsets all other keys on the prefix (in
+    ;; motion state)
+    (evilem-default-keybindings prefix)
+    (evilem-define (kbd (concat prefix &quot; n&quot;)) #'evil-ex-search-next)
+    (evilem-define (kbd (concat prefix &quot; N&quot;)) #'evil-ex-search-previous)
+    (evilem-define (kbd (concat prefix &quot; s&quot;)) #'evil-snipe-repeat
+                   :pre-hook (save-excursion (call-interactively #'evil-snipe-s))
+                   :bind ((evil-snipe-scope 'buffer)
+                          (evil-snipe-enable-highlight)
+                          (evil-snipe-enable-incremental-highlight)))
+    (evilem-define (kbd (concat prefix &quot; S&quot;)) #'evil-snipe-repeat-reverse
+                   :pre-hook (save-excursion (call-interactively #'evil-snipe-s))
+                   :bind ((evil-snipe-scope 'buffer)
+                          (evil-snipe-enable-highlight)
+                          (evil-snipe-enable-incremental-highlight)))))</p>
+<p>;;
+;; Keybinding fixes
+;;</p>
+<p>;; This section is dedicated to &quot;fixing&quot; certain keys so that they behave
+;; properly, more like vim, or how I like it.</p>
+<p>(map! (:map input-decode-map
+        [S-iso-lefttab] [backtab]
+        (:unless window-system &quot;TAB&quot; [tab])) ; Fix TAB in terminal</p>
+<pre>  ;; I want C-a <span class="hljs-keyword">and</span> C-e <span class="hljs-keyword">to</span> be a little smarter. C-a will jump <span class="hljs-keyword">to</span>
+  ;; indentation. Pressing it again will send you <span class="hljs-keyword">to</span> the <span class="hljs-literal">true</span> bol. Same goes
+  ;; <span class="hljs-keyword">for</span> C-e, except it will ignore comments <span class="hljs-keyword">and</span> trailing whitespace before
+  ;; jumping <span class="hljs-keyword">to</span> eol.
+  :i <span class="hljs-string">&quot;C-a&quot;</span> #<span class="hljs-symbol">'doom</span>/backward-<span class="hljs-keyword">to</span>-bol-<span class="hljs-keyword">or</span>-indent
+  :i <span class="hljs-string">&quot;C-e&quot;</span> #<span class="hljs-symbol">'doom</span>/forward-<span class="hljs-keyword">to</span>-last-non-comment-<span class="hljs-keyword">or</span>-eol
+  :i <span class="hljs-string">&quot;C-u&quot;</span> #<span class="hljs-symbol">'doom</span>/backward-kill-<span class="hljs-keyword">to</span>-bol-<span class="hljs-keyword">and</span>-indent
+
+  ;; textmate-esque newline insertion
+  :i [M-<span class="hljs-keyword">return</span>]     #<span class="hljs-symbol">'evil</span>-<span class="hljs-keyword">open</span>-below
+  :i [S-M-<span class="hljs-keyword">return</span>]   #<span class="hljs-symbol">'evil</span>-<span class="hljs-keyword">open</span>-above
+  ;; textmate-esque deletion
+  [M-backspace]     #<span class="hljs-symbol">'doom</span>/backward-kill-<span class="hljs-keyword">to</span>-bol-<span class="hljs-keyword">and</span>-indent
+  :i [backspace]    #<span class="hljs-symbol">'delete</span>-backward-char
+  :i [M-backspace]  #<span class="hljs-symbol">'doom</span>/backward-kill-<span class="hljs-keyword">to</span>-bol-<span class="hljs-keyword">and</span>-indent
+  ;; Emacsien motions <span class="hljs-keyword">for</span> insert mode
+  :i <span class="hljs-string">&quot;C-b&quot;</span> #<span class="hljs-symbol">'backward</span>-word
+  :i <span class="hljs-string">&quot;C-f&quot;</span> #<span class="hljs-symbol">'forward</span>-word
+
+  ;; Highjacks space/backspace <span class="hljs-keyword">to</span>:
+  ;;   a) balance spaces inside brackets/parentheses ( | ) -&gt; (|)
+  ;;   b) delete space-indented blocks intelligently
+  ;;   c) do none <span class="hljs-keyword">of</span> this <span class="hljs-keyword">when</span> inside a <span class="hljs-built_in">string</span>
+  :i <span class="hljs-string">&quot;SPC&quot;</span>                          #<span class="hljs-symbol">'doom</span>/inflate-space-maybe
+  :i [remap delete-backward-char]   #<span class="hljs-symbol">'doom</span>/deflate-space-maybe
+  :i [remap newline]                #<span class="hljs-symbol">'doom</span>/newline-<span class="hljs-keyword">and</span>-indent
+
+  (:<span class="hljs-keyword">after</span> org-mode
+    (:<span class="hljs-keyword">map</span> org-mode-<span class="hljs-keyword">map</span>
+      :i [remap doom/inflate-space-maybe] #<span class="hljs-symbol">'org</span>-self-insert-command
+      :i <span class="hljs-string">&quot;C-e&quot;</span> #<span class="hljs-symbol">'org</span>-<span class="hljs-keyword">end</span>-<span class="hljs-keyword">of</span>-<span class="hljs-literal">line</span>
+      :i <span class="hljs-string">&quot;C-a&quot;</span> #<span class="hljs-symbol">'org</span>-beginning-<span class="hljs-keyword">of</span>-<span class="hljs-literal">line</span>))
+
+  ;; Restore common editing keys (<span class="hljs-keyword">and</span> ESC) <span class="hljs-keyword">in</span> minibuffer
+  (:<span class="hljs-keyword">map</span> (minibuffer-local-<span class="hljs-keyword">map</span>
+         minibuffer-local-ns-<span class="hljs-keyword">map</span>
+         minibuffer-local-completion-<span class="hljs-keyword">map</span>
+         minibuffer-local-must-match-<span class="hljs-keyword">map</span>
+         minibuffer-local-isearch-<span class="hljs-keyword">map</span>
+         evil-ex-completion-<span class="hljs-keyword">map</span>
+         evil-ex-search-keymap
+         read-expression-<span class="hljs-keyword">map</span>)
+    [escape] #<span class="hljs-symbol">'abort</span>-recursive-edit
+    <span class="hljs-string">&quot;C-r&quot;</span> #<span class="hljs-symbol">'evil</span>-paste-from-<span class="hljs-keyword">register</span>
+    <span class="hljs-string">&quot;C-a&quot;</span> #<span class="hljs-symbol">'move</span>-beginning-<span class="hljs-keyword">of</span>-<span class="hljs-literal">line</span>
+    <span class="hljs-string">&quot;C-w&quot;</span> #<span class="hljs-symbol">'doom</span>/minibuffer-kill-word
+    <span class="hljs-string">&quot;C-u&quot;</span> #<span class="hljs-symbol">'doom</span>/minibuffer-kill-<span class="hljs-literal">line</span>
+    <span class="hljs-string">&quot;C-b&quot;</span> #<span class="hljs-symbol">'backward</span>-word
+    <span class="hljs-string">&quot;C-f&quot;</span> #<span class="hljs-symbol">'forward</span>-word
+    <span class="hljs-string">&quot;M-z&quot;</span> #<span class="hljs-symbol">'doom</span>/minibuffer-undo)
+
+  (:<span class="hljs-keyword">map</span> messages-<span class="hljs-keyword">buffer</span>-mode-<span class="hljs-keyword">map</span>
+    <span class="hljs-string">&quot;M-;&quot;</span> #<span class="hljs-symbol">'eval</span>-expression
+    <span class="hljs-string">&quot;A-;&quot;</span> #<span class="hljs-symbol">'eval</span>-expression)
+
+  (:<span class="hljs-keyword">map</span> tabulated-list-mode-<span class="hljs-keyword">map</span>
+    [remap evil-<span class="hljs-keyword">record</span>-macro] #<span class="hljs-symbol">'doom</span>/popup-close-maybe)
+
+  (:<span class="hljs-keyword">after</span> view
+    (:<span class="hljs-keyword">map</span> view-mode-<span class="hljs-keyword">map</span> <span class="hljs-string">&quot;&lt;escape&gt;&quot;</span> #<span class="hljs-symbol">'View</span>-quit-<span class="hljs-keyword">all</span>)))
+    #+END_SRC
+
+    #+RESULTS:
+    : View-quit-<span class="hljs-keyword">all</span></pre><p><strong><em>*</em></strong> Commands</p>
+<p>#+BEGIN_SRC emacs-lisp :tangle &quot;~/Github/doom-emacs/modules/private/allforabit/+commands.el&quot; :mkdirp yes
+;;; private/hlissner/+commands.el -<em>- lexical-binding: t; -</em>-</p>
+<p>(defalias 'ex! 'evil-ex-define-cmd)</p>
+<p>;;; Commands defined elsewhere
+;;(ex! &quot;al[ign]&quot;      #'+evil:align)
+;;(ex! &quot;g[lobal]&quot;     #'+evil:global)</p>
+<p>;;; Custom commands
+;; Editing
+(ex! &quot;@&quot;            #'+evil:macro-on-all-lines)   ; TODO Test me
+(ex! &quot;al[ign]&quot;      #'+evil:align)
+(ex! &quot;enhtml&quot;       #'+web:encode-html-entities)
+(ex! &quot;dehtml&quot;       #'+web:decode-html-entities)
+(ex! &quot;mc&quot;           #'+evil:mc)
+(ex! &quot;iedit&quot;        #'evil-multiedit-ex-match)
+(ex! &quot;na[rrow]&quot;     #'+evil:narrow-buffer)
+(ex! &quot;retab&quot;        #'+evil:retab)</p>
+<p>;; External resources
+;; TODO (ex! &quot;db&quot;          #'doom:db)
+;; TODO (ex! &quot;dbu[se]&quot;     #'doom:db-select)
+;; TODO (ex! &quot;go[ogle]&quot;    #'doom:google-search)
+(ex! &quot;lo[okup]&quot;    #'+jump:online)
+(ex! &quot;http&quot;        #'httpd-start)            ; start http server
+(ex! &quot;repl&quot;        #'+eval:repl)             ; invoke or send to repl
+;; TODO (ex! &quot;rx&quot;          'doom:regex)             ; open re-builder
+(ex! &quot;sh[ell]&quot;     #'+eshell:run)
+(ex! &quot;t[mux]&quot;      #'+tmux:run)              ; send to tmux
+(ex! &quot;tcd&quot;         #'+tmux:cd-here)          ; cd to default-directory in tmux
+(ex! &quot;x&quot;           #'doom/open-project-scratch-buffer)</p>
+<p>;; GIT
+(ex! &quot;gist&quot;        #'+gist:send)  ; send current buffer/region to gist
+(ex! &quot;gistl&quot;       #'+gist:list)  ; list gists by user
+(ex! &quot;gbrowse&quot;     #'+vcs/git-browse)        ; show file in github/gitlab
+(ex! &quot;gissues&quot;     #'+vcs/git-browse-issues) ; show github issues
+(ex! &quot;git&quot;         #'magit-status)           ; open magit status window
+(ex! &quot;gstage&quot;      #'magit-stage)
+(ex! &quot;gunstage&quot;    #'magit-unstage)
+(ex! &quot;gblame&quot;      #'magit-blame)
+(ex! &quot;grevert&quot;     #'git-gutter:revert-hunk)</p>
+<p>;; Dealing with buffers
+(ex! &quot;clean[up]&quot;   #'doom/cleanup-buffers)
+(ex! &quot;k[ill]&quot;      #'doom/kill-this-buffer)
+(ex! &quot;k[ill]all&quot;   #'+hlissner:kill-all-buffers)
+(ex! &quot;k[ill]m&quot;     #'+hlissner:kill-matching-buffers)
+(ex! &quot;k[ill]o&quot;     #'doom/kill-other-buffers)
+(ex! &quot;l[ast]&quot;      #'doom/popup-restore)
+(ex! &quot;m[sg]&quot;       #'view-echo-area-messages)
+(ex! &quot;pop[up]&quot;     #'doom/popup-this-buffer)</p>
+<p>;; Project navigation
+(ex! &quot;a&quot;           #'projectile-find-other-file)
+(ex! &quot;cd&quot;          #'+hlissner:cd)
+(cond ((featurep! :completion ivy)
+       (ex! &quot;ag&quot;       #'+ivy:ag)
+       (ex! &quot;agc[wd]&quot;  #'+ivy:ag-cwd)
+       (ex! &quot;rg&quot;       #'+ivy:rg)
+       (ex! &quot;rgc[wd]&quot;  #'+ivy:rg-cwd)
+       (ex! &quot;sw[iper]&quot; #'+ivy:swiper)
+       (ex! &quot;todo&quot;     #'+ivy:todo))
+      ((featurep! :completion helm)
+       (ex! &quot;ag&quot;       #'+helm:ag)
+       (ex! &quot;agc[wd]&quot;  #'+helm:ag-cwd)
+       (ex! &quot;rg&quot;       #'+helm:rg)
+       (ex! &quot;rgc[wd]&quot;  #'+helm:rg-cwd)
+       (ex! &quot;sw[oop]&quot;  #'+helm:swoop)
+       (ex! &quot;todo&quot;     #'+helm:todo)))</p>
+<p>;; Project tools
+(ex! &quot;build&quot;       #'+eval/build)
+(ex! &quot;debug&quot;       #'+debug/run)
+(ex! &quot;er[rors]&quot;    #'flycheck-list-errors)</p>
+<p>;; File operations
+(ex! &quot;cp&quot;          #'+evil:copy-this-file)
+(ex! &quot;mv&quot;          #'+evil:move-this-file)
+(ex! &quot;rm&quot;          #'+evil:delete-this-file)</p>
+<p>;; Sessions/tabs
+(ex! &quot;sclear&quot;      #'+workspace/kill-session)
+(ex! &quot;sl[oad]&quot;     #'+workspace:load-session)
+(ex! &quot;ss[ave]&quot;     #'+workspace:save-session)
+(ex! &quot;tabc[lose]&quot;  #'+workspace:delete)
+(ex! &quot;tabclear&quot;    #'doom/kill-all-buffers)
+(ex! &quot;tabl[ast]&quot;   #'+workspace/switch-to-last)
+(ex! &quot;tabload&quot;     #'+workspace:load)
+(ex! &quot;tabn[ew]&quot;    #'+workspace:new)
+(ex! &quot;tabn[ext]&quot;   #'+workspace:switch-next)
+(ex! &quot;tabp[rev]&quot;   #'+workspace:switch-previous)
+(ex! &quot;tabr[ename]&quot; #'+workspace:rename)
+(ex! &quot;tabs&quot;        #'+workspace/display)
+(ex! &quot;tabsave&quot;     #'+workspace:save)</p>
+<p>;; Org-mode
+(ex! &quot;cap&quot;         #'+org-capture/dwim)</p>
+<p>#+END_SRC
+<strong><em>*</em></strong> Autoload</p>
+<p>#+BEGIN_SRC emacs-lisp :tangle &quot;~/Github/doom-emacs/modules/private/allforabit/autoloads.el&quot; :mkdirp yes
+(message &quot;hello&quot;)</p>
+<p>#+END_SRC</p>
+<h1>&quot;~/Github/doom-emacs/modules/private/allforabit/autoload/evil.el&quot;</h1>
+<p>#+BEGIN_SRC emacs-lisp :tangle nil :mkdirp yes</p>
+<p>;; ;;; private/allforabit/autoload/evil.el -<em>- lexical-binding: t; -</em>-</p>
+<p>;; ;;;###autoload (autoload '+allforabit:multi-next-line &quot;private/allforabit/autoload/evil&quot; nil t)
+;; (evil-define-motion +allforabit:multi-next-line (count)
+;;   &quot;Move down 6 lines.&quot;
+;;   :type line
+;;   (let ((line-move-visual (or visual-line-mode (derived-mode-p 'text-mode))))
+;;     (evil-line-move (* 6 (or count 1)))))</p>
+<p>;; ;;;###autoload (autoload '+allforabit:multi-previous-line &quot;private/allforabit/autoload/evil&quot; nil t)
+;; (evil-define-motion +allforabit:multi-previous-line (count)
+;;   &quot;Move up 6 lines.&quot;
+;;   :type line
+;;   (let ((line-move-visual (or visual-line-mode (derived-mode-p 'text-mode))))
+;;     (evil-line-move (- (* 6 (or count 1))))))</p>
+<p>;; ;;;###autoload (autoload '+allforabit:cd &quot;private/allforabit/autoload/evil&quot; nil t)
+;; (evil-define-command +allforabit:cd ()
+;;   &quot;Change <code>default-directory' with</code>cd'.&quot;
+;;   (interactive &quot;&quot;)
+;;   (cd input))</p>
+<p>;; ;;;###autoload (autoload '+allforabit:kill-all-buffers &quot;private/allforabit/autoload/evil&quot; nil t)
+;; (evil-define-command +allforabit:kill-all-buffers (&amp;optional bang)
+;;   &quot;Kill all buffers. If BANG, kill current session too.&quot;
+;;   (interactive &quot;&lt;!&gt;&quot;)
+;;   (if bang
+;;       (+workspace/kill-session)
+;;     (doom/kill-all-buffers)))</p>
+<p>;; ;;;###autoload (autoload '+allforabit:kill-matching-buffers &quot;private/allforabit/autoload/evil&quot; nil t)
+;; (evil-define-command +allforabit:kill-matching-buffers (&amp;optional bang pattern)
+;;   &quot;Kill all buffers matching PATTERN regexp. If BANG, only match project
+;; buffers.&quot;
+;;   (interactive &quot;<a>&quot;)
+;;   (doom/kill-matching-buffers pattern bang))</a></p>
+<p>#+END_SRC</p>
+<h1>&quot;~/Github/doom-emacs/modules/private/allforabit/autoload/allforabit.el&quot;</h1>
+<p>#+BEGIN_SRC emacs-lisp :tangle yes :mkdirp yes</p>
+<p>;;; private/allforabit/autoload/allforabit.el -<em>- lexical-binding: t; -</em>-</p>
+<p>;;;###autoload
+(defun +allforabit/install-snippets ()
+  &quot;Install my snippets from <a href="https://github.com/allforabit/emacs-snippets">https://github.com/allforabit/emacs-snippets</a> into
+private/allforabit/snippets.&quot;
+  (interactive)
+  (doom-fetch :github &quot;allforabit/emacs-snippets&quot;
+              (expand-file-name &quot;snippets&quot; (doom-module-path :private 'allforabit))))</p>
+<p>;;;###autoload
+(defun +allforabit/yank-buffer-filename ()
+  &quot;Copy the current buffer's path to the kill ring.&quot;
+  (interactive)
+  (if-let (filename (or buffer-file-name (bound-and-true-p list-buffers-directory)))
+      (message (kill-new (abbreviate-file-name filename)))
+    (error &quot;Couldn't find filename in current buffer&quot;)))</p>
+<p>(defmacro +allforabit-def-finder! (name dir)
+  &quot;Define a pair of find-file and browse functions.&quot;
+  `(progn
+     (defun ,(intern (format &quot;+allforabit/find-in-%s&quot; name)) ()
+       (interactive)
+       (let ((default-directory ,dir)
+             projectile-require-project-root
+             projectile-cached-buffer-file-name
+             projectile-cached-project-root)
+         (call-interactively (command-remapping #'projectile-find-file))))
+     (defun ,(intern (format &quot;+allforabit/browse-%s&quot; name)) ()
+       (interactive)
+       (let ((default-directory ,dir))
+         (call-interactively (command-remapping #'find-file))))))</p>
+<p>;;;###autoload (autoload '+allforabit/find-in-templates &quot;private/allforabit/autoload/allforabit&quot; nil t)
+;;;###autoload (autoload '+allforabit/browse-templates &quot;private/allforabit/autoload/allforabit&quot; nil t)
+(+allforabit-def-finder! templates +file-templates-dir)</p>
+<p>;;;###autoload (autoload '+allforabit/find-in-snippets &quot;private/allforabit/autoload/allforabit&quot; nil t)
+;;;###autoload (autoload '+allforabit/browse-snippets &quot;private/allforabit/autoload/allforabit&quot; nil t)
+(+allforabit-def-finder! snippets +allforabit-snippets-dir)</p>
+<p>;;;###autoload (autoload '+allforabit/find-in-dotfiles &quot;private/allforabit/autoload/allforabit&quot; nil t)
+;;;###autoload (autoload '+allforabit/browse-dotfiles &quot;private/allforabit/autoload/allforabit&quot; nil t)
+(+allforabit-def-finder! dotfiles (expand-file-name &quot;.dotfiles&quot; &quot;~&quot;))</p>
+<p>;;;###autoload (autoload '+allforabit/find-in-emacsd &quot;private/allforabit/autoload/allforabit&quot; nil t)
+;;;###autoload (autoload '+allforabit/browse-emacsd &quot;private/allforabit/autoload/allforabit&quot; nil t)
+(+allforabit-def-finder! emacsd doom-emacs-dir)</p>
+<p>;;;###autoload (autoload '+allforabit/find-in-notes &quot;private/allforabit/autoload/allforabit&quot; nil t)
+;;;###autoload (autoload '+allforabit/browse-notes &quot;private/allforabit/autoload/allforabit&quot; nil t)
+(+allforabit-def-finder! notes +org-dir)</p>
+<p>#+END_SRC
+<strong><em>*</em></strong> A thing</p>
+<p>#+BEGIN_SRC emacs-lisp :tangle &quot;~/Github/doom-emacs/modules/private/allforabit/a-thing.el&quot; :mkdirp yes
+(map!
+ ;; --- Global keybindings ---------------------------
+ :nvime &quot;M-h&quot; (λ! (message &quot;hello&quot;)))</p>
+<p>#+END_SRC
+<strong><em>*</em></strong> Git ignore</p>
+<p>#+BEGIN_SRC txt :tangle &quot;~/Github/doom-emacs/modules/private/allforabit/.gitignore&quot; :mkdirp yes
+snippets
+.authinfo.gpg</p>
+<p>#+END_SRC</p>
+<ul>
+<li>Installation
+Provide some sort of installation steps. Use org tangle, git, git sub modules.
+** Make symlinks
+This the script from original dotfiles:</li>
+</ul>
+<p>#+BEGIN_SRC sh :tangle</p>
+<p>#!/bin/bash</p>
+<p>############################</p>
+<h1>.make.sh</h1>
+<h1>This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles</h1>
+<p>############################</p>
+<p>########## Variables</p>
+<p>dir=~/dotfiles                    # dotfiles directory
+olddir=~/dotfiles_old             # old dotfiles backup directory
+files=&quot;zshrc vimrc vim spacemacs emacs.d&quot;          # list of files/folders to symlink in homedir</p>
+<p>##########</p>
+<h1>create dotfiles_old in homedir</h1>
+<p>echo -n &quot;Creating $olddir for backup of any existing dotfiles in ~ ...&quot;
+mkdir -p $olddir
+echo &quot;done&quot;</p>
+<h1>change to the dotfiles directory</h1>
+<p>echo -n &quot;Changing to the $dir directory ...&quot;
+cd $dir
+echo &quot;done&quot;</p>
+<h1>move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files</h1>
+<p>for file in $files; do
+  echo &quot;Moving any existing dotfiles from ~ to $olddir&quot;
+  mv ~/.$file ~/dotfiles_old/
+  echo &quot;Creating symlink to $file in home directory.&quot;
+  ln -s $dir/$file ~/.$file
+done</p>
+<p>git clone <a href="https://github.com/gmarik/vundle.git">https://github.com/gmarik/vundle.git</a> ~/dotfiles/vim/bundle/vundle
+vim +PluginInstall +qall</p>
+<p>#+END_SRC
+** A test sh file</p>
+<p>#+BEGIN_SRC sh
+cd ~/dotfiles/
+ls -la</p>
+<p>#+END_SRC</p>
+<p>#+RESULTS:
+| total       | 136 |       |       |       |     |    |       |                                  |    |                                |
+| drwxr-xr-x  |  19 | kevin | staff |   646 | Oct |  1 | 14:24 | 0                                |    |                                |
+| lrwxr-xr-x  |   1 | kevin | staff |    30 | Oct |  1 | 14:24 | .#README.org                     | -&gt; | kevin@MacBook-Air-4.local.2271 |
+| drwxr-xr-x@ | 260 | kevin | staff |  8840 | Oct |  1 | 13:52 | ..                               |    |                                |
+| -rw-r--r--@ |   1 | kevin | staff | 12292 | Aug |  4 | 10:51 | .DS_Store                        |    |                                |
+| drwxr-xr-x  |  17 | kevin | staff |   578 | Oct |  1 | 14:24 | .git                             |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |    71 | Sep | 16 | 14:01 | .gitignore                       |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |   158 | Mar |  8 |  2017 | .gitmodules                      |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |  3233 | Oct |  1 | 14:24 | README.org                       |    |                                |
+| drwxr-xr-x  |   5 | kevin | staff |   170 | Jul | 15 | 18:32 | autoit                           |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |  2968 | Mar |  8 |  2017 | bashrc                           |    |                                |
+| drwxr-xr-x  |   4 | kevin | staff |   136 | Jun | 29 |  2014 | gt8_patches                      |    |                                |
+| -rw-r--r--@ |   1 | kevin | staff |   341 | Feb | 26 |  2017 | instruments.xml                  |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |   587 | Jul | 15 | 18:32 | jsbeautifyrc                     |    |                                |
+| -rwxr-xr-x  |   1 | kevin | staff |  1129 | Mar |  8 |  2017 | makesymlinks.sh                  |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |  1821 | Jun | 10 |  2016 | midi_program_change_to_note.mipi |    |                                |
+| drwxr-xr-x  |   9 | kevin | staff |   306 | Sep | 16 | 14:39 | spacemacs.d                      |    |                                |
+| drwxr-xr-x  |   9 | kevin | staff |   306 | Mar |  8 |  2017 | vim                              |    |                                |
+| -rw-r--r--  |   1 | kevin | staff | 10793 | Jun | 10 |  2016 | vimrc                            |    |                                |
+| -rw-r--r--  |   1 | kevin | staff |  1024 | Sep | 23 | 15:37 | zshrc                            |    |                                |</p>
+</div></article></div><footer><div style="box-sizing:border-box;max-width:768px;margin-left:auto;margin-right:auto;margin-bottom:32px;padding-top:8px;padding-bottom:8px;padding-left:32px;padding-right:32px;"><div style="margin-left:-16px;margin-right:-16px;"><a href="https://github.com/allforabit/dotfiles" class="Link" style="box-sizing:border-box;color:inherit;display:inline-block;font-size:14px;line-height:16px;padding-left:16px;padding-right:16px;padding-top:16px;padding-bottom:16px;font-weight:600;text-decoration:none;">GitHub</a><a href="https://github.com/allforabit" class="Link" style="box-sizing:border-box;color:inherit;display:inline-block;font-size:14px;line-height:16px;padding-left:16px;padding-right:16px;padding-top:16px;padding-bottom:16px;font-weight:600;text-decoration:none;">allforabit</a></div><div></div></div></footer></div><div style="font-family:-apple-system, sans-serif;font-size:12px;font-weight:600;text-align:right;padding:24px;color:#333;background-color:#eee;"><a href="http://compositor.io" style="color:inherit;text-decoration:none;">Built with Compositor.io</a></div></body></html>
