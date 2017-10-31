@@ -402,7 +402,7 @@ This is loaded last.
 ;;      :desc "Spelling correction" :n  "S" #'flyspell-correct-previous-word-generic)))
 
 ;; (org-get-header-list a4b-an-el)
-
+;; (a4b-org-element-map (org-element-contents el) results)
 (defun a4b-org-element-map (tree results)
     (org-element-map 
           tree 
@@ -410,39 +410,85 @@ This is loaded last.
         (lambda (el) 
                 (if (org-element-contents el)
                     ;; Recurse in if there's contents
-                    (if (org-element-property :K el)
+                    (if (org-element-property :F el)
                         (thread-last results
-                            (cons (a4b-org-element-map (org-element-contents el) results))
+                            (cons "Bo")
                             (cons (org-element-property :K el)))    
                       ;; Pass results unchanged if there's no :K
                         (a4b-org-element-map (org-element-contents el) results))
                   ;; Otherwise return heading value
-                  (thread-last results
-                    (cons (org-element-property :F el))
-                    (cons (org-element-property :K el))))
+                  (if (org-element-property :K el)
+                    (thread-last results
+                        ((lambda (res)
+                           (cons (org-element-property :F el) res)
+                           "Hi"
+                        ))
+                        (cons (org-element-property :K el)))
+                        )
+                    (thread-last results
+                        (cons "Yo")
+                        (cons (org-element-property :K el))))
                 ) nil nil '(headline)))
 
 ;; a4b-an-el
-(a4b-org-element-map
-  ;; a4b-an-el
-  (org-element-parse-buffer 'headline) '())
+(thread-first
+    (a4b-org-element-map
+        (org-element-parse-buffer 'headline) '())
+    ;; (map!)
+)
 #+END_SRC
-
-
 
 #+RESULTS: doom-keymap
 #+BEGIN_SRC emacs-lisp
-((("M-!" "spacemacs/buffer-alternate" map!)
-  (nil nil map!)
-  (("tab" "spacemacs/buffer-alternate" map!))
-  (nil nil map!)))
+((nil "Yo")
+ ((((nil "Yo")))
+  ((nil "Yo")
+   (nil "Yo"))
+  (((nil "Yo")
+    (nil "Yo"))))
+ ((((nil "Yo"))
+   ((((nil "Yo")
+      ((nil "Yo")
+       (nil "Yo")
+       (nil "Yo")
+       (nil "Yo")
+       (("M-!" "Yo")
+        (nil "Yo")
+        (nil "Yo")
+        (nil "Yo"))
+       (nil "Yo")
+       (nil "Yo")
+       (nil "Yo")
+       (nil "Yo")))))))
+ ((nil "Yo")
+  (nil "Yo")))
+#+END_SRC
+
+#+RESULTS:
+
+
+#+BEGIN_SRC emacs-lisp :results code
+;; (map!
+;;   (("M-!" (lambda () (interactive) (message "hello")))))
+;; (make-symbol "#'foo")
+
+(map! 
+((("M-!" 'spacemacs/alternate-buffer-in-persp)
+  (nil nil)
+  (nil nil)))
+)
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC emacs-lisp
+nil
 #+END_SRC
 
 
 ******** Meta-! 
 :PROPERTIES:
 :K:        M-!
-:F:        spacemacs/buffer-alternate
+:F:        spacemacs/alternate-buffer-in-persp
 :END:
 
 
@@ -467,7 +513,6 @@ This is loaded last.
 
 #+RESULTS:
 
-
 #+BEGIN_SRC emacs-lisp
 (save-excursion
   (outline-up-heading 1) 
@@ -482,12 +527,6 @@ This is loaded last.
 
 ******** TODO Global 
 ******** TODO Leader 
-********* TODO TAB :tab_key:
-:PROPERTIES:
-:K: tab
-:F: spacemacs/buffer-alternate
-:END:
-
 ******** Raw 
 
 #+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/+bindings.el" :mkdirp yes
