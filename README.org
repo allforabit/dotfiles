@@ -1,4 +1,4 @@
-;; -*- after-save-hook: org-babel-tangle; -*-
+;; -*- eval: (add-hook 'after-save-hook 'org-babel-tangle); -*-
 * Introduction [0/1]
 :todo:
  - [ ] Fix doom link
@@ -93,7 +93,7 @@ the next line. And then we go on and on, bla bla bla!!!!
 (when (string-equal system-type "windows-nt")
   (setenv "PATH"
     (concat
-    "C:/msys64/mingw64/bin" ";"
+    ;; "C:/msys64/mingw64/bin" ";"
     "C:/msys64/usr/bin" ";"
     (getenv "PATH"))))
 
@@ -148,34 +148,34 @@ the next line. And then we go on and on, bla bla bla!!!!
       ;cc              ; C/C++/Obj-C madness
       ;crystal         ; ruby at the speed of c
       ;csharp          ; unity, .NET, and mono shenanigans
-      ;data            ; config/data formats
+      data            ; config/data formats
       ;elixir          ; erlang done right
       ;elm             ; care for a cup of TEA?
        emacs-lisp      ; drown in parentheses
       ;go              ; the hipster dialect
-      ;haskell         ; a language that's lazier than I am
+      haskell         ; a language that's lazier than I am
       ;hy              ; readability of scheme w/ speed of python
-      ;java            ; the poster child for carpal tunnel syndrome
-      ;javascript      ; all(hope(abandon(ye(who(enter(here))))))
+      java            ; the poster child for carpal tunnel syndrome
+      javascript      ; all(hope(abandon(ye(who(enter(here))))))
       ;julia           ; a better, faster MATLAB
-      ;latex           ; writing papers in Emacs has never been so fun
-      ;ledger          ; an accounting system in Emacs
+      latex           ; writing papers in Emacs has never been so fun
+      ledger          ; an accounting system in Emacs
       ;lua             ; one-based indices? one-based indices
-      ;markdown        ; writing docs for people to ignore
+      markdown        ; writing docs for people to ignore
       ;ocaml           ; an objective camel
       ;perl            ; write code no one else can comprehend
       php             ; make php less awful to work with
-      ;plantuml        ; diagrams for confusing people more
+      plantuml        ; diagrams for confusing people more
       ;purescript      ; javascript, but functional
       ;python          ; beautiful is better than ugly
-      ;rest            ; Emacs as a REST client
+      rest            ; Emacs as a REST client
       ;ruby            ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
       ;rust            ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
       ;scala           ; java, but good
-      ;sh              ; she sells (ba|z)sh shells on the C xor
+      sh              ; she sells (ba|z)sh shells on the C xor
       ;swift           ; who asked for emoji variables?
       ;typescript      ; javascript, but better
-      ;web             ; the tubes
+      web             ; the tubes
 
        :org
        org             ; organize your plain life in plain text
@@ -249,12 +249,14 @@ the next line. And then we go on and on, bla bla bla!!!!
 #+RESULTS:
 ******* Packages
 
-        #+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/packages.el" :mkdirp yes
-(package! drupal-mode)
-        #+END_SRC
+#+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/packages.el" :mkdirp yes
+(package! drupal-mode
+ :config
+ (setq drupal-drush-program "c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat"))
+#+END_SRC
 
-        #+RESULTS:
-        | drupal-mode |
+#+RESULTS:
+| drupal-mode |
 ******* Config
 This is loaded last.
 
@@ -369,85 +371,88 @@ This is loaded last.
 :PROPERTIES:
 :END:
 
-#+BEGIN_SRC emacs-lisp
-
-;; (org-element-map (org-element-parse-buffer) '(example-block src-block) #'identity)
-
-(defun unflatten (xs &optional fn-value fn-level)
-  "Unflatten a list XS into a tree, e.g. (1 2 3 1) => (1 (2 (3)) 1).
-FN-VALUE specifies how to extract the values from each element, which
-are included in the output tree, FN-LEVEL tells how to extract the
-level of each element. By default these are the `identity' function so
-it will work on a list of numbers."
-  (let* ((level 1)
-         (tree (cons nil nil))
-         (start tree)
-         (stack nil)
-         (fn-value (or fn-value #'identity))
-         (fn-level (or fn-level #'identity)))
-    (dolist (x xs)
-      (let ((x-value (funcall fn-value x))
-            (x-level (funcall fn-level x)))
-        (cond ((> x-level level)
-               (setcdr tree (cons (cons x-value nil) nil))
-               (setq tree (cdr tree))
-               (push tree stack)
-               (setq tree (car tree))
-               (setq level x-level))
-              ((= x-level level)
-               (setcdr tree (cons x-value nil))
-               (setq tree (cdr tree)))
-              ((< x-level level)
-               (while (< x-level level)
-                 (setq tree (pop stack))
-                 (setq level (- level 1)))
-               (setcdr tree (cons x-value nil))
-               (setq tree (cdr tree))
-               (setq level x-level)))))
-      (cdr start)))
-
-; eg (unflatten '(1 2 3 2 3 4)) => '(1 (2 (3) 2 (3 (4))))
-
-(defun org-get-header-list (&optional buffer) 
-  "Get the headers of an org buffer as a flat list of headers and levels.
-Buffer will default to the current buffer."
-  (interactive)
-  (with-current-buffer (or buffer (current-buffer))
-    (let ((tree (org-element-parse-buffer 'headline)))
-      (org-element-map 
-          tree 
-          'headline
-        (lambda (el) (list 
-                 (org-element-property :raw-value el) ; get header title without tags etc
-                 (org-element-property :level el) ; get depth
-                 (org-element-property :F el)
-                 (org-element-property :K el)
-                 ;; >> could add other properties here
-                 )) nil nil '(headline)))))
-
-; eg (org-get-header-list) => (("pok" 1) ("lkm" 1) (("cedar" 2) ("yr" 2)) ("kjn" 1))
-
-
-(defun org-get-header-tree (&optional buffer)
-  "Get the headers of the given org buffer as a tree."
-  (interactive)
-  (let* ((headers (org-get-header-list buffer))
-         (header-tree (unflatten headers  
-                 (lambda (hl) (list (car hl) (nth 2 hl) (nth 3 hl)))  ; extract information to include in tree
-                 (lambda (hl) (cadr hl))
-)))  ; extract item level
-    header-tree))
-
-(org-get-header-tree)
-
+#+BEGIN_SRC emacs-lisp :results code
+(setq my-list '(apple orange peach))
 #+END_SRC
 
 #+RESULTS:
-| Introduction [0/1] | nil | nil |
-| Gui apps           | nil | nil |
-| Commandline apps   | nil | nil |
-| Installation       | nil | nil |
+#+BEGIN_SRC emacs-lisp
+(apple orange peach)
+#+END_SRC
 
+#+NAME: doom-keymap
+#+BEGIN_SRC emacs-lisp :results code
+
+;; Example
+;; (map!
+;;  ;; --- Global keybindings ---------------------------
+;;  ;; Make M-x available everywhere
+;;  :nvime "M-x" #'execute-extended-command
+;;  "M-+"    (λ! (text-scale-set 0))
+;;  "M-="    #'text-scale-increase
+;;  "M--"    #'text-scale-decrease
+
+;;  (:prefix "C-x"
+;;    "p" #'doom/other-popup)
+
+;;  ;; --- <leader> -------------------------------------
+;;  (:leader
+;;    :desc "Ex command"  :nv ";"   #'evil-ex
+;;    (:desc "previous..." :prefix "["
+;;      :desc "Spelling correction" :n  "S" #'flyspell-correct-previous-word-generic)))
+
+;; (org-get-header-list a4b-an-el)
+
+(defun a4b-org-element-map (tree results)
+    (org-element-map 
+          tree 
+          'headline
+        (lambda (el) 
+                (if (org-element-contents el)
+                    ;; Recurse in if there's contents
+                    (if (org-element-property :K el)
+                        (thread-last results
+                            (cons (a4b-org-element-map (org-element-contents el) results))
+                            (cons (org-element-property :K el)))    
+                      ;; Pass results unchanged if there's no :K
+                        (a4b-org-element-map (org-element-contents el) results))
+                  ;; Otherwise return heading value
+                  (thread-last results
+                    (cons (org-element-property :F el))
+                    (cons (org-element-property :K el))))
+                ) nil nil '(headline)))
+
+;; a4b-an-el
+(a4b-org-element-map
+  ;; a4b-an-el
+  (org-element-parse-buffer 'headline) '())
+#+END_SRC
+
+
+
+#+RESULTS: doom-keymap
+#+BEGIN_SRC emacs-lisp
+((("M-!" "spacemacs/buffer-alternate" map!)
+  (nil nil map!)
+  (("tab" "spacemacs/buffer-alternate" map!))
+  (nil nil map!)))
+#+END_SRC
+
+
+******** Meta-! 
+:PROPERTIES:
+:K:        M-!
+:F:        spacemacs/buffer-alternate
+:END:
+
+
+#+BEGIN_SRC emacs-lisp
+(thread-last '(5 6 7 89 9)
+  (seq-map (lambda (n) (+ n 1)))
+  (seq-map (lambda (n) (* n n n))))
+#+END_SRC
+
+#+RESULTS:
 
 #+BEGIN_SRC emacs-lisp
 (org-element-map (org-element-parse-buffer) 'paragraph
@@ -461,7 +466,6 @@ Buffer will default to the current buffer."
 #+END_SRC
 
 #+RESULTS:
-| paragraph | (:begin 1 :end 47 :contents-begin 1 :contents-end 47 :post-blank 0 :post-affiliated 1 :parent (section (:begin 1 :end 47 :contents-begin 1 :contents-end 47 :post-blank 0 :post-affiliated 1 :parent (org-data nil #1 (headline (:raw-value Introduction [0/1] :begin 47 :end 815 :pre-blank 0 :contents-begin 68 :contents-end 814 :level 1 :priority nil :tags nil :todo-keyword nil :todo-type nil :post-blank 1 :footnote-section-p nil :archivedp nil :commentedp nil :post-affiliated 47 :title (Introduction  (statistics-cookie (:begin 62 :end 67 :value [0/1] :post-blank 0 :parent #4))) :parent #3) (section (:begin 68 :end 815 :contents-begin 68 :contents-end 814 :post-blank 1 :post-affiliated 68 :parent #4) (drawer (:begin 68 :end 102 :drawer-name todo :contents-begin 75 :contents-end 96 :post-blank 0 :post-affiliated 68 :parent #5) (plain-list (:type unordered :begin 75 :end 96 :contents-begin 75 :contents-end 96 :structure ((75 1 -  nil [ ] nil 96)) :post-blank 0 :post-affiliated 75 :parent #6) (item (:bullet -  :begin 75 :end 96 :contents-begin 82 :contents-end 96 :checkbox off :counter nil :structure ((75 1 -  nil [ ] nil 96)) :post-blank 0 :post-affiliated 75 :tag nil :parent #7) (paragraph (:begin 82 :end 96 :contents-begin 82 :contents-end 96 :post-blank 0 :post-affiliated 82 :parent #8) Fix doom link |
 
 
 #+BEGIN_SRC emacs-lisp
@@ -473,6 +477,9 @@ Buffer will default to the current buffer."
 #+END_SRC
 
 #+RESULTS:
+
+
+
 ******** TODO Global 
 ******** TODO Leader 
 ********* TODO TAB :tab_key:
@@ -513,17 +520,18 @@ Buffer will default to the current buffer."
     ((eq major-mode 'org-mode) 'helm-org-in-buffer-headings)
     (t 'helm-semantic-or-imenu))))
 
-(defun spacemacs/alternate-buffer (&optional window)
+(defun spacemacs/alternate-buffer-in-persp ()
   "Switch back and forth between current and last buffer in the
-current window."
+current perspective."
   (interactive)
-  (let ((current-buffer (window-buffer window)))
-    ;; if no window is found in the windows history, `switch-to-buffer' will
-    ;; default to calling `other-buffer'.
-    (switch-to-buffer
-     (cl-find-if (lambda (buffer)
-                   (not (eq buffer current-buffer)))
-                 (mapcar #'car (window-prev-buffers window))))))
+  (with-persp-buffer-list ()
+                          (switch-to-buffer (other-buffer (current-buffer) t))))
+
+(defun spacemacs/persp-helm-mini ()
+  "As `helm-mini' but restricts visible buffers by perspective."
+  (interactive)
+  (with-persp-buffer-list ()
+                          (helm-mini)))
 
 (map!
  ;; --- Global keybindings ---------------------------
@@ -590,7 +598,7 @@ current window."
    :desc "Org Capture"             :nv "X"  #'+org-capture/open
 
    ;; Most commonly used
-   :desc "Find file in project"    :n "SPC" #'execute-extended-command
+   :desc "Execute extended command"    :n "SPC" #'execute-extended-command
    :desc "Switch workspace buffer" :n ","   #'persp-switch-to-buffer
    :desc "Switch buffer"           :n "<"   #'switch-to-buffer
    :desc "Browse files"            :n "."   #'find-file
@@ -616,7 +624,7 @@ current window."
    :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
    :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last
 
-   :desc "Switch to last buffer" :n "TAB"   #'spacemacs/alternate-buffer
+   :desc "Switch to last buffer" :n "TAB"   #'spacemacs/alternate-buffer-in-persp
 
 
    (:desc "previous..." :prefix "["
@@ -643,7 +651,7 @@ current window."
 
    (:desc "buffer" :prefix "b"
      :desc "New empty buffer"        :n "n" #'evil-buffer-new
-     :desc "Switch workspace buffer" :n "b" #'persp-switch-to-buffer
+     :desc "Switch workspace buffer" :n "b" #'spacemacs/persp-helm-mini
      :desc "Switch buffer"           :n "B" #'switch-to-buffer
      :desc "Kill buffer"             :n "d" #'doom/kill-this-buffer
      :desc "Kill buffer"             :n "k" #'doom/kill-this-buffer
@@ -655,7 +663,7 @@ current window."
      :desc "Previous buffer"         :n "[" #'doom/previous-buffer
      :desc "Sudo edit this file"     :n "S" #'doom/sudo-this-file)
 
-   (:desc "code" :prefix "c"
+   (:desc "eval" :prefix "e"
      :desc "List errors"               :n  "x" #'flycheck-list-errors
      :desc "Evaluate buffer/region"    :n  "e" #'+eval/buffer
                                        :v  "e" #'+eval/region
@@ -665,9 +673,6 @@ current window."
      :desc "Jump to references"        :n  "D" #'+jump/references
      :desc "Open REPL"                 :n  "r" #'+eval/open-repl
                                        :v  "r" #'+eval:repl)
-
-   (:desc "code" :prefix "e"
-     :desc "Revert buffer"               :n  "x" #'revert-buffer)
 
    (:desc "file" :prefix "f"
      :desc "File file"                 :n "f" #'find-file
@@ -723,8 +728,10 @@ current window."
      :desc "From kill-ring" :nv "y" #'counsel-yank-pop
      :desc "From snippet"   :nv "s" #'yas-insert-snippet)
 
-   (:desc "insert" :prefix "j"
-     :desc "Jump in" :nv "i" #'spacemacs/helm-jump-in-buffer)
+   (:desc "Jumping" :prefix "j"
+     :desc "Jump in" :nv "i" #'spacemacs/helm-jump-in-buffer
+     :desc "Jump to" :nv "j" #'evil-avy-goto-char
+     :desc "Jump to 2 char" :nv "J" #'evil-avy-goto-char-2)
 
    ;; Change to spacemacs prefix
    (:desc "workspace" :prefix "l"
@@ -787,6 +794,7 @@ current window."
    (:desc "project" :prefix "p"
      :desc "Browse project"          :n  "." (find-file-in! (doom-project-root))
      :desc "Find file in project"    :n  "/" #'projectile-find-file
+     :desc "Find file in project"    :n  "f" #'projectile-find-file
      :desc "Run cmd in project root" :nv "!" #'projectile-run-shell-command-in-root
      :desc "Switch project"          :n  "p" #'projectile-switch-project
      :desc "Recent project files"    :n  "r" #'projectile-recentf
@@ -883,6 +891,7 @@ current window."
 
  ;; company-mode (vim-like omnicompletion)
  :i "C-SPC"  #'+company/complete
+
  (:prefix "C-x"
    :i "C-l"   #'+company/whole-lines
    :i "C-k"   #'+company/dict-or-keywords
@@ -893,13 +902,15 @@ current window."
    :i "C-o"   #'company-capf
    :i "C-n"   #'company-dabbrev-code
    :i "C-p"   #'+company/dabbrev-code-previous)
+
  (:after company
    (:map company-active-map
      ;; Don't interfere with `evil-delete-backward-word' in insert mode
      "C-w"        nil
      "C-o"        #'company-search-kill-others
-     "C-n"        #'company-select-next
-     "C-p"        #'company-select-previous
+     "C-j"        #'company-select-next
+     "C-k"        #'company-select-previous
+     "C-l"        #'company-complete-selection
      "C-h"        #'company-quickhelp-manual-begin
      "C-S-h"      #'company-show-doc-buffer
      "C-S-s"      #'company-search-candidates
@@ -1071,7 +1082,8 @@ current window."
      "C-k"      #'helm-previous-line
      "C-h"      #'helm-next-source
      "C-S-h"      #'describe-key
-     "C-l"      #'helm-execute-persistent-action
+     ;; The same as return in normal helm
+     "C-l"      #'helm-maybe-exit-minibuffer
      "C-u"        #'helm-delete-minibuffer-contents
      "C-h"        #'backward-kill-word
      "C-r"        #'evil-paste-from-register ; Evil registers in helm! Glorious!
