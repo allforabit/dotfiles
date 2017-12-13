@@ -1,9 +1,16 @@
-* Doom init
+* Introduction
+Emacs config based on doom emacs. All config is divided up as much as is possible.
+* Emacs init
+This bootstraps doom and sets up a few things thtat this depends on such as the
+username.
+
+Only real updates to this should be to add doom modules and the likes.
+
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/init.el" :mkdirp yes
   ;;; init.el -*- lexical-binding: t; -*-
   ;;
   ;; Author:  Henrik Lissner <henrik@lissner.net>
-  ;; URL:     https://github.com/hlissner/.emacs.d
+  ;; URL:     https://github.com/allforabit/.emacs.d
   ;;
   ;;   =================     ===============     ===============   ========  ========
   ;;   \\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //
@@ -51,6 +58,7 @@
   (doom! :feature
           evil            ; come to the dark side, we have cookies
          jump            ; helping you get around
+         services
          snippets        ; my elves. They type so I don't have to
          file-templates  ; auto-snippets for empty files
          hydra           ; keybindings that stick around
@@ -121,7 +129,6 @@
         ;macos           ; MacOS-specific commands
          neotree         ; a project drawer, like NERDTree for vim
          password-store  ; password manager for nerds
-         prodigy         ; manage external services from within emacs
          rotate-text     ; cycle region at point between text candidates
          term            ; terminals in Emacs
          tmux            ; an API for interacting with tmux
@@ -152,16 +159,14 @@
          ;; Private modules named after your username are loaded automatically.
          ;; Leaving this here is harmless though. Also, they are omitted from
          ;; source control (except for mine; use it as a reference).
-         ;; original value: hlissner
+         ;; original value: allforabit
          :private allforabit)
 
         #+END_SRC
-
-        #+RESULTS:
-        : Doom modules initialized
 * Private init
+The private init is run before all other modules.
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/init.el" :mkdirp yes
-;;; private/hlissner/init.el -*- lexical-binding: t; -*-
+;;; private/allforabit/init.el -*- lexical-binding: t; -*-
 
 ;; I've swapped these keys on my keyboard
 (setq x-super-keysym 'alt
@@ -174,6 +179,10 @@
 (setq +org-dir "~/Bitbucket/org/")
 
 (after! org
+  ;; TODO Figure out how to get this to work
+  
+  (map! (:mode org-mode (:map ivy-mode-map
+        [remap imenu] #'counsel-org-goto)))
   (setq org-ellipsis "…"))
 
 (setq org-default-notes-file (concat +org-dir "notes.org")
@@ -188,10 +197,16 @@
          (file+headline org-default-notes-file "Inbox")
          "* %u %?\n%i" :prepend t :kill-buffer t)))
 
+;; Use git bash for shell
+;; TODO maybe should be msys2??
+;; (setq explicit-shell-file-name
+;;       "C:/Program Files (x86)/Git/bin/bash.exe")
+;; (setq shell-file-name explicit-shell-file-name)
+;; (add-to-list 'exec-path "C:/Program Files (x86)/Git/bin")
 
 ;; An extra measure to prevent the flash of unstyled mode-line while Emacs is
 ;; booting up (when Doom is byte-compiled).
-(setq-default mode-line-format nil)
+;; (setq-default mode-line-format nil)
 
 (set! :font "Source Code Pro" :size 13)
 (set! :variable-font "Georgia" :size 13)
@@ -217,40 +232,311 @@
 
 #+RESULTS:
 : +workspace--tabline
-* Packages
+* Packages  
+** Management
+*** [ ] Add image+
+ https://github.com/mhayashi1120/Emacs-imagex
+*** [ ] Add ahk
+https://melpa.org/#/ahk-mode
+** Main
 The packages to install go here.
 
 #+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/packages.el" :mkdirp yes
+;; TODO should config not be in config.el
 (package! drupal-mode
  :config
  (setq drupal-drush-program "c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat"))
 
+(package! rich-minority)
+(package! lispy)
 ;; (package! solarized-theme)
 
 ;; (package! org-trello)
 #+END_SRC
 
 #+RESULTS:
-| org-trello  |         |                                                                               |
-| drupal-mode | :config | (setq drupal-drush-program c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat) |
+| rich-minority           | :config | (rich-minority-mode 1)                                                        |
+| drupal-mode             | :config | (setq drupal-drush-program c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat) |
+| twittering-mode         |         |                                                                               |
+| elfeed-org              |         |                                                                               |
+| elfeed                  |         |                                                                               |
+| circe-notifications     |         |                                                                               |
+| circe                   |         |                                                                               |
+| mu4e-maildirs-extension |         |                                                                               |
+| ox-reveal               |         |                                                                               |
+| org-tree-slide          |         |                                                                               |
+| centered-window-mode    |         |                                                                               |
+| ox-pandoc               |         |                                                                               |
+| org-download            |         |                                                                               |
+| ob-translate            |         |                                                                               |
+| ob-sql-mode             |         |                                                                               |
+| ob-rust                 | :recipe | (ob-rust :fetcher github :repo zweifisch/ob-rust)                             |
+| ob-restclient           |         |                                                                               |
+| ob-redis                |         |                                                                               |
+| ob-mongo                |         |                                                                               |
+| ob-go                   |         |                                                                               |
+| toc-org                 |         |                                                                               |
+| org-bullets             | :recipe | (org-bullets :fetcher github :repo allforabit/org-bullets)                      |
+| org-plus-contrib        | :recipe | (org-plus-contrib :fetcher git :url http://orgmode.org/org-mode.git)          |
+| ssh-deploy              |         |                                                                               |
+| multi-term              |         |                                                                               |
+| rotate-text             | :recipe | (rotate-text :fetcher github :repo debug-ito/rotate-text.el)                  |
+| auth-password-store     |         |                                                                               |
+| password-store          |         |                                                                               |
+| pass                    |         |                                                                               |
+| neotree                 |         |                                                                               |
+| impatient-mode          |         |                                                                               |
+| htmlize                 |         |                                                                               |
+| gist                    |         |                                                                               |
+| dired-k                 |         |                                                                               |
+| stylus-mode             |         |                                                                               |
+| sass-mode               |         |                                                                               |
+| less-css-mode           |         |                                                                               |
+| company-web             |         |                                                                               |
+| web-mode                |         |                                                                               |
+| pug-mode                |         |                                                                               |
+| haml-mode               |         |                                                                               |
+| emmet-mode              |         |                                                                               |
+| counsel-css             | :recipe | (counsel-css :fetcher github :repo allforabit/emacs-counsel-css)                |
+| web-beautify            |         |                                                                               |
+| rainbow-mode            |         |                                                                               |
+| company-shell           |         |                                                                               |
+| company-restclient      |         |                                                                               |
+| restclient              |         |                                                                               |
+| flycheck-plantuml       |         |                                                                               |
+| plantuml-mode           |         |                                                                               |
+| company-php             |         |                                                                               |
+| phpunit                 |         |                                                                               |
+| php-refactor-mode       |         |                                                                               |
+| php-mode                |         |                                                                               |
+| php-extras              | :recipe | (php-extras :fetcher github :repo arnested/php-extras)                        |
+| php-boris               |         |                                                                               |
+| markdown-toc            |         |                                                                               |
+| markdown-mode           |         |                                                                               |
+| flycheck-ledger         |         |                                                                               |
+| evil-ledger             |         |                                                                               |
+| ledger-mode             |         |                                                                               |
+| ivy-bibtex              |         |                                                                               |
+| company-auctex          |         |                                                                               |
+| auctex                  |         |                                                                               |
+| xref-js2                |         |                                                                               |
+| company-tern            |         |                                                                               |
+| eslintd-fix             |         |                                                                               |
+| skewer-mode             |         |                                                                               |
+| tern                    |         |                                                                               |
+| nodejs-repl             |         |                                                                               |
+| rjsx-mode               |         |                                                                               |
+| js2-refactor            |         |                                                                               |
+| js2-mode                |         |                                                                               |
+| coffee-mode             |         |                                                                               |
+| groovy-mode             |         |                                                                               |
+| android-mode            |         |                                                                               |
+| hindent                 |         |                                                                               |
+| intero                  |         |                                                                               |
+| company-ghc             |         |                                                                               |
+| haskell-mode            |         |                                                                               |
+| flycheck-cask           |         |                                                                               |
+| slime                   |         |                                                                               |
+| overseer                |         |                                                                               |
+| macrostep               |         |                                                                               |
+| highlight-quoted        |         |                                                                               |
+| auto-compile            |         |                                                                               |
+| yaml-mode               |         |                                                                               |
+| vimrc-mode              |         |                                                                               |
+| toml-mode               |         |                                                                               |
+| json-mode               |         |                                                                               |
+| dockerfile-mode         |         |                                                                               |
+| unicode-fonts           |         |                                                                               |
+| ace-window              |         |                                                                               |
+| evil-goggles            |         |                                                                               |
+| nav-flash               |         |                                                                               |
+| hl-todo                 |         |                                                                               |
+| solaire-mode            |         |                                                                               |
+| doom-themes             |         |                                                                               |
+| ivy-hydra               |         |                                                                               |
+| swiper                  |         |                                                                               |
+| smex                    |         |                                                                               |
+| counsel-projectile      |         |                                                                               |
+| counsel                 |         |                                                                               |
+| ivy                     |         |                                                                               |
+| company-statistics      |         |                                                                               |
+| company-quickhelp       |         |                                                                               |
+| company-dict            |         |                                                                               |
+| company                 |         |                                                                               |
+| quickrun                |         |                                                                               |
+| persp-mode              |         |                                                                               |
+| magit                   |         |                                                                               |
+| gitignore-mode          |         |                                                                               |
+| gitconfig-mode          |         |                                                                               |
+| git-timemachine         |         |                                                                               |
+| git-link                |         |                                                                               |
+| git-gutter-fringe       |         |                                                                               |
+| flycheck-pos-tip        |         |                                                                               |
+| flycheck                |         |                                                                               |
+| flyspell-correct-ivy    |         |                                                                               |
+| flyspell-correct        |         |                                                                               |
+| auto-yasnippet          |         |                                                                               |
+| yasnippet               |         |                                                                               |
+| gxref                   |         |                                                                               |
+| dumb-jump               |         |                                                                               |
+| evil-visualstar         |         |                                                                               |
+| evil-vimish-fold        |         |                                                                               |
+| evil-surround           |         |                                                                               |
+| evil-snipe              |         |                                                                               |
+| evil-textobj-anyblock   |         |                                                                               |
+| evil-numbers            |         |                                                                               |
+| evil-multiedit          |         |                                                                               |
+| evil-mc                 |         |                                                                               |
+| evil-matchit            |         |                                                                               |
+| evil-indent-plus        |         |                                                                               |
+| evil-exchange           |         |                                                                               |
+| evil-escape             |         |                                                                               |
+| evil-embrace            |         |                                                                               |
+| evil-easymotion         |         |                                                                               |
+| evil-commentary         |         |                                                                               |
+| evil-args               |         |                                                                               |
+| evil                    |         |                                                                               |
+| hydra                   |         |                                                                               |
+| which-key               |         |                                                                               |
+| projectile              |         |                                                                               |
+| wgrep                   |         |                                                                               |
+| undo-tree               |         |                                                                               |
+| smartparens             |         |                                                                               |
+| smart-forward           |         |                                                                               |
+| pcre2el                 |         |                                                                               |
+| help-fns+               |         |                                                                               |
+| expand-region           |         |                                                                               |
+| editorconfig            |         |                                                                               |
+| command-log-mode        |         |                                                                               |
+| avy                     |         |                                                                               |
+| ace-link                |         |                                                                               |
+| shackle                 |         |                                                                               |
+| visual-fill-column      |         |                                                                               |
+| rainbow-delimiters      |         |                                                                               |
+| highlight-numbers       |         |                                                                               |
+| highlight-indentation   |         |                                                                               |
+| fringe-helper           |         |                                                                               |
+| all-the-icons           |         |                                                                               |
+| osx-clipboard           | :ignore | t                                                                             |
+| exec-path-from-shell    | :ignore | t                                                                             |
+| f                       |         |                                                                               |
+| s                       |         |                                                                               |
 
 * Config
-This is loaded last.
+This is loaded last. Most stuff should go in here.
 
 #+NAME: doom-drupal
 #+BEGIN_SRC emacs-lisp 
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes
+** Org
+ - Make org blocks editable courtesy of Jon Kitchen technique
+#+NAME: config-org
+#+BEGIN_SRC emacs-lisp
+(require 'lispy)
+(require 'org-mouse)
+
+(defcustom allforabit-src-block-keymaps
+  '()
+  "alist of custom keymaps for src blocks.")
+
+(setq allforabit-src-block-keymaps
+      `(("emacs-lisp" . ,(let ((map (make-composed-keymap `(,lispy-mode-map
+							    ,emacs-lisp-mode-map
+							    ,outline-minor-mode-map)
+							  org-mode-map)))
+			   (define-key map (kbd "C-c C-c") 'org-ctrl-c-ctrl-c)
+			   map))))
+
+(defun allforabit-add-keymap-to-src-blocks (limit)
+  "Add keymaps to src-blocks defined in `allforabit-src-block-keymaps'."
+  (let ((case-fold-search t)
+	lang)
+    (while (re-search-forward org-babel-src-block-regexp limit t)
+      (let ((lang (match-string 2))
+	    (beg (match-beginning 0))
+	    (end (match-end 0)))
+	(if (assoc (org-no-properties lang) allforabit-src-block-keymaps)
+	    (progn
+	      (add-text-properties
+	       beg end `(local-map ,(cdr (assoc
+					  (org-no-properties lang)
+					  allforabit-src-block-keymaps))))
+	      (add-text-properties
+	       beg end `(cursor-sensor-functions
+			 ((lambda (win prev-pos sym)
+			    ;; This simulates a mouse click and makes a menu change
+			    (org-mouse-down-mouse nil)))))))))))
+
+
+(defun allforabit-spoof-mode (orig-func &rest args)
+  "Advice function to spoof commands in org-mode src blocks.
+It is for commands that depend on the major mode. One example is
+`lispy--eval'."
+  (if (org-in-src-block-p)
+      (let ((major-mode (intern (format "%s-mode" (first (org-babel-get-src-block-info))))))
+	(apply orig-func args))
+    (apply orig-func args)))
+
+(define-minor-mode allforabit-src-keymap-mode
+  "Minor mode to add mode keymaps to src-blocks."
+  :init-value nil
+  (if allforabit-src-keymap-mode
+      (progn
+	(add-hook 'org-font-lock-hook #'allforabit-add-keymap-to-src-blocks t)
+	(add-to-list 'font-lock-extra-managed-props 'local-map)
+	(add-to-list 'font-lock-extra-managed-props 'cursor-sensor-functions)
+	(advice-add 'lispy--eval :around 'allforabit-spoof-mode)
+	(cursor-sensor-mode +1)
+	(message "allforabit-src-keymap-mode enabled"))
+    (remove-hook 'org-font-lock-hook #'allforabit-add-keymap-to-src-blocks)
+    (advice-remove 'lispy--eval 'allforabit-spoof-mode)
+    (cursor-sensor-mode -1))
+  (font-lock-fontify-buffer))
+
+(add-hook 'org-mode-hook (lambda ()
+			   (allforabit-src-keymap-mode +1)))
+#+END_SRC
+
+** Conclusion
+#+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes :noweb yes
 ;;; private/allforabit/config.el -*- lexical-binding: t; -*-
 ;; (def-package! solarized-theme 
 ;;   :demand t
 ;;   :config
 ;;   (load-theme 'solarized-dark))
+<<config-org>>
+
+
+;; Package to filter modeline items
+;; TODO not working at the moment
+(def-package! rich-minority
+  :config
+  (rich-minority-mode 1)
+  (setq rm-whitelist ""))
 
 ;; Don't use default snippets, use mine.
+;; TODO add my snippets
 (after! yasnippet
   (setq yas-snippet-dirs (list "~/Github/doom-emacs/modules/private/allforabit/snippets")))
+
+(after! prodigy
+  (prodigy-define-service
+    :name "WLB electron"
+    :command "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/node_modules/.bin/electron.cmd"
+    :args '(".")
+    :cwd "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/app"
+    :tags '(work)
+    :stop-signal 'sigkill
+    :kill-process-buffer-on-stop t)
+  (prodigy-define-service
+    :name "Campus 2017"
+    :command "gulp"
+    :args '("watch")
+    :cwd "c:/Users/admin/Documents/Bitbucket/campus/wp-content/themes/campus-theme/"
+    :tags '(work)
+    :stop-signal 'sigkill
+    :kill-process-buffer-on-stop t))
 
 ;; Make it possible to add hashes and euro symbols
 (setq mac-right-option-modifier nil)
@@ -263,18 +549,18 @@ This is loaded last.
   (load! +bindings)  ; my key bindings
   (load! +commands)) ; my custom ex commands
 
-(defvar +hlissner-dir (file-name-directory load-file-name))
-(defvar +hlissner-snippets-dir (expand-file-name "snippets/" +hlissner-dir))
+(defvar +allforabit-dir (file-name-directory load-file-name))
+(defvar +allforabit-snippets-dir (expand-file-name "snippets/" +allforabit-dir))
 
 (setq epa-file-encrypt-to user-mail-address
-      auth-sources (list (expand-file-name ".authinfo.gpg" +hlissner-dir))
+      auth-sources (list (expand-file-name ".authinfo.gpg" +allforabit-dir))
       +doom-modeline-buffer-file-name-style 'relative-from-project)
 
-(defun +hlissner*no-authinfo-for-tramp (orig-fn &rest args)
+(defun +allforabit*no-authinfo-for-tramp (orig-fn &rest args)
   "Don't look into .authinfo for local sudo TRAMP buffers."
   (let ((auth-sources (if (equal tramp-current-method "sudo") nil auth-sources)))
     (apply orig-fn args)))
-(advice-add #'tramp-read-passwd :around #'+hlissner*no-authinfo-for-tramp)
+(advice-add #'tramp-read-passwd :around #'+allforabit*no-authinfo-for-tramp)
 
 ;;
 (after! smartparens
@@ -318,7 +604,7 @@ This is loaded last.
 
 ;; app/irc
 ;; (after! circe
-;;   (setq +irc-notifications-watch-strings '("v0" "vnought" "hlissner"))
+;;   (setq +irc-notifications-watch-strings '("v0" "vnought" "allforabit"))
 
 ;;   (set! :irc "irc.snoonet.org"
 ;;     `(:tls t
@@ -327,7 +613,6 @@ This is loaded last.
 ;;       :sasl-username ,(+pass-get-user "irc/snoonet.org")
 ;;       :sasl-password ,(+pass-get-secret "irc/snoonet.org")
 ;;       :channels (:after-auth "#ynought"))))
-
 
 ;; app/email
 (after! mu4e
@@ -345,8 +630,10 @@ This is loaded last.
       (user-mail-address      . "kevnolan@gmail.com")
       (mu4e-compose-signature . "---\nKevin Nolan")))
   )
-        #+END_SRC
-* TODO Bindings
+
+#+END_SRC
+
+* [ ] Bindings
 :PROPERTIES:
 :END:
 
@@ -510,7 +797,7 @@ nil
 
 #+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/+bindings.el" :mkdirp yes
 
-;;; private/hlissner/+bindings.el -*- lexical-binding: t; -*-
+;;; private/allforabit/+bindings.el -*- lexical-binding: t; -*-
 
 (defmacro find-file-in! (path &optional project-p)
   "Returns an interactive function for searching files."
@@ -550,6 +837,8 @@ current perspective."
   (interactive)
   (with-persp-buffer-list ()
                           (helm-mini)))
+
+(map! :nv ";" #'evil-ex)
 
 (map!
  ;; --- Global keybindings ---------------------------
@@ -596,8 +885,8 @@ current perspective."
  "M-v"    #'clipboard-yank
  "M-f"    #'helm-swoop
  "C-M-f"  #'doom/toggle-fullscreen
- :m "A-j" #'+hlissner:multi-next-line
- :m "A-k" #'+hlissner:multi-previous-line
+ :m "A-j" #'+allforabit:multi-next-line
+ :m "A-k" #'+allforabit:multi-previous-line
  :m "'"   #'evil-snipe-repeat-reverse
  :nv "C-SPC" #'+evil:fold-toggle
  ;; Easier window navigation
@@ -705,13 +994,13 @@ current perspective."
      :desc "Find file from here"       :n "?" #'counsel-file-jump
      :desc "Find other file"           :n "a" #'projectile-find-other-file
      :desc "Open project editorconfig" :n "c" #'editorconfig-find-current-editorconfig
-     :desc "Find file in dotfiles"     :n "d" #'+hlissner/find-in-dotfiles
-     :desc "Browse dotfiles"           :n "D" #'+hlissner/browse-dotfiles
-     :desc "Find file in emacs.d"      :n "e" #'+hlissner/find-in-emacsd
-     :desc "Browse emacs.d"            :n "E" #'+hlissner/browse-emacsd
+     :desc "Find file in dotfiles"     :n "d" #'+allforabit/find-in-dotfiles
+     :desc "Browse dotfiles"           :n "D" #'+allforabit/browse-dotfiles
+     :desc "Find file in emacs.d"      :n "e" #'+allforabit/find-in-emacsd
+     :desc "Browse emacs.d"            :n "E" #'+allforabit/browse-emacsd
      :desc "Recent files"              :n "r" #'ivy-recentf
      :desc "Recent project files"      :n "R" #'projectile-recentf
-     :desc "Yank filename"             :n "y" #'+hlissner/yank-buffer-filename)
+     :desc "Yank filename"             :n "y" #'+allforabit/yank-buffer-filename)
 
    (:desc "git" :prefix "g"
      :desc "Git status"        :n  "S" #'magit-status
@@ -786,8 +1075,8 @@ current perspective."
 
 
    (:desc "notes" :prefix "n"
-     :desc "Find file in notes"    :n "n" #'+hlissner/find-in-notes
-     :desc "Browse notes"          :n "N" #'+hlissner/browse-notes
+     :desc "Find file in notes"    :n "n" #'+allforabit/find-in-notes
+     :desc "Browse notes"          :n "N" #'+allforabit/browse-notes
      :desc "Org capture"           :n "x" #'+org-capture/open
      :desc "Browse mode notes"     :n "m" #'+org/browse-notes-for-major-mode
      :desc "Browse project notes"  :n "p" #'+org/browse-notes-for-project)
@@ -852,7 +1141,7 @@ current perspective."
      :desc "New snippet"           :n  "n" #'yas-new-snippet
      :desc "Insert snippet"        :nv "i" #'yas-insert-snippet
      :desc "Find snippet for mode" :n  "s" #'yas-visit-snippet-file
-     :desc "Find snippet"          :n  "S" #'+hlissner/find-in-snippets)
+     :desc "Find snippet"          :n  "S" #'+allforabit/find-in-snippets)
    
    (:desc "toggle" :prefix "t"
      :desc "Flyspell"               :n "s" #'flyspell-mode
@@ -1433,7 +1722,7 @@ current perspective."
 
 * Commands
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/+commands.el" :mkdirp yes
-;;; private/hlissner/+commands.el -*- lexical-binding: t; -*-
+;;; private/allforabit/+commands.el -*- lexical-binding: t; -*-
 
 (defalias 'ex! 'evil-ex-define-cmd)
 
@@ -1479,8 +1768,8 @@ current perspective."
 ;; Dealing with buffers
 (ex! "clean[up]"   #'doom/cleanup-buffers)
 (ex! "k[ill]"      #'doom/kill-this-buffer)
-(ex! "k[ill]all"   #'+hlissner:kill-all-buffers)
-(ex! "k[ill]m"     #'+hlissner:kill-matching-buffers)
+(ex! "k[ill]all"   #'+allforabit:kill-all-buffers)
+(ex! "k[ill]m"     #'+allforabit:kill-matching-buffers)
 (ex! "k[ill]o"     #'doom/kill-other-buffers)
 (ex! "l[ast]"      #'doom/popup-restore)
 (ex! "m[sg]"       #'view-echo-area-messages)
@@ -1488,7 +1777,7 @@ current perspective."
 
 ;; Project navigation
 (ex! "a"           #'projectile-find-other-file)
-(ex! "cd"          #'+hlissner:cd)
+(ex! "cd"          #'+allforabit:cd)
 (cond ((featurep! :completion ivy)
        (ex! "ag"       #'+ivy:ag)
        (ex! "agc[wd]"  #'+ivy:ag-cwd)
@@ -1532,56 +1821,10 @@ current perspective."
 ;; Org-mode
 (ex! "cap"         #'+org-capture/dwim)
 #+END_SRC
-* Autoload
-#+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/autoloads.el" :mkdirp yes
-(message "hello")
-#+END_SRC
-# "~/Github/doom-emacs/modules/private/allforabit/autoload/evil.el"
-#+BEGIN_SRC emacs-lisp :tangle nil :mkdirp yes
+* [ ] Autoload
 
-;; ;;; private/allforabit/autoload/evil.el -*- lexical-binding: t; -*-
-
-;; ;;;###autoload (autoload '+allforabit:multi-next-line "private/allforabit/autoload/evil" nil t)
-;; (evil-define-motion +allforabit:multi-next-line (count)
-;;   "Move down 6 lines."
-;;   :type line
-;;   (let ((line-move-visual (or visual-line-mode (derived-mode-p 'text-mode))))
-;;     (evil-line-move (* 6 (or count 1)))))
-
-;; ;;;###autoload (autoload '+allforabit:multi-previous-line "private/allforabit/autoload/evil" nil t)
-;; (evil-define-motion +allforabit:multi-previous-line (count)
-;;   "Move up 6 lines."
-;;   :type line
-;;   (let ((line-move-visual (or visual-line-mode (derived-mode-p 'text-mode))))
-;;     (evil-line-move (- (* 6 (or count 1))))))
-
-;; ;;;###autoload (autoload '+allforabit:cd "private/allforabit/autoload/evil" nil t)
-;; (evil-define-command +allforabit:cd ()
-;;   "Change `default-directory' with `cd'."
-;;   (interactive "<f>")
-;;   (cd input))
-
-;; ;;;###autoload (autoload '+allforabit:kill-all-buffers "private/allforabit/autoload/evil" nil t)
-;; (evil-define-command +allforabit:kill-all-buffers (&optional bang)
-;;   "Kill all buffers. If BANG, kill current session too."
-;;   (interactive "<!>")
-;;   (if bang
-;;       (+workspace/kill-session)
-;;     (doom/kill-all-buffers)))
-
-;; ;;;###autoload (autoload '+allforabit:kill-matching-buffers "private/allforabit/autoload/evil" nil t)
-;; (evil-define-command +allforabit:kill-matching-buffers (&optional bang pattern)
-;;   "Kill all buffers matching PATTERN regexp. If BANG, only match project
-;; buffers."
-;;   (interactive "<a>")
-;;   (doom/kill-matching-buffers pattern bang))
-#+END_SRC
-
-# "~/Github/doom-emacs/modules/private/allforabit/autoload/allforabit.el"
-#+BEGIN_SRC emacs-lisp :tangle yes :mkdirp yes
-
+#+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/autoload/allforabit.el" :mkdirp yes
 ;;; private/allforabit/autoload/allforabit.el -*- lexical-binding: t; -*-
-
 ;;;###autoload
 (defun +allforabit/install-snippets ()
   "Install my snippets from https://github.com/allforabit/emacs-snippets into
@@ -1633,7 +1876,49 @@ private/allforabit/snippets."
 ;;;###autoload (autoload '+allforabit/browse-notes "private/allforabit/autoload/allforabit" nil t)
 (+allforabit-def-finder! notes +org-dir)
 #+END_SRC
+
+** Evil
+#+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/autoload/evil.el" :mkdirp yes
+;;; private/allforabit/autoload/evil.el -*- lexical-binding: t; -*-
+;;;###if (featurep! :feature evil)
+
+;;;###autoload (autoload '+allforabit:multi-next-line "private/allforabit/autoload/evil" nil t)
+(evil-define-motion +allforabit:multi-next-line (count)
+  "Move down 6 lines."
+  :type line
+  (let ((line-move-visual (or visual-line-mode (derived-mode-p 'text-mode))))
+    (evil-line-move (* 6 (or count 1)))))
+
+;;;###autoload (autoload '+allforabit:multi-previous-line "private/allforabit/autoload/evil" nil t)
+(evil-define-motion +allforabit:multi-previous-line (count)
+  "Move up 6 lines."
+  :type line
+  (let ((line-move-visual (or visual-line-mode (derived-mode-p 'text-mode))))
+    (evil-line-move (- (* 6 (or count 1))))))
+
+;;;###autoload (autoload '+allforabit:cd "private/allforabit/autoload/evil" nil t)
+(evil-define-command +allforabit:cd ()
+  "Change `default-directory' with `cd'."
+  (interactive "<f>")
+  (cd input))
+
+;;;###autoload (autoload '+allforabit:kill-all-buffers "private/allforabit/autoload/evil" nil t)
+(evil-define-command +allforabit:kill-all-buffers (&optional bang)
+  "Kill all buffers. If BANG, kill current session too."
+  (interactive "<!>")
+  (if bang
+      (+workspace/kill-session)
+    (doom/kill-all-buffers)))
+
+;;;###autoload (autoload '+allforabit:kill-matching-buffers "private/allforabit/autoload/evil" nil t)
+(evil-define-command +allforabit:kill-matching-buffers (&optional bang pattern)
+  "Kill all buffers matching PATTERN regexp. If BANG, only match project
+buffers."
+  (interactive "<a>")
+  (doom/kill-matching-buffers pattern bang))
+#+END_SRC
 * A thing
+Not sure what this is
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/a-thing.el" :mkdirp yes
 (map!
  ;; --- Global keybindings ---------------------------
