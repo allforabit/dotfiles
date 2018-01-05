@@ -63,7 +63,7 @@ Only real updates to this should be to add doom modules and the likes.
           evil            ; come to the dark side, we have cookies
           jump            ; helping you get around
           services
-          snippets        ; my elves. They type so I don't have to
+          ;; snippets        ; my elves. They type so I don't have to
           file-templates  ; auto-snippets for empty files
           hydra           ; keybindings that stick around
           spellcheck      ; tasing you for misspelling mispelling
@@ -82,7 +82,7 @@ Only real updates to this should be to add doom modules and the likes.
           :ui
           doom            ; what makes DOOM look the way it does
           doom-dashboard  ; a nifty splash screen for Emacs
-          ;; doom-modeline   ; a snazzy Atom-inspired mode-line
+          doom-modeline   ; a snazzy Atom-inspired mode-line
           doom-quit       ; DOOM quit-message prompts when you quit Emacs
           hl-todo         ; highlight TODO/FIXME/NOTE tags
           nav-flash       ; blink the current line after jumping
@@ -164,8 +164,7 @@ Only real updates to this should be to add doom modules and the likes.
           ;; original value: allforabit
           :private
           ;; hlissner
-          allforabit
-          )
+          allforabit)
 
         #+END_SRC
 
@@ -476,6 +475,7 @@ It is for commands that depend on the major mode. One example is
         evil-escape-key-sequence "fd"
         evil-escape-delay 0.25))
 
+(setq org-babel-clojure-backend 'cider)
 
 
 ;; app/irc
@@ -703,7 +703,7 @@ nil
 
 (defun spacemacs/alternate-buffer-in-persp ()
   "Switch back and forth between current and last buffer in the
-current perspective."
+  current perspective."
   (interactive)
   (with-persp-buffer-list ()
                           (switch-to-buffer (other-buffer (current-buffer) t))))
@@ -1057,38 +1057,38 @@ current perspective."
  ;; paste from recent yank register (which isn't overwritten)
  :v  "C-p" "\"0p"
 
- (:map evil-window-map ; prefix "C-w"
-   ;; Navigation
-   "C-h"     #'evil-window-left
-   "C-j"     #'evil-window-down
-   "C-k"     #'evil-window-up
-   "C-l"     #'evil-window-right
-   "C-w"     #'ace-window
-   ;; Swapping windows
-   "H"       #'+evil/window-move-left
-   "J"       #'+evil/window-move-down
-   "K"       #'+evil/window-move-up
-   "L"       #'+evil/window-move-right
-   "C-S-w"   #'ace-swap-window
-   ;; Window undo/redo
-   "u"       #'winner-undo
-   "C-u"     #'winner-undo
-   "C-r"     #'winner-redo
-   "o"       #'doom/window-enlargen
-   ;; Delete window
-   "c"       #'+workspace/close-window-or-workspace
-   "C"     #'ace-delete-window)
+  (:map evil-window-map ; prefix "C-w"
+        ;; Navigation
+        "C-h"     #'evil-window-left
+        "C-j"     #'evil-window-down
+        "C-k"     #'evil-window-up
+        "C-l"     #'evil-window-right
+        "C-w"     #'ace-window
+        ;; Swapping windows
+        "H"       #'+evil/window-move-left
+        "J"       #'+evil/window-move-down
+        "K"       #'+evil/window-move-up
+        "L"       #'+evil/window-move-right
+        "C-S-w"   #'ace-swap-window
+        ;; Window undo/redo
+        "u"       #'winner-undo
+        "C-u"     #'winner-undo
+        "C-r"     #'winner-redo
+        "o"       #'doom/window-enlargen
+        ;; Delete window
+        "c"       #'+workspace/close-window-or-workspace
+        "C"     #'ace-delete-window)
 
 
- ;; --- Plugin bindings ------------------------------
- ;; auto-yasnippet
- :i  [C-tab] #'aya-expand
- :nv [C-tab] #'aya-create
+  ;; --- Plugin bindings ------------------------------
+  ;; auto-yasnippet
+  :i  [C-tab] #'aya-expand
+  :nv [C-tab] #'aya-create
 
- ;; company-mode (vim-like omnicompletion)
- :i "C-SPC"  #'+company/complete
+  ;; company-mode (vim-like omnicompletion)
+  :i "C-SPC"  #'+company/complete
 
- (:prefix "C-x"
+  (:prefix "C-x"
    :i "C-l"   #'+company/whole-lines
    :i "C-k"   #'+company/dict-or-keywords
    :i "C-f"   #'company-files
