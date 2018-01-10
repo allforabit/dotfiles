@@ -60,17 +60,19 @@ Only real updates to this should be to add doom modules and the likes.
 
 
   (doom! :feature
+          popup
+          eval
           evil            ; come to the dark side, we have cookies
-          jump            ; helping you get around
-          services
-          ;; snippets        ; my elves. They type so I don't have to
           file-templates  ; auto-snippets for empty files
-          hydra           ; keybindings that stick around
+          (lookup           ; helps you navigate your code and documentation
+            +devdocs         ; ...on devdocs.io online
+            +docsets)        ; ...or in Dash docsets locally
+          services
+          snippets        ; my elves. They type so I don't have to
           spellcheck      ; tasing you for misspelling mispelling
           syntax-checker  ; tasing you for every semicolon you forget
           version-control ; remember, remember that commit in November
           workspaces      ; tab emulation, persistence & separate workspaces
-          eval            ; repls, runners 'n builders; run code, run
           ;debug           ; FIXME stepping through code, to help you add bugs
 
           :completion
@@ -87,7 +89,7 @@ Only real updates to this should be to add doom modules and the likes.
           hl-todo         ; highlight TODO/FIXME/NOTE tags
           nav-flash       ; blink the current line after jumping
           evil-goggles    ; display visual hints when editing in evil
-          (window-select +ace-window)
+          window-select
           unicode         ; extended unicode support for various languages
           ;tabbar          ; FIXME an (incomplete) tab bar for Emacs
 
@@ -871,8 +873,8 @@ nil
  "M-="    #'text-scale-increase
  "M--"    #'text-scale-decrease
  ;; Simple window navigation/manipulation
- "C-`"    #'doom/popup-toggle
- "C-~"    #'doom/popup-raise
+ "C-`"    #'+popup/toggle
+ "C-~"    #'+popup/raise
  "M-t"    #'+workspace/new
  "M-T"    #'+workspace/display
  "M-w"    #'delete-window
@@ -911,7 +913,7 @@ nil
  :en "C-l"    #'evil-window-right
 
  (:prefix "C-x"
-   "p" #'doom/other-popup)
+   "p" #'+popup/other)
 
 
  ;; (:desc "Minor mode" :prefix ","
@@ -928,7 +930,7 @@ nil
    :desc "Switch workspace buffer" :n ","   #'persp-switch-to-buffer
    :desc "Switch buffer"           :n "<"   #'switch-to-buffer
    :desc "Browse files"            :n "."   #'find-file
-   :desc "Toggle last popup"       :n "~"   #'doom/popup-toggle
+   :desc "Toggle last popup"       :n "~"   #'+popup/toggle
    :desc "Eval expression"         :n "`"   #'eval-expression
    :desc "Blink cursor line"       :n "DEL" #'+doom/blink-cursor
    :desc "Jump to bookmark"        :n "RET" #'bookmark-jump
@@ -1033,7 +1035,7 @@ nil
      :desc "Apropos"               :n "a" #'apropos
      :desc "Reload theme"          :n "R" #'doom/reload-theme
      :desc "Find library"          :n "l" #'find-library
-     :desc "Toggle Emacs log"      :n "m" #'doom/popup-toggle-messages
+     :desc "Toggle Emacs log"      :n "m" #'view-echo-area-messages
      :desc "Command log"           :n "L" #'global-command-log-mode
      :desc "Describe function"     :n "f" #'describe-function
      :desc "Describe key"          :n "k" #'describe-key
@@ -1179,9 +1181,9 @@ nil
  :n  "[w" #'+workspace/switch-left
  :m  "gt" #'+workspace/switch-right
  :m  "gT" #'+workspace/switch-left
- :m  "gd" #'+jump/definition
- :m  "gD" #'+jump/references
- :m  "gh" #'+jump/documentation
+ :m  "gd" #'+lookup/definition
+ :m  "gD" #'+lookup/references
+ :m  "gh" #'+lookup/documentation
  :n  "gp" #'+evil/reselect-paste
  :n  "gr" #'+eval:region
  :n  "gR" #'+eval/buffer
@@ -1266,7 +1268,7 @@ nil
  (:after counsel
    (:map counsel-ag-map
      [backtab]  #'+ivy/wgrep-occur  ; search/replace on results
-     "C-SPC"    #'counsel-git-grep-recenter   ; preview
+     "C-SPC"    #'ivy-call-and-recenter   ; preview
      "M-RET"    (+ivy-do-action! #'+ivy-git-grep-other-window-action)))
 
  ;; evil-commentary
@@ -1675,7 +1677,7 @@ nil
       ;; for C-e, except it will ignore comments and trailing whitespace before
       ;; jumping to eol.
       :i "C-a" #'doom/backward-to-bol-or-indent
-      :i "C-e" #'doom/forward-to-last-non-comment-or-eol
+      :i "C-e" #'doom/forward-to-last-non-comment-or-eol
       :i "C-u" #'doom/backward-kill-to-bol-and-indent
 
       ;; textmate-esque newline insertion
@@ -1726,7 +1728,7 @@ nil
         "A-;" #'eval-expression)
 
       (:map tabulated-list-mode-map
-        [remap evil-record-macro] #'doom/popup-close-maybe)
+        [remap evil-record-macro] #'popup/close-maybe)
 
       (:after view
         (:map view-mode-map "<escape>" #'View-quit-all)))
