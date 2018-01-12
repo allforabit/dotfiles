@@ -267,9 +267,15 @@ The packages to install go here.
   :recipe (:fetcher github
            :repo "allforabit/emacs-snippets"
            :files ("*")))
+
+(package! fakecygpty 
+  :recipe (:fetcher github
+           :repo "d5884/fakecygpty"
+           :files ("*")))
 #+END_SRC
 
 #+RESULTS:
+| fakecygpty      | :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*))                |
 | emacs-snippets  | :recipe | (emacs-snippets :fetcher github :repo allforabit/emacs-snippets :files (*))   |
 | list-processes+ |         |                                                                               |
 | livid-mode      |         |                                                                               |
@@ -322,10 +328,10 @@ This is loaded last. Most stuff should go in here.
 #+BEGIN_SRC js
 // this code goes in skewer.js, to replace the current version of skewer.fn.eval.
 /**
- * Handles an code evaluation request from Emacs.
- * @param request The request object sent by Emacs
- * @returns The result object to be returned to Emacs
- */
+ ,* Handles an code evaluation request from Emacs.
+ ,* @param request The request object sent by Emacs
+ ,* @returns The result object to be returned to Emacs
+ ,*/
 skewer.fn.evalBabel = function(request) {
     var result = {
         strict: request.strict
@@ -375,7 +381,8 @@ skewer.fn.evalBabel = function(request) {
 <<config-skewer-js>>
 "))
 
-(set! :popup "^\\*Org Src"    '((size . 0.95)) '((quit) (select . t)))
+;; Setup org src to use more space
+(set! :popup "^\\*Org Src"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
 
 (remove-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
 (add-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
@@ -391,8 +398,10 @@ skewer.fn.evalBabel = function(request) {
         (skewer-eval full-body (lambda (result)
                                  (let ((value))
                                    (goto-char pos)
-                                   (org-babel-insert-result
-                                    (alist-get 'value result)))) :type "eval")
+                                   (print (alist-get 'value result))
+                                   ;; (org-babel-insert-result
+                                   ;;  (alist-get 'value result))
+                                   )) :type "eval")
         nil)
     (apply oldFunc body params nil)))
 
@@ -479,22 +488,74 @@ It is for commands that depend on the major mode. One example is
     (cursor-sensor-mode -1))
   (font-lock-fontify-buffer))
 
-(add-hook 'org-mode-hook (lambda ()
-			   (allforabit-src-keymap-mode +1)))
+;; (add-hook 'org-mode-hook (lambda ()
+;; 			   (allforabit-src-keymap-mode +1)))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((clojure     . t)
    (emacs-lisp . t)))
-
-(setq a4b-thing '((id . "6c08260711072da") (type . "eval") (status . "success") (value . "hello") (strict) (time . 1.701)))
-
-(alist-get 'value a4b-thing)
-
 #+END_SRC
 
 #+RESULTS: config-org
-: hello
+
+** Term
+#+NAME: config-term
+#+BEGIN_SRC emacs-lisp
+;; (def-package! fakecygpty
+;;   :config
+;;   (message "Activating Fake cyg pty")
+;;   (fakecygpty-activate))
+
+;; (make-comint-in-buffer "cmd" nil "cmd" nil)
+;; (setq explicit-shell-file-name "c:/msys64/usr/bin/bash.exe")
+;; (setq shell-file-name explicit-shell-file-name)
+#+END_SRC
+
+#+RESULTS: config-term
+: c:/msys64/usr/bin/bash.exe
+
+** Services
+#+NAME: config-services
+#+BEGIN_SRC emacs-lisp
+(after! prodigy
+  (prodigy-define-service
+    :name "WLB electron"
+    :command "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/node_modules/.bin/electron.cmd"
+    :args '(".")
+    :cwd "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/app"
+    :tags '(work)
+    :stop-signal 'sigkill
+    :kill-process-buffer-on-stop t)
+  (prodigy-define-service
+    :name "Campus 2017"
+    :command "gulp"
+    :args '("watch")
+    :cwd "c:/Users/admin/Documents/Bitbucket/campus/wp-content/themes/campus-theme/"
+    :tags '(work)
+    :stop-signal 'sigkill
+    :kill-process-buffer-on-stop t)
+  (prodigy-define-service
+    :name "React sandbox"
+    :command "yarn"
+    :args '("start")
+    :cwd "c:/Users/admin/Documents/Bitbucket/org/code/js/react"
+    :tags '(play)
+    :stop-signal 'sigkill
+    :kill-process-buffer-on-stop t)
+(prodigy-define-service
+    :name "Mailcatcher (1080, 1025)"
+    :command "mailcatcher"
+    :tags '(work)
+    :stop-signal 'sigkill
+    :kill-process-buffer-on-stop t))
+#+END_SRC
+
+#+RESULTS: config-services
+| :name | Mailcatcher (1080, 1025) | :command | mailcatcher                                                                          | :tags | (work)  | :stop-signal | sigkill                                                                   | :kill-process-buffer-on-stop | t      |              |         |                              |   |
+| :name | React sandbox            | :command | webpack-dev-server                                                                   | :args | (watch) | :cwd         | c:/Users/admin/Documents/Bitbucket/org/code/js/react                      | :tags                        | (play) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |
+| :name | Campus 2017              | :command | gulp                                                                                 | :args | (watch) | :cwd         | c:/Users/admin/Documents/Bitbucket/campus/wp-content/themes/campus-theme/ | :tags                        | (work) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |
+| :name | WLB electron             | :command | c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/node_modules/.bin/electron.cmd | :args | (.)     | :cwd         | c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/app                 | :tags                        | (work) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |
 
 ** Conclusion
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes :noweb yes
@@ -505,6 +566,9 @@ It is for commands that depend on the major mode. One example is
 ;;   (load-theme 'solarized-dark))
 <<config-org>>
 <<config-temp-mode>>
+<<config-term>>
+<<config-services>>
+
 
 ;; Make magit work
 (set! :popup "^\\*magit" :ignore)
@@ -531,29 +595,7 @@ It is for commands that depend on the major mode. One example is
 
 (def-package! emacs-snippets :after yasnippet)
 
-(after! prodigy
-  (prodigy-define-service
-    :name "WLB electron"
-    :command "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/node_modules/.bin/electron.cmd"
-    :args '(".")
-    :cwd "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/app"
-    :tags '(work)
-    :stop-signal 'sigkill
-    :kill-process-buffer-on-stop t)
-  (prodigy-define-service
-    :name "Campus 2017"
-    :command "gulp"
-    :args '("watch")
-    :cwd "c:/Users/admin/Documents/Bitbucket/campus/wp-content/themes/campus-theme/"
-    :tags '(work)
-    :stop-signal 'sigkill
-    :kill-process-buffer-on-stop t)
-(prodigy-define-service
-    :name "Mailcatcher (1080, 1025)"
-    :command "mailcatcher"
-    :tags '(work)
-    :stop-signal 'sigkill
-    :kill-process-buffer-on-stop t))
+
 
 ;; Make it possible to add hashes and euro symbols
 (setq mac-right-option-modifier nil)
@@ -845,21 +887,46 @@ nil
      :desc "Switch to 7th workspace"  :n "7"   (λ! (+workspace/switch-to 6))
      :desc "Switch to 8th workspace"  :n "8"   (λ! (+workspace/switch-to 7))
      :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
-     :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last))
-
+     :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last)
+   
+   (:desc "open" :prefix "o"
+          :desc "Terminal"              :n  "t" #'+eshell/open-popup
+          :desc "Terminal in project"   :n  "T" #'projectile-run-eshell)
+   
+   (:desc "project" :prefix "p"
+          :desc "Pop term in project"     :n  "o" #'projectile-run-eshell)
+   
+   )
+(:map evil-window-map ; prefix "C-w"
+        "C"     #'ace-delete-window)
 
   (:map evil-window-map ; prefix "C-w"
         "C"     #'ace-delete-window)
 
- ;; ivy
- (:after ivy
-   :map ivy-minibuffer-map
-   "C-h" #'ivy-backward-delete-char))
+  ;; ivy
+  ;; May not need to redefine all these
+  (:after ivy
+    :map ivy-minibuffer-map
+    "C-h" #'ivy-backward-delete-char)
 
-        #+END_SRC
+ 
+  ;; Add j/k bindings
+  (:after company
+    (:map company-active-map
+      ;; Don't interfere with `evil-delete-backward-word' in insert mode
+      "C-w"        nil
+      "C-o"        #'company-search-kill-others
+      "C-j"        #'company-select-next
+      "C-k"        #'company-select-previous
+      "C-l"        #'company-complete-selection)
+    ;; Automatically applies to `company-filter-map'
+    (:map company-search-map
+      "C-j"        #'company-search-repeat-forward
+      "C-k"        #'company-search-repeat-backward)))
+    #+END_SRC
 
         #+RESULTS:
-        : ivy-backward-delete-char
+        : company-search-repeat-backward
 
 * Git ignore
 #+BEGIN_SRC txt :tangle "~/Github/doom-emacs/modules/private/allforabit/.gitignore" :mkdirp yes
