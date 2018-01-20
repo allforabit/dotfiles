@@ -327,11 +327,13 @@ This is loaded last. Most stuff should go in here.
 #+NAME: config-skewer-js
 #+BEGIN_SRC js
 // this code goes in skewer.js, to replace the current version of skewer.fn.eval.
+
 /**
  ,* Handles an code evaluation request from Emacs.
  ,* @param request The request object sent by Emacs
  ,* @returns The result object to be returned to Emacs
  ,*/
+
 
 skewer.fn.evalBabel = function(request) {
     var result = {
@@ -366,6 +368,9 @@ skewer.fn.evalBabel = function(request) {
     result.time = (skewer.now() - start) / 1000;
     return result;
 };
+
+
+
 #+END_SRC
 
 #+RESULTS: config-skewer-js
@@ -582,6 +587,20 @@ It is for commands that depend on the major mode. One example is
 
 #+RESULTS: config-lookup
 : eww
+** JS
+Js is evaluated in a temporary folder, so node_path needs to be explicitly set
+#+NAME: config-js
+#+BEGIN_SRC emacs-lisp
+(setenv "NODE_PATH"
+  (concat
+   "~/Documents/Bitbucket/org/node_modules" ":"
+   (getenv "NODE_PATH")
+  )
+)
+#+END_SRC
+
+#+RESULTS: config-js
+: ~/Documents/Bitbucket/org/node_modules:~/Documents/Bitbucket/org/node_modules:
 
 ** Conclusion
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes :noweb yes
@@ -595,7 +614,12 @@ It is for commands that depend on the major mode. One example is
 <<config-term>>
 <<config-services>>
 <<config-lookup>>
+<<config-js>>
 
+
+;; Image refresh fix
+;; https://emacs.stackexchange.com/questions/2303/making-an-image-ie-image-mode-auto-reload-changes-from-disk
+(add-hook 'image-mode #'auto-image-file-mode)
 
 ;; Make magit work
 (set! :popup "^\\*magit" :ignore)
