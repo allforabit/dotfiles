@@ -132,7 +132,7 @@ Only real updates to this should be to add doom modules and the likes.
           ;scala           ; java, but good
           sh              ; she sells (ba|z)sh shells on the C xor
           ;swift           ; who asked for emoji variables?
-          ;typescript      ; javascript, but better
+          typescript      ; javascript, but better
           web             ; the tubes
           :tools
           dired           ; making dired pretty [functional]
@@ -176,6 +176,33 @@ Only real updates to this should be to add doom modules and the likes.
 The private init is run before all other modules.
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/init.el" :mkdirp yes
 ;;; private/allforabit/init.el -*- lexical-binding: t; -*-
+
+;; To fix node modules??
+;; Maybe should be only added in special circumstances
+(setq org-babel-temporary-directory "~/Documents/Bitbucket/org/tmp")
+
+(defvar +org-babel-languages
+  '(calc
+    css
+    emacs-lisp
+    haskell
+    js
+    typescript
+    latex
+    ledger
+    lilypond
+    lisp
+    matlab
+    plantuml
+    python
+    restclient ; ob-restclient
+    ruby
+    rust       ; ob-rust
+    shell
+    sqlite
+    sql-mode   ; ob-sql-mode
+    translate) ; ob-translate
+  "A list of org-babel languages to load.")
 
 ;; I've swapped these keys on my keyboard
 (setq x-super-keysym 'alt
@@ -252,6 +279,7 @@ The packages to install go here.
  (setq drupal-drush-program "c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat"))
 
 
+(package! ob-typescript)
 (package! rich-minority)
 (package! lispy)
 ;; (package! psysh)
@@ -281,6 +309,7 @@ The packages to install go here.
 | livid-mode      |         |                                                                               |
 | lispy           |         |                                                                               |
 | rich-minority   |         |                                                                               |
+| ob-typescript   |         |                                                                               |
 | drupal-mode     | :config | (setq drupal-drush-program c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat) |
 
 * Config
@@ -510,13 +539,15 @@ It is for commands that depend on the major mode. One example is
 ;; (add-hook 'org-mode-hook (lambda ()
 ;; 			   (allforabit-src-keymap-mode +1)))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((clojure     . t)
-   (emacs-lisp . t)))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '((clojure     . t)
+;;    (emacs-lisp . t)))
+
 #+END_SRC
 
 #+RESULTS: config-org
+: ~/Documents/Bitbucket/org/tmp
 
 ** Term
 #+NAME: config-term
@@ -597,10 +628,12 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
    (getenv "NODE_PATH")
   )
 )
+
+(def-package! ob-typescript)
+
 #+END_SRC
 
 #+RESULTS: config-js
-: ~/Documents/Bitbucket/org/node_modules:~/Documents/Bitbucket/org/node_modules:
 
 ** Conclusion
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes :noweb yes
