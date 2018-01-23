@@ -180,8 +180,10 @@ The private init is run before all other modules.
 ;; To fix node modules??
 ;; Maybe should be only added in special circumstances
 (setq org-babel-temporary-directory "~/Documents/Bitbucket/org/tmp")
-;; TODO this may be slow
-(mkdir org-babel-temporary-directory)
+;; TODO this slow down startup
+
+(unless (file-directory-p org-babel-temporary-directory)
+  (make-directory org-babel-temporary-directory))
 
 (defvar +org-babel-languages
   '(calc
