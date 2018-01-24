@@ -83,7 +83,7 @@ Only real updates to this should be to add doom modules and the likes.
           :ui
           doom            ; what makes DOOM look the way it does
           doom-dashboard  ; a nifty splash screen for Emacs
-          ;; doom-modeline   ; a snazzy Atom-inspired mode-line
+          doom-modeline   ; a snazzy Atom-inspired mode-line
           doom-quit       ; DOOM quit-message prompts when you quit Emacs
           hl-todo         ; highlight TODO/FIXME/NOTE tags
           nav-flash       ; blink the current line after jumping
@@ -177,6 +177,37 @@ The private init is run before all other modules.
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/init.el" :mkdirp yes
 ;;; private/allforabit/init.el -*- lexical-binding: t; -*-
 
+;; To fix node modules??
+;; Maybe should be only added in special circumstances
+(setq org-babel-temporary-directory "~/Documents/Bitbucket/org/tmp")
+;; TODO this slow down startup
+
+(unless (file-directory-p org-babel-temporary-directory)
+  (make-directory org-babel-temporary-directory))
+
+(defvar +org-babel-languages
+  '(calc
+    css
+    emacs-lisp
+    haskell
+    js
+    typescript
+    latex
+    ledger
+    lilypond
+    lisp
+    matlab
+    plantuml
+    python
+    restclient ; ob-restclient
+    ruby
+    rust       ; ob-rust
+    shell
+    sqlite
+    sql-mode   ; ob-sql-mode
+    translate) ; ob-translate
+  "A list of org-babel languages to load.")
+
 ;; I've swapped these keys on my keyboard
 (setq x-super-keysym 'alt
       x-alt-keysym   'meta
@@ -252,13 +283,12 @@ The packages to install go here.
  (setq drupal-drush-program "c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat"))
 
 
+(package! ob-typescript)
 (package! rich-minority)
 (package! lispy)
 ;; (package! psysh)
 (package! livid-mode)
 (package! list-processes+)
-(package! firestarter)
-(package! indium)
 ;; (packp)
 
 ;; (package! solarized-theme)
@@ -277,7 +307,14 @@ The packages to install go here.
 #+END_SRC
 
 #+RESULTS:
-| :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*)) |
+| fakecygpty      | :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*))                |
+| emacs-snippets  | :recipe | (emacs-snippets :fetcher github :repo allforabit/emacs-snippets :files (*))   |
+| list-processes+ |         |                                                                               |
+| livid-mode      |         |                                                                               |
+| lispy           |         |                                                                               |
+| rich-minority   |         |                                                                               |
+| ob-typescript   |         |                                                                               |
+| drupal-mode     | :config | (setq drupal-drush-program c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat) |
 
 * Config
 This is loaded last. Most stuff should go in here.
@@ -316,7 +353,6 @@ This is loaded last. Most stuff should go in here.
 
 #+RESULTS: config-temp-mode
 | keymap |
-** 
 
 ** Org
  - Make org blocks editable courtesy of Jon Kitchen technique
@@ -324,11 +360,14 @@ This is loaded last. Most stuff should go in here.
 #+NAME: config-skewer-js
 #+BEGIN_SRC js
 // this code goes in skewer.js, to replace the current version of skewer.fn.eval.
+
 /**
  ,* Handles an code evaluation request from Emacs.
  ,* @param request The request object sent by Emacs
  ,* @returns The result object to be returned to Emacs
  ,*/
+
+
 skewer.fn.evalBabel = function(request) {
     var result = {
         strict: request.strict
@@ -362,16 +401,27 @@ skewer.fn.evalBabel = function(request) {
     result.time = (skewer.now() - start) / 1000;
     return result;
 };
+
+
+
 #+END_SRC
 
 #+RESULTS: config-skewer-js
 
 #+NAME: config-org
 #+BEGIN_SRC emacs-lisp :noweb yes  
+;; TODO these requires should probably be done using after and the likes
+;; Check in doom project
 (require 'lispy)
 (require 'org-mouse)
 (require 'ob-js)
 (require 'cl)
+(require 'rjsx-mode)
+
+(defun a4b-org-mode-hook ()
+  (setq-local yas-buffer-local-condition
+              '(not (org-in-src-block-p t))))
+(add-hook 'org-mode-hook #'a4b-org-mode-hook)
 
 (defun a4b-org-babel-skewer-js-hook ()
   (insert "
@@ -417,7 +467,7 @@ contents before any export processing."
                   (lambda (el)
                     (when (equal 'headline (org-element-type el))
                       (org-element-put-property el
-                        :level (1- (org-element-property :level el))))))
+                                                :level (1- (org-element-property :level el))))))
                 (org-element-insert-before el object))
               (cddr object))
         (org-element-extract-element object)))
@@ -432,32 +482,37 @@ contents before any export processing."
   "alist of custom keymaps for src blocks.")
 
 (setq allforabit-src-block-keymaps
-      `(("emacs-lisp" . ,(let ((map (make-composed-keymap `(,lispy-mode-map
-							    ,emacs-lisp-mode-map
-							    ,outline-minor-mode-map)
-							  org-mode-map)))
-			   (define-key map (kbd "C-c C-c") 'org-ctrl-c-ctrl-c)
-			   map))))
+        `(("js" . ,(let ((map (make-composed-keymap `(,rjsx-mode-map
+                                                      ,outline-minor-mode-map)
+                                                    org-mode-map)))
+                     (define-key map (kbd "C-c C-c") 'org-ctrl-c-ctrl-c)
+                     map))
+          ("emacs-lisp" . ,(let ((map (make-composed-keymap `(,lispy-mode-map
+                                                              ,emacs-lisp-mode-map
+                                                              ,outline-minor-mode-map)
+                                                            org-mode-map)))
+                             (define-key map (kbd "C-c C-c") 'org-ctrl-c-ctrl-c)
+                             map))))
 
 (defun allforabit-add-keymap-to-src-blocks (limit)
   "Add keymaps to src-blocks defined in `allforabit-src-block-keymaps'."
   (let ((case-fold-search t)
-	lang)
+        lang)
     (while (re-search-forward org-babel-src-block-regexp limit t)
       (let ((lang (match-string 2))
-	    (beg (match-beginning 0))
-	    (end (match-end 0)))
-	(if (assoc (org-no-properties lang) allforabit-src-block-keymaps)
-	    (progn
-	      (add-text-properties
-	       beg end `(local-map ,(cdr (assoc
-					  (org-no-properties lang)
-					  allforabit-src-block-keymaps))))
-	      (add-text-properties
-	       beg end `(cursor-sensor-functions
-			 ((lambda (win prev-pos sym)
-			    ;; This simulates a mouse click and makes a menu change
-			    (org-mouse-down-mouse nil)))))))))))
+            (beg (match-beginning 0))
+            (end (match-end 0)))
+        (if (assoc (org-no-properties lang) allforabit-src-block-keymaps)
+            (progn
+              (add-text-properties
+               beg end `(local-map ,(cdr (assoc
+                                          (org-no-properties lang)
+                                          allforabit-src-block-keymaps))))
+              (add-text-properties
+               beg end `(cursor-sensor-functions
+                         ((lambda (win prev-pos sym)
+                            ;; This simulates a mouse click and makes a menu change
+                            (org-mouse-down-mouse nil)))))))))))
 
 
 (defun allforabit-spoof-mode (orig-func &rest args)
@@ -466,7 +521,7 @@ It is for commands that depend on the major mode. One example is
 `lispy--eval'."
   (if (org-in-src-block-p)
       (let ((major-mode (intern (format "%s-mode" (first (org-babel-get-src-block-info))))))
-	(apply orig-func args))
+        (apply orig-func args))
     (apply orig-func args)))
 
 (define-minor-mode allforabit-src-keymap-mode
@@ -474,12 +529,12 @@ It is for commands that depend on the major mode. One example is
   :init-value nil
   (if allforabit-src-keymap-mode
       (progn
-	(add-hook 'org-font-lock-hook #'allforabit-add-keymap-to-src-blocks t)
-	(add-to-list 'font-lock-extra-managed-props 'local-map)
-	(add-to-list 'font-lock-extra-managed-props 'cursor-sensor-functions)
-	(advice-add 'lispy--eval :around 'allforabit-spoof-mode)
-	(cursor-sensor-mode +1)
-	(message "allforabit-src-keymap-mode enabled"))
+        (add-hook 'org-font-lock-hook #'allforabit-add-keymap-to-src-blocks t)
+        (add-to-list 'font-lock-extra-managed-props 'local-map)
+        (add-to-list 'font-lock-extra-managed-props 'cursor-sensor-functions)
+        (advice-add 'lispy--eval :around 'allforabit-spoof-mode)
+        (cursor-sensor-mode +1)
+        (message "allforabit-src-keymap-mode enabled"))
     (remove-hook 'org-font-lock-hook #'allforabit-add-keymap-to-src-blocks)
     (advice-remove 'lispy--eval 'allforabit-spoof-mode)
     (cursor-sensor-mode -1))
@@ -488,34 +543,15 @@ It is for commands that depend on the major mode. One example is
 ;; (add-hook 'org-mode-hook (lambda ()
 ;; 			   (allforabit-src-keymap-mode +1)))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((clojure     . t)
-   (emacs-lisp . t)))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '((clojure     . t)
+;;    (emacs-lisp . t)))
+
 #+END_SRC
 
 #+RESULTS: config-org
-** Firestarter
-#+NAME: config-firestarter
-#+BEGIN_SRC emacs-lisp
-(def-package! firestarter)
-#+END_SRC
-
-#+RESULTS: config-firestarter
-
-** JS
-#+NAME: config-indium
-#+BEGIN_SRC emacs-lisp
-(def-package! indium
-:config
- (add-hook 'js2-mode-hook #'indium-interaction-mode))
-
-;; Make js2 default to 2 spaces
-(setq js2-basic-offset 2)
-#+END_SRC
-
-#+RESULTS: config-indium
-: 2
+: ~/Documents/Bitbucket/org/tmp
 
 ** Term
 #+NAME: config-term
@@ -570,10 +606,38 @@ It is for commands that depend on the major mode. One example is
 #+END_SRC
 
 #+RESULTS: config-services
-| :name | Mailcatcher (1080, 1025) | :command | mailcatcher                                                                          | :tags | (work)  | :stop-signal | sigkill                                                                   | :kill-process-buffer-on-stop | t      |              |         |                              |   |
-| :name | React sandbox            | :command | webpack-dev-server                                                                   | :args | (watch) | :cwd         | c:/Users/admin/Documents/Bitbucket/org/code/js/react                      | :tags                        | (play) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |
-| :name | Campus 2017              | :command | gulp                                                                                 | :args | (watch) | :cwd         | c:/Users/admin/Documents/Bitbucket/campus/wp-content/themes/campus-theme/ | :tags                        | (work) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |
-| :name | WLB electron             | :command | c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/node_modules/.bin/electron.cmd | :args | (.)     | :cwd         | c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/app                 | :tags                        | (work) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |
+| :name | Mailcatcher (1080, 1025) | :command | mailcatcher                                                                          | :tags | (work)  | :stop-signal | sigkill                                                                   | :kill-process-buffer-on-stop | t      |              |         |                              |   |          |                   |
+| :name | React sandbox            | :command | yarn                                                                                 | :args | (start) | :cwd         | c:/Users/admin/Documents/Bitbucket/org/code/js/react                      | :tags                        | (play) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |          |                   |
+| :name | Campus 2017              | :command | gulp                                                                                 | :args | (watch) | :cwd         | c:/Users/admin/Documents/Bitbucket/campus/wp-content/themes/campus-theme/ | :tags                        | (work) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |          |                   |
+| :name | WLB electron             | :command | c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/node_modules/.bin/electron.cmd | :args | (.)     | :cwd         | c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/app                 | :tags                        | (work) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |          |                   |
+| :name | Angular 4 sandbox        | :command | yarn                                                                                 | :args | (start) | :cwd         | ~/Documents/Github/angular4-sandbox/                                      | :tags                        | (play) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t | :process | Angular 4 sandbox |
+
+
+** Lookup
+
+#+NAME: config-lookup
+#+BEGIN_SRC emacs-lisp
+;; (setq +lookup-open-url-fn 'eww)
+#+END_SRC
+
+#+RESULTS: config-lookup
+: eww
+** JS
+Js is evaluated in a temporary folder, so node_path needs to be explicitly set
+#+NAME: config-js
+#+BEGIN_SRC emacs-lisp
+(setenv "NODE_PATH"
+  (concat
+   "~/Documents/Bitbucket/org/node_modules" ":"
+   (getenv "NODE_PATH")
+  )
+)
+
+(def-package! ob-typescript)
+
+#+END_SRC
+
+#+RESULTS: config-js
 
 ** Conclusion
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes :noweb yes
@@ -586,9 +650,13 @@ It is for commands that depend on the major mode. One example is
 <<config-temp-mode>>
 <<config-term>>
 <<config-services>>
-<<config-firestarter>>
-<<config-indium>>
+<<config-lookup>>
+<<config-js>>
 
+
+;; Image refresh fix
+;; https://emacs.stackexchange.com/questions/2303/making-an-image-ie-image-mode-auto-reload-changes-from-disk
+(add-hook 'image-mode #'auto-image-file-mode)
 
 ;; Make magit work
 (set! :popup "^\\*magit" :ignore)
@@ -948,7 +1016,13 @@ nil
         #+RESULTS:
         : company-search-repeat-backward
 
+        
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
 * Git ignore
+
 #+BEGIN_SRC txt :tangle "~/Github/doom-emacs/modules/private/allforabit/.gitignore" :mkdirp yes
 snippets
 .authinfo.gpg
