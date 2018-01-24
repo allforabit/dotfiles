@@ -83,7 +83,7 @@ Only real updates to this should be to add doom modules and the likes.
           :ui
           doom            ; what makes DOOM look the way it does
           doom-dashboard  ; a nifty splash screen for Emacs
-          doom-modeline   ; a snazzy Atom-inspired mode-line
+          ;; doom-modeline   ; a snazzy Atom-inspired mode-line
           doom-quit       ; DOOM quit-message prompts when you quit Emacs
           hl-todo         ; highlight TODO/FIXME/NOTE tags
           nav-flash       ; blink the current line after jumping
@@ -132,7 +132,7 @@ Only real updates to this should be to add doom modules and the likes.
           ;scala           ; java, but good
           sh              ; she sells (ba|z)sh shells on the C xor
           ;swift           ; who asked for emoji variables?
-          ;typescript      ; javascript, but better
+          typescript      ; javascript, but better
           web             ; the tubes
           :tools
           dired           ; making dired pretty [functional]
@@ -257,6 +257,8 @@ The packages to install go here.
 ;; (package! psysh)
 (package! livid-mode)
 (package! list-processes+)
+(package! firestarter)
+(package! indium)
 ;; (packp)
 
 ;; (package! solarized-theme)
@@ -275,13 +277,7 @@ The packages to install go here.
 #+END_SRC
 
 #+RESULTS:
-| fakecygpty      | :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*))                |
-| emacs-snippets  | :recipe | (emacs-snippets :fetcher github :repo allforabit/emacs-snippets :files (*))   |
-| list-processes+ |         |                                                                               |
-| livid-mode      |         |                                                                               |
-| lispy           |         |                                                                               |
-| rich-minority   |         |                                                                               |
-| drupal-mode     | :config | (setq drupal-drush-program c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat) |
+| :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*)) |
 
 * Config
 This is loaded last. Most stuff should go in here.
@@ -320,6 +316,7 @@ This is loaded last. Most stuff should go in here.
 
 #+RESULTS: config-temp-mode
 | keymap |
+** 
 
 ** Org
  - Make org blocks editable courtesy of Jon Kitchen technique
@@ -498,6 +495,27 @@ It is for commands that depend on the major mode. One example is
 #+END_SRC
 
 #+RESULTS: config-org
+** Firestarter
+#+NAME: config-firestarter
+#+BEGIN_SRC emacs-lisp
+(def-package! firestarter)
+#+END_SRC
+
+#+RESULTS: config-firestarter
+
+** JS
+#+NAME: config-indium
+#+BEGIN_SRC emacs-lisp
+(def-package! indium
+:config
+ (add-hook 'js2-mode-hook #'indium-interaction-mode))
+
+;; Make js2 default to 2 spaces
+(setq js2-basic-offset 2)
+#+END_SRC
+
+#+RESULTS: config-indium
+: 2
 
 ** Term
 #+NAME: config-term
@@ -568,6 +586,8 @@ It is for commands that depend on the major mode. One example is
 <<config-temp-mode>>
 <<config-term>>
 <<config-services>>
+<<config-firestarter>>
+<<config-indium>>
 
 
 ;; Make magit work
