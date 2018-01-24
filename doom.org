@@ -102,7 +102,7 @@ Only real updates to this should be to add doom modules and the likes.
                               ;; TODO +publish
                               )
           ;assembly        ; assembly for fun or debugging
-          cc              ; C/C++/Obj-C madness
+          ;; cc              ; C/C++/Obj-C madness
           clojure
           ;crystal         ; ruby at the speed of c
           ;csharp          ; unity, .NET, and mono shenanigans
@@ -111,7 +111,7 @@ Only real updates to this should be to add doom modules and the likes.
           ;elm             ; care for a cup of TEA?
           emacs-lisp      ; drown in parentheses
           ;go              ; the hipster dialect
-          haskell         ; a language that's lazier than I am
+          ;; haskell         ; a language that's lazier than I am
           ;hy              ; readability of scheme w/ speed of python
           java            ; the poster child for carpal tunnel syndrome
           javascript      ; all(hope(abandon(ye(who(enter(here))))))
@@ -187,9 +187,11 @@ The private init is run before all other modules.
 
 (defvar +org-babel-languages
   '(calc
+    clojure
     css
     emacs-lisp
     haskell
+    browser
     js
     typescript
     latex
@@ -282,6 +284,10 @@ The packages to install go here.
  :config
  (setq drupal-drush-program "c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat"))
 
+(package! ob-browser)
+(package! firestarter)
+
+(package! ob-clojure-literate)
 
 (package! ob-typescript)
 (package! rich-minority)
@@ -300,6 +306,7 @@ The packages to install go here.
            :repo "allforabit/emacs-snippets"
            :files ("*")))
 
+;; Should only be windows
 (package! fakecygpty 
   :recipe (:fetcher github
            :repo "d5884/fakecygpty"
@@ -307,14 +314,7 @@ The packages to install go here.
 #+END_SRC
 
 #+RESULTS:
-| fakecygpty      | :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*))                |
-| emacs-snippets  | :recipe | (emacs-snippets :fetcher github :repo allforabit/emacs-snippets :files (*))   |
-| list-processes+ |         |                                                                               |
-| livid-mode      |         |                                                                               |
-| lispy           |         |                                                                               |
-| rich-minority   |         |                                                                               |
-| ob-typescript   |         |                                                                               |
-| drupal-mode     | :config | (setq drupal-drush-program c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat) |
+| :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*)) |
 
 * Config
 This is loaded last. Most stuff should go in here.
@@ -553,6 +553,32 @@ It is for commands that depend on the major mode. One example is
 #+RESULTS: config-org
 : ~/Documents/Bitbucket/org/tmp
 
+** Org babel clojure
+#+NAME: config-org-babel-clojure
+#+BEGIN_SRC emacs-lisp
+(def-package! ob-clojure-literate)
+
+(after! org
+  (setq ob-clojure-literate-auto-jackin-p t)
+  (add-hook 'org-mode-hook #'ob-clojure-literate-mode))
+#+END_SRC
+
+#+RESULTS: config-org-babel-clojure
+** Org browser
+#+BEGIN_SRC emacs-lisp
+(def-package! ob-browser)
+#+END_SRC
+
+#+RESULTS:
+: t
+
+** Firestarter
+#+BEGIN_SRC emacs-lisp
+(def-package! firestarter)
+#+END_SRC
+
+#+RESULTS:
+: t
 ** Term
 #+NAME: config-term
 #+BEGIN_SRC emacs-lisp
@@ -652,6 +678,7 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 <<config-services>>
 <<config-lookup>>
 <<config-js>>
+<<config-org-babel-clojure>>
 
 
 ;; Image refresh fix
@@ -1028,16 +1055,9 @@ snippets
 .authinfo.gpg
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-(message "hi")
+#+BEGIN_SRC clojure :session "*cider-repl ob-clojure*" :results output
+(println "Hello there")
 #+END_SRC
 
 #+RESULTS:
-: hi
-
-#+BEGIN_SRC js
-return 17 + 201;
-#+END_SRC
-
-#+RESULTS:
-: 218
+: Hello there
