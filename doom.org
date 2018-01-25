@@ -1,3 +1,4 @@
+# -*- firestarter: org-babel-tangle -*- 
 * Introduction
 Emacs config based on doom emacs. All config is divided up as much as is possible.
 ** Ideas
@@ -428,6 +429,14 @@ skewer.fn.evalBabel = function(request) {
 <<config-skewer-js>>
 "))
 
+;; ;; Remove wrapper
+;; (setq org-babel-js-function-wrapper
+;;   "\n%s\n")
+
+;; ;; Default wrapper
+;; (setq org-babel-js-function-wrapper
+;;   "require('sys').print(require('sys').inspect(function(){\n%s\n}()));")
+
 ;; Setup org src to use more space
 (set! :popup "^\\*Org Src"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
 
@@ -551,16 +560,16 @@ It is for commands that depend on the major mode. One example is
 #+END_SRC
 
 #+RESULTS: config-org
-: ~/Documents/Bitbucket/org/tmp
 
 ** Org babel clojure
 #+NAME: config-org-babel-clojure
 #+BEGIN_SRC emacs-lisp
 (def-package! ob-clojure-literate)
 
-(after! org
-  (setq ob-clojure-literate-auto-jackin-p t)
-  (add-hook 'org-mode-hook #'ob-clojure-literate-mode))
+;; TODO figure out how it works and re-enable
+;; (after! org
+;;   (setq ob-clojure-literate-auto-jackin-p t)
+;;   (add-hook 'org-mode-hook #'ob-clojure-literate-mode))
 #+END_SRC
 
 #+RESULTS: config-org-babel-clojure
@@ -573,12 +582,15 @@ It is for commands that depend on the major mode. One example is
 : t
 
 ** Firestarter
+#+NAME: config-firestarter
 #+BEGIN_SRC emacs-lisp
-(def-package! firestarter)
+(def-package! firestarter
+:config
+  ;; Start by default
+  (firestarter-mode))
+(put 'firestarter 'safe-local-variable 'identity)
 #+END_SRC
 
-#+RESULTS:
-: t
 ** Term
 #+NAME: config-term
 #+BEGIN_SRC emacs-lisp
@@ -679,6 +691,7 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 <<config-lookup>>
 <<config-js>>
 <<config-org-babel-clojure>>
+<<config-firestarter>>
 
 
 ;; Image refresh fix
