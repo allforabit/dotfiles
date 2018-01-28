@@ -192,9 +192,9 @@ The private init is run before all other modules.
     css
     emacs-lisp
     haskell
-    browser
+    ;; browser
     js
-    typescript
+    ;; typescript
     latex
     ledger
     lilypond
@@ -202,7 +202,7 @@ The private init is run before all other modules.
     matlab
     plantuml
     python
-    restclient ; ob-restclient
+    ;; restclient ; ob-restclient
     ruby
     rust       ; ob-rust
     shell
@@ -285,7 +285,7 @@ The packages to install go here.
  :config
  (setq drupal-drush-program "c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat"))
 
-(package! ob-browser)
+;; (package! ob-browser)
 (package! ob-async)
 (package! firestarter)
 
@@ -421,8 +421,6 @@ skewer.fn.evalBabel = function(request) {
 (require 'cl)
 (require 'rjsx-mode)
 
-
-(def-package! ob-async)
 
 (defun a4b-org-mode-hook ()
   (setq-local yas-buffer-local-condition
@@ -565,6 +563,11 @@ It is for commands that depend on the major mode. One example is
 #+END_SRC
 
 #+RESULTS: config-org
+** Org babel
+#+NAME: config-org-babel
+#+BEGIN_SRC emacs-lisp
+(def-package! ob-async)
+#+END_SRC
 
 ** Org babel clojure
 #+NAME: config-org-babel-clojure
@@ -578,7 +581,8 @@ It is for commands that depend on the major mode. One example is
 #+END_SRC
 
 #+RESULTS: config-org-babel-clojure
-** Org browser
+** Org babel browser
+#+NAME: config-org-babel-browser
 #+BEGIN_SRC emacs-lisp
 (def-package! ob-browser)
 #+END_SRC
@@ -689,12 +693,13 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 ;;   :demand t
 ;;   :config
 ;;   (load-theme 'solarized-dark))
-<<config-org>>
 <<config-temp-mode>>
 <<config-term>>
 <<config-services>>
 <<config-lookup>>
 <<config-js>>
+<<config-org>>
+<<config-org-babel>>
 <<config-org-babel-clojure>>
 <<config-firestarter>>
 
@@ -1080,3 +1085,4 @@ snippets
 
 #+RESULTS:
 : Hello there
+
