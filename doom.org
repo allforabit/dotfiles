@@ -286,6 +286,7 @@ The packages to install go here.
  (setq drupal-drush-program "c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat"))
 
 (package! ob-browser)
+(package! ob-async)
 (package! firestarter)
 
 (package! ob-clojure-literate)
@@ -419,6 +420,9 @@ skewer.fn.evalBabel = function(request) {
 (require 'ob-js)
 (require 'cl)
 (require 'rjsx-mode)
+
+
+(def-package! ob-async)
 
 (defun a4b-org-mode-hook ()
   (setq-local yas-buffer-local-condition
