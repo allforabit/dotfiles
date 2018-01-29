@@ -420,6 +420,10 @@ skewer.fn.evalBabel = function(request) {
 (require 'cl)
 (require 'rjsx-mode)
 
+(setq org-pandoc-options
+        '((standalone . t)
+          (mathjax . t)))
+
 (defun a4b-org-mode-hook ()
   (setq-local yas-buffer-local-condition
               '(not (org-in-src-block-p t))))
