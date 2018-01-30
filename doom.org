@@ -378,6 +378,7 @@ fi
 #+BEGIN_SRC emacs-lisp :noweb yes
 (def-package! git-auto-commit-mode
   :config
+  ;; Push automatically
   (setq gac-automatically-push-p 1))
 
 (def-package! evil-magit)
