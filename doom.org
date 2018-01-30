@@ -298,6 +298,7 @@ The packages to install go here.
 (package! livid-mode)
 (package! list-processes+)
 (package! xmlgen)
+(package! indium)
 ;; (packp)
 
 ;; (package! solarized-theme)
@@ -317,7 +318,19 @@ The packages to install go here.
 #+END_SRC
 
 #+RESULTS:
-| :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*)) |
+| fakecygpty          | :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*))                |
+| emacs-snippets      | :recipe | (emacs-snippets :fetcher github :repo allforabit/emacs-snippets :files (*))   |
+| indium              |         |                                                                               |
+| xmlgen              |         |                                                                               |
+| list-processes+     |         |                                                                               |
+| livid-mode          |         |                                                                               |
+| lispy               |         |                                                                               |
+| rich-minority       |         |                                                                               |
+| ob-typescript       |         |                                                                               |
+| ob-clojure-literate |         |                                                                               |
+| firestarter         |         |                                                                               |
+| ob-async            |         |                                                                               |
+| drupal-mode         | :config | (setq drupal-drush-program c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat) |
 
 * Config
 This is loaded last. Most stuff should go in here.
@@ -681,6 +694,7 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 )
 
 (def-package! ob-typescript)
+(def-package! indium)
 
 #+END_SRC
 
