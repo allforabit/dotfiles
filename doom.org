@@ -652,6 +652,7 @@ It is for commands that depend on the major mode. One example is
 ** Services
 #+NAME: config-services
 #+BEGIN_SRC emacs-lisp
+;; TODO move out of public repo
 (after! prodigy
   (prodigy-define-service
     :name "WLB electron"
