@@ -805,11 +805,6 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 
 (def-package! list-processes+)
 
-;; ;; Don't use default snippets, use mine.
-;; ;; TODO add my snippets
-;; (after! yasnippet
-;;   (setq yas-snippet-dirs (list "~/Github/doom-emacs/modules/private/allforabit/snippets")))
-
 (def-package! emacs-snippets
 :after yasnippet
 :config
