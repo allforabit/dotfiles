@@ -279,7 +279,11 @@ https://melpa.org/#/ahk-mode
 ** Main
 The packages to install go here.
 
+
 #+BEGIN_SRC emacs-lisp :tangle  "~/Github/doom-emacs/modules/private/allforabit/packages.el" :mkdirp yes
+
+(package! evil-collection)
+
 ;; TODO should config not be in config.el
 (package! drupal-mode
  :config
@@ -343,6 +347,13 @@ This is loaded last. Most stuff should go in here.
 
 #+NAME: doom-drupal
 #+BEGIN_SRC emacs-lisp 
+#+END_SRC
+
+** Evil
+Evil collection
+#+NAME: config-evil
+#+BEGIN_SRC emacs-lisp :results silent
+(def-package! evil-collection)
 #+END_SRC
 
 ** Temp mode
@@ -651,6 +662,13 @@ It is for commands that depend on the major mode. One example is
     :stop-signal 'sigkill
     :kill-process-buffer-on-stop t)
   (prodigy-define-service
+    :name "Plein Air"
+    :command "yarn run start"
+    :cwd "~/Documents/Github/plein-air/wp-content/themes/plein-air"
+    :tags '(work)
+    :stop-signal 'sigkill
+    :kill-process-buffer-on-stop t)
+  (prodigy-define-service
     :name "Campus 2017"
     :command "gulp"
     :args '("watch")
@@ -675,11 +693,6 @@ It is for commands that depend on the major mode. One example is
 #+END_SRC
 
 #+RESULTS: config-services
-| :name | Mailcatcher (1080, 1025) | :command | mailcatcher                                                                          | :tags | (work)  | :stop-signal | sigkill                                                                   | :kill-process-buffer-on-stop | t      |              |         |                              |   |          |                   |
-| :name | React sandbox            | :command | yarn                                                                                 | :args | (start) | :cwd         | c:/Users/admin/Documents/Bitbucket/org/code/js/react                      | :tags                        | (play) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |          |                   |
-| :name | Campus 2017              | :command | gulp                                                                                 | :args | (watch) | :cwd         | c:/Users/admin/Documents/Bitbucket/campus/wp-content/themes/campus-theme/ | :tags                        | (work) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |          |                   |
-| :name | WLB electron             | :command | c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/node_modules/.bin/electron.cmd | :args | (.)     | :cwd         | c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/app                 | :tags                        | (work) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t |          |                   |
-| :name | Angular 4 sandbox        | :command | yarn                                                                                 | :args | (start) | :cwd         | ~/Documents/Github/angular4-sandbox/                                      | :tags                        | (play) | :stop-signal | sigkill | :kill-process-buffer-on-stop | t | :process | Angular 4 sandbox |
 
 
 ** Lookup
@@ -724,6 +737,7 @@ Magit keybindings
 ;;   :demand t
 ;;   :config
 ;;   (load-theme 'solarized-dark))
+<<config-evil>>
 <<config-temp-mode>>
 <<config-term>>
 <<config-services>>
