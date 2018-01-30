@@ -284,6 +284,8 @@ The packages to install go here.
 
 (package! evil-collection)
 
+(package! git-auto-commit-mode)
+
 ;; TODO should config not be in config.el
 (package! drupal-mode
  :config
@@ -725,7 +727,6 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 ** Git
 Magit keybindings
 
-
 #+NAME: config-git-pull-if-clean
 #+BEGIN_SRC bash
 if [ -z '$(git status --porcelain)' ]; then 
@@ -738,6 +739,7 @@ fi
 
 #+NAME: config-git
 #+BEGIN_SRC emacs-lisp :noweb yes
+(def-package! git-auto-commit-mode)
 (def-package! evil-magit)
 
 (defun a4b-git-pull-if-clean ()
@@ -745,6 +747,8 @@ fi
   (message (shell-command-to-string "
 <<config-git-pull-if-clean>>
 ")))
+
+
 #+END_SRC
 
 #+RESULTS: config-git
