@@ -724,12 +724,33 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 #+RESULTS: config-js
 ** Git
 Magit keybindings
+
+
+#+NAME: config-git-pull-if-clean
+#+BEGIN_SRC bash
+if [ -z '$(git status --porcelain)' ]; then 
+  echo 'clean'
+  git pull
+else 
+  echo 'dirty'
+fi
+#+END_SRC
+
 #+NAME: config-git
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :noweb yes
 (def-package! evil-magit)
+
+(defun a4b-git-pull-if-clean ()
+  (interactive)
+  (message (shell-command-to-string "
+<<config-git-pull-if-clean>>
+")))
 #+END_SRC
 
 #+RESULTS: config-git
+: a4b-git-pull-if-clean
+
+
 
 ** Conclusion
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes :noweb yes
