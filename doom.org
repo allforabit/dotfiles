@@ -180,6 +180,7 @@ The private init is run before all other modules.
 
 (setq evil-want-integration nil)
 
+
 ;; To fix node modules??
 ;; Maybe should be only added in special circumstances
 (setq org-babel-temporary-directory "~/Documents/Bitbucket/org/tmp")
@@ -766,6 +767,7 @@ fi
 ;;   :config
 ;;   (load-theme 'solarized-dark))
 <<config-evil>>
+<<config-git>>
 <<config-temp-mode>>
 <<config-term>>
 <<config-services>>
