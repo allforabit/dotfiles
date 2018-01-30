@@ -321,7 +321,7 @@ The packages to install go here.
 
 (package! emacs-snippets
   :recipe (:fetcher github
-           :repo "allforabit/emacs-snippets"
+           :repo "hlissner/emacs-snippets"
            :files ("*")))
 
 ;; Should only be windows
