@@ -299,6 +299,11 @@ The packages to install go here.
 (package! list-processes+)
 (package! xmlgen)
 (package! indium)
+
+;; Git requirements
+(package! evil-magit)
+
+
 ;; (packp)
 
 ;; (package! solarized-theme)
@@ -320,6 +325,7 @@ The packages to install go here.
 #+RESULTS:
 | fakecygpty          | :recipe | (fakecygpty :fetcher github :repo d5884/fakecygpty :files (*))                |
 | emacs-snippets      | :recipe | (emacs-snippets :fetcher github :repo allforabit/emacs-snippets :files (*))   |
+| evil-magit          |         |                                                                               |
 | indium              |         |                                                                               |
 | xmlgen              |         |                                                                               |
 | list-processes+     |         |                                                                               |
@@ -702,6 +708,14 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 #+END_SRC
 
 #+RESULTS: config-js
+** Git
+Magit keybindings
+#+NAME: config-git
+#+BEGIN_SRC emacs-lisp
+(def-package! evil-magit)
+#+END_SRC
+
+#+RESULTS: config-git
 
 ** Conclusion
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/config.el" :mkdirp yes :noweb yes
