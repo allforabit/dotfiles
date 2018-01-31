@@ -174,7 +174,6 @@ Only real updates to this should be to add doom modules and the likes.
 
         #+RESULTS:
         : Doom modules initialized
-
 * Private init
 The private init is run before all other modules.
 #+BEGIN_SRC emacs-lisp :tangle "~/Github/doom-emacs/modules/private/allforabit/init.el" :mkdirp yes
@@ -323,7 +322,7 @@ The packages to install go here.
 
 (package! emacs-snippets
   :recipe (:fetcher github
-           :repo "allforabit/emacs-snippets"
+           :repo "hlissner/emacs-snippets"
            :files ("*")))
 
 ;; Should only be windows
@@ -808,12 +807,10 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 
 (def-package! list-processes+)
 
-;; ;; Don't use default snippets, use mine.
-;; ;; TODO add my snippets
-;; (after! yasnippet
-;;   (setq yas-snippet-dirs (list "~/Github/doom-emacs/modules/private/allforabit/snippets")))
-
-(def-package! emacs-snippets :after yasnippet)
+(def-package! emacs-snippets
+:after yasnippet
+:config
+(add-to-list 'yas-snippet-dirs "~/Documents/Github/dotfiles/emacs/snippets"))
 
 
 
@@ -1166,4 +1163,3 @@ snippets
 
 #+RESULTS:
 : Hello there
-
