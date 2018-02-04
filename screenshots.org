@@ -94,4 +94,7 @@ Example:
 - [[https://www.vmix.com/software/download.aspx][Screenshot tool from vmix]]
 ** Wasamasa flipbook
 - [[https://github.com/wasamasa/quasiconf-2014/blob/master/code/flipbook.el][Flipbook by Wasamasa]]
+- [[https://www.youtube.com/watch?v=x1t9b7Fqo9c][Video wasamasa graphics emacs]]
+- https://github.com/wasamasa/quasiconf-2015
+- https://www.youtube.com/watch?v=NBArWrn6FnY&feature=youtu.be 
 
