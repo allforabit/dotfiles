@@ -5,6 +5,8 @@ Emacs config based on doom emacs. All config is divided up as much as is possibl
 - Make source block keys work only when entering insert mode
 - In general see if there are ways to take advantage of evil setup in org mode
 - Get rid of emacs keybindings completely and only leave evil bindings
+- Link window layouts to org mode project definitions
+- Add screenshot module
 * Emacs init
 This bootstraps doom and sets up a few things thtat this depends on such as the
 username.
