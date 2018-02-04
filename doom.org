@@ -433,13 +433,15 @@ fi
 
 #+RESULTS: config-temp-mode
 | keymap |
-
-** Org
- - Make org blocks editable courtesy of Jon Kitchen technique
- - Make it possible to send org babel js to skewer mode
-#+NAME: config-skewer-js
-#+BEGIN_SRC js
-// this code goes in skewer.js, to replace the current version of skewer.fn.eval.
+** PDF
+#+NAME: config-pdf
+#+BEGIN_SRC emacs-lisp :results silent
+(def-package! pdf-tools
+  :if (display-graphic-p)
+  :mode ("\\.pdf$" . pdf-view-mode)
+  :init (load "pdf-tools-autoloads" nil t)
+  :config (pdf-tools-install))
+#+END_SRC
 
 /**
  ,* Handles an code evaluation request from Emacs.
@@ -783,6 +785,7 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 <<config-services>>
 <<config-lookup>>
 <<config-js>>
+<<config-pdf>>
 <<config-org>>
 <<config-org-babel>>
 <<config-org-babel-clojure>>
