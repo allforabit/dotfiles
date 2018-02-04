@@ -373,7 +373,8 @@ Evil collection
   (setq evil-collection-company-use-tng nil
         evil-collection-outline-bind-tab-p nil
         evil-collection-term-sync-state-and-mode-p nil)
-  (evil-collection-init))
+  ; (evil-collection-init)
+)
 #+END_SRC
 
 ** Git
