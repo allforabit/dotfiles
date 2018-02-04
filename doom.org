@@ -367,7 +367,13 @@ This is loaded last. Most stuff should go in here.
 Evil collection
 #+NAME: config-evil
 #+BEGIN_SRC emacs-lisp :results silent
-(def-package! evil-collection)
+(def-package! evil-collection
+  :after evil
+  :config
+  (setq evil-collection-company-use-tng nil
+        evil-collection-outline-bind-tab-p nil
+        evil-collection-term-sync-state-and-mode-p nil)
+  (evil-collection-init))
 #+END_SRC
 
 ** Git
