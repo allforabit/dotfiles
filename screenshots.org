@@ -92,3 +92,6 @@ Example:
 ** Make it a major mode (like pdf-view)
 ** Use syphon (OSX) and SPOUT (Windows) to capture GPU screenshots
 - [[https://www.vmix.com/software/download.aspx][Screenshot tool from vmix]]
+** Wasamasa flipbook
+- [[https://github.com/wasamasa/quasiconf-2014/blob/master/code/flipbook.el][Flipbook by Wasamasa]]
+
