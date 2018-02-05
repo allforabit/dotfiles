@@ -56,7 +56,9 @@ Only real updates to this should be to add doom modules and the likes.
 (when (string-equal system-type "windows-nt")
   (setenv "PATH"
           (concat
-           ;; "C:/msys64/mingw64/bin" ";"
+           ;; Use windows node
+           "C:/Program Files/nodejs" ";"
+           "C:/msys64/mingw64/bin" ";"
            "C:/msys64/usr/bin" ";"
            (getenv "PATH"))))
 
@@ -65,7 +67,7 @@ Only real updates to this should be to add doom modules and the likes.
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
        popup             ; tame sudden yet inevitable temporary windows
-       ;debugger           ; FIXME stepping through code, to help you add bugs
+                                        ;debugger           ; FIXME stepping through code, to help you add bugs
        eval            ; repls, runners 'n builders; run code, run
        evil            ; come to the dark side, we have cookies
        file-templates  ; auto-snippets for empty files
