@@ -1,4 +1,3 @@
-# -*- firestarter: org-babel-tangle -*- 
 #+TITLE: Screenshots
 * Ideas
 ** Use create image
