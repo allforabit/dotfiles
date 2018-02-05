@@ -49,46 +49,38 @@ Example:
 ** Use chrome devtools screenshot facility
 - [[https://github.com/tryggvigy/chrome-devtools-protocol-screenshot][Chrome devtools screenshot link]]
 - No need to use full library, just use CDP:
-  #+BEGIN_SRC js
- function singlePage(data) {
-  CDP({port: program.remoteDebuggingPort}, async (client) => {
-    const {Page, Emulation, Runtime} = client;
+#+NAME: chrome-take-screenshot
+#+BEGIN_SRC js
 
-    const originalDimentions = await Page
-      .getLayoutMetrics()
-      .then(r => r.layoutViewport)
+const CDP = require('chrome-remote-interface')
+const fs = require('fs')
+const path = require('path')
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-    if (program.breakPoints) {
-      for(b of program.breakPoints) {
-        await Emulation.setVisibleSize({
-          width: b,
-          height: originalDimentions.clientHeight,
-        });
+const port = 9222;
 
-        const b64Img = await Page.captureScreenshot();
-        const buffer = new Buffer(b64Img.data, 'base64');
+const dir = './tmp/screenshot_captures'
 
-        fs.writeFileSync(`${dir}/${b}.png`, buffer);
-        console.log(`wrote: ${dir}/${b}.png`);
-      }
-    } else {
-      const b64Img = await Page.captureScreenshot();
-      const buffer = new Buffer(b64Img.data, 'base64');
-
-      fs.writeFileSync(`${dir}/out.png`, buffer);
-      console.log(`wrote: ${dir}/out.png`);
-    }
-
-    // Reset the client size.
-    await Emulation.setVisibleSize({
-      width: originalDimentions.clientWidth,
-      height: originalDimentions.clientHeight,
-    });
-
-    client.close();
-  });
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
 }
-  #+END_SRC
+
+CDP({port: port}, async (client) => {
+  const {Page, Emulation, Runtime} = client;
+  const b64Img = await Page.captureScreenshot();
+  const buffer = new Buffer(b64Img.data, 'base64');
+
+  fs.writeFileSync(`${dir}/out.png`, buffer);
+  console.log(`wrote: ${dir}/out.png`);
+  client.close();
+});
+
+return `${dir}/out.png`
+#+END_SRC
+
+#+RESULTS: chrome-take-screenshot
+
+
 ** Make it a major mode (like pdf-view)
 ** Use syphon (OSX) and SPOUT (Windows) to capture GPU screenshots
 - [[https://www.vmix.com/software/download.aspx][Screenshot tool from vmix]]
