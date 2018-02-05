@@ -74,11 +74,23 @@ CDP({port: port}, async (client) => {
   client.close();
 });
 
-return `${dir}/out.png`
+console.log(`${dir}/out.png`)
 #+END_SRC
 
 #+RESULTS: chrome-take-screenshot
 : \./tmp/screenshot_captures/out\.png
+
+#+NAME: chrome-take-screeenshot-cmd
+#+BEGIN_SRC emacs-lisp :noweb yes
+(defun a4b-ss-chrome()
+  (interactive)
+  (message (shell-command-to-string "node -e '
+<<chrome-take-screenshot>> \n
+'")))
+#+END_SRC
+
+#+RESULTS: chrome-take-screeenshot-cmd
+: a4b-ss-chrome
 
 
 ** Make it a major mode (like pdf-view)
