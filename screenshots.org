@@ -84,7 +84,7 @@ console.log(`${dir}/out.png`)
 #+BEGIN_SRC emacs-lisp :noweb yes
 (defun a4b-ss-chrome()
   (interactive)
-  (message (shell-command-to-string "node -e '
+  (message (shell-command-to-string "node -e '\n
 <<chrome-take-screenshot>> \n
 '")))
 #+END_SRC
