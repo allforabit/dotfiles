@@ -89,9 +89,12 @@ CDP({port: port}, async (client) => {
 #+BEGIN_SRC emacs-lisp :noweb yes
 (defun a4b-ss-chrome()
   (interactive)
-  (shell-command-to-string "node -e \"
+  ;; TODO make this dynamic
+  (let ((default-directory "~/Documents/Github/dotfiles"))
+    (shell-command-to-string "node -e \"
 <<chrome-take-screenshot>>
 \""))
+  )
 #+END_SRC
 
 #+RESULTS: chrome-take-screeenshot-cmd
