@@ -91,8 +91,7 @@ CDP({port: port}, async (client) => {
   (let ((default-directory "~/Documents/Github/dotfiles"))
     (shell-command-to-string "node -e \"
 <<chrome-take-screenshot>>
-\""))
-  )
+\"")))
 #+END_SRC
 
 #+RESULTS: chrome-take-screeenshot-cmd
