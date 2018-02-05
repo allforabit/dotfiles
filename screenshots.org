@@ -61,7 +61,6 @@ const port = 9222;
 
 const dir = './tmp/screenshot_captures/';
 
-
 CDP({port: port}, async (client) => {
   const {Page, Emulation, Runtime} = client;
   const b64Img = await Page.captureScreenshot();
