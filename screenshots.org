@@ -85,6 +85,7 @@ CDP({port: port}, async (client) => {
 
 #+NAME: chrome-take-screeenshot-cmd
 #+BEGIN_SRC emacs-lisp :noweb yes
+;; Take screenshot
 (defun a4b-ss-chrome()
   (interactive)
   ;; TODO make this dynamic
