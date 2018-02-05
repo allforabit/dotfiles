@@ -64,6 +64,7 @@ if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir);
 }
 
+
 CDP({port: port}, async (client) => {
   const {Page, Emulation, Runtime} = client;
   const b64Img = await Page.captureScreenshot();
