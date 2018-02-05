@@ -395,6 +395,7 @@ fi
 
 #+NAME: config-git
 #+BEGIN_SRC emacs-lisp :noweb yes
+
 (setq gac-automatically-push-p t)
 (def-package! git-auto-commit-mode
   :config
