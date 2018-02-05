@@ -726,7 +726,8 @@ It is for commands that depend on the major mode. One example is
     :kill-process-buffer-on-stop t)
   (prodigy-define-service
     :name "Plein Air"
-    :command "yarn run start"
+    :command "yarn"
+    :args '("run" "start")
     :cwd "~/Documents/Github/plein-air/wp-content/themes/plein-air"
     :tags '(work)
     :stop-signal 'sigkill
