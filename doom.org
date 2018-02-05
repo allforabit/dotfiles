@@ -1,6 +1,7 @@
 # -*- firestarter: org-babel-tangle -*- 
 * Introduction
 Emacs config based on doom emacs. All config is divided up as much as is possible.
+
 ** Ideas
 *** Make source block keys work only when entering insert mode
 *** In general see if there are ways to take advantage of evil setup in org mode
