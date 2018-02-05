@@ -95,7 +95,7 @@ CDP({port: port}, async (client) => {
 #+END_SRC
 
 #+RESULTS: chrome-take-screeenshot-cmd
-: hi
+: a4b-ss-chrome
 
 #+BEGIN_SRC emacs-lisp
 (shell-command-to-string "node -e \"
