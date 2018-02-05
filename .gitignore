@@ -7,3 +7,4 @@ vim/bundle/*
 /nil
 /README.el
 /node_modules
+/tmp
