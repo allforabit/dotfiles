@@ -46,7 +46,21 @@ Example:
 
 
   #+END_SRC
-** Use chrome devtools screenshot facility
+
+** Make it a major mode (like pdf-view)
+** Use syphon (OSX) and SPOUT (Windows) to capture GPU screenshots
+- [[https://www.vmix.com/software/download.aspx][Screenshot tool from vmix]]
+** Wasamasa flipbook
+- [[https://github.com/wasamasa/quasiconf-2014/blob/master/code/flipbook.el][Flipbook by Wasamasa]]
+- [[https://www.youtube.com/watch?v=x1t9b7Fqo9c][Video wasamasa graphics emacs]]
+- https://github.com/wasamasa/quasiconf-2015
+- https://www.youtube.com/watch?v=NBArWrn6FnY&feature=youtu.be 
+
+  Hello world this is a very long line that will continue for a good deal of time but at some point will wrap!!!
+
+  And a thing that I want to with the other thing is 
+
+* Use chrome devtools screenshot facility
 - [[https://github.com/tryggvigy/chrome-devtools-protocol-screenshot][Chrome devtools screenshot link]]
 - No need to use full library, just use CDP:
 #+NAME: chrome-take-screenshot
@@ -109,20 +123,6 @@ console.log('hello')
 #+RESULTS:
 : hi
 : hello
-
-
-** Make it a major mode (like pdf-view)
-** Use syphon (OSX) and SPOUT (Windows) to capture GPU screenshots
-- [[https://www.vmix.com/software/download.aspx][Screenshot tool from vmix]]
-** Wasamasa flipbook
-- [[https://github.com/wasamasa/quasiconf-2014/blob/master/code/flipbook.el][Flipbook by Wasamasa]]
-- [[https://www.youtube.com/watch?v=x1t9b7Fqo9c][Video wasamasa graphics emacs]]
-- https://github.com/wasamasa/quasiconf-2015
-- https://www.youtube.com/watch?v=NBArWrn6FnY&feature=youtu.be 
-
-  Hello world this is a very long line that will continue for a good deal of time but at some point will wrap!!!
-
-  And a thing that I want to with the other thing is 
 
 * Module definition
 #+NAME: screenshots
