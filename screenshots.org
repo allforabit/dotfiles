@@ -123,3 +123,9 @@ console.log('hello')
   Hello world this is a very long line that will continue for a good deal of time but at some point will wrap!!!
 
   And a thing that I want to with the other thing is 
+
+* Module definition
+#+NAME: screenshots
+#+BEGIN_SRC emacs-lisp :noweb yes :tangle ~/Documents/Github/doom-emacs/modules/private/a4b-screenshots/config.el :mkdirp yes
+<<chrome-take-screenshot-cmd>>
+#+END_SRC
