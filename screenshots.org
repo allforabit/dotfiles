@@ -51,46 +51,62 @@ Example:
 - No need to use full library, just use CDP:
 #+NAME: chrome-take-screenshot
 #+BEGIN_SRC js
-const CDP = require('chrome-remote-interface')
-const fs = require('fs')
-const path = require('path')
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+console.log('hi');
+const CDP = require('chrome-remote-interface');
+const fs = require('fs');
+const path = require('path');
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const port = 9222;
 
-const dir = './tmp/screenshot_captures'
+const dir = './tmp/screenshot_captures/';
 
-if (!fs.existsSync(dir)) {
-  fs.mkdirSync(dir);
-}
 
-// Hello git
 CDP({port: port}, async (client) => {
   const {Page, Emulation, Runtime} = client;
   const b64Img = await Page.captureScreenshot();
   const buffer = new Buffer(b64Img.data, 'base64');
 
-  fs.writeFileSync(`${dir}/out.png`, buffer);
+  fs.writeFileSync(dir + '/out.png', buffer);
   client.close();
 });
 
-console.log(`${dir}/out.png`)
+
 #+END_SRC
 
 #+RESULTS: chrome-take-screenshot
-: \./tmp/screenshot_captures/out\.png
+: hi
+: undefined
+
+#+BEGIN_SRC js
+// TODO this is broken through noweb for some reason
+// if (!fs.existsSync(dir)) {
+//   fs.mkdirSync(dir)
+// }
+#+END_SRC
 
 #+NAME: chrome-take-screeenshot-cmd
 #+BEGIN_SRC emacs-lisp :noweb yes
 (defun a4b-ss-chrome()
   (interactive)
-  (message (shell-command-to-string "node -e '\n
-<<chrome-take-screenshot>> \n
-'")))
+  (shell-command-to-string "node -e \"
+<<chrome-take-screenshot>>
+\""))
 #+END_SRC
 
 #+RESULTS: chrome-take-screeenshot-cmd
-: a4b-ss-chrome
+: hi
+
+#+BEGIN_SRC emacs-lisp
+(shell-command-to-string "node -e \"
+console.log('hi')
+console.log('hello')
+\"")
+#+END_SRC
+
+#+RESULTS:
+: hi
+: hello
 
 
 ** Make it a major mode (like pdf-view)
