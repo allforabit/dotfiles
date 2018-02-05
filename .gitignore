@@ -6,3 +6,4 @@ vim/bundle/*
 /spacemacs.d/init.bck.el
 /nil
 /README.el
+/node_modules
