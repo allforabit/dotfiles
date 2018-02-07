@@ -803,6 +803,8 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 (def-package! ob-typescript)
 (def-package! indium)
 
+(setq js2-basic-offset 2)
+
 #+END_SRC
 
 #+RESULTS: config-js
