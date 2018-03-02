@@ -812,6 +812,8 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 				  :run "yarn run start"
 				  :test-suffix ".test")
 
+(add-to-list 'projectile-project-root-files "package.json") 
+
 #+END_SRC
 
 #+RESULTS: config-js
