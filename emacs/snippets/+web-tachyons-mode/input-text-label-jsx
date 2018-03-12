@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name: Input text label
 # key: itl
+# condtion: (rjsx-mode)
 # --
 <div className="measure">
     <label for="name" className="f6 b db mb2">$1 <span className="normal black-60">${2:(optional)}</span></label>
