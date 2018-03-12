@@ -805,6 +805,15 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 
 (setq js2-basic-offset 2)
 
+;; Make it yarn for now
+(projectile-register-project-type 'yarn '("package.json")
+				  :compile "yarn install"
+				  :test "yarn run test"
+				  :run "yarn run start"
+				  :test-suffix ".test")
+
+(add-to-list 'projectile-project-root-files "package.json") 
+
 #+END_SRC
 
 #+RESULTS: config-js
