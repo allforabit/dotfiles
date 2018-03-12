@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Input text label
+# key: itl
+# --
+<div className="measure">
+    <label for="name" className="f6 b db mb2">$1 <span className="normal black-60">${2:(optional)}</span></label>
+    <input id="name" className="input-reset ba b--black-20 pa2 mb2 db w-100" type="text" aria-describedby="name-desc">
+    <small id="name-desc" className="f6 black-60 db mb2">$3</small>
+</div>
