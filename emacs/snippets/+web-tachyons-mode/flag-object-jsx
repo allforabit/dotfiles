@@ -1,7 +1,6 @@
 # -*- mode: snippet -*-
 # name: Flag object
 # key: fo
-# condition: (rjsx-mode)
 # --
 <div className="dt mw6 center pv4 pv5-m pv6-ns">
   <div className="dtc v-top">
