@@ -3,9 +3,8 @@
 # key: const
 # --
 
-// ifndef ${1:`(upcase text)`}
-// define $1
+// ${1:$(make-string (string-width yas-text) ?\=)}
+// ${1:Title}
+// ${1:$(make-string (string-width yas-text) ?\=)}
 
 $0
-
-// #endif /* $1 */
