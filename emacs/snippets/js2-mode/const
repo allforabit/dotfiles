@@ -2,9 +2,10 @@
 # name: Const
 # key: const
 # --
-$1 ${2:varname$(let* ((end (- (point) 1))
-           (start (save-excursion (backward-word) (point)))
-           (type (buffer-substring start end)))
-         (if (equal yas/text "varname")
-            (java-default-variable-name type)
-            yas/text))} = new $1($3);
+
+// ifndef ${1:_`(upcase (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`_H_}
+// define $1
+
+$0
+
+// #endif /* $1 */
