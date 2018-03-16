@@ -2,5 +2,4 @@
 # name: Const
 # key: const
 # --
-const ${1:$(capitalize text)} = "${1:my-const}";
-$0
+const ${1:$(capitalize text)} = "${1:hello}";
