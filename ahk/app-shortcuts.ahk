@@ -5,7 +5,13 @@ Return
 #b:: ;Browser (chrome)
 if WinExist("Google Chrome")
 {
-	WinActivate
+    IfWinActive "Visual Studio Code"
+    {
+        SendInput !{Tab}
+    }
+    else
+        WinActivate
+    return
 }
 else
     Run Chrome.exe
