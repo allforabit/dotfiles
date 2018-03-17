@@ -34,7 +34,7 @@ return
 #v:: ;Visual studio code
 if WinExist("Visual Studio Code")
 {
-    ifWinActive("Visual Studio Code")
+    if WinActive
     {
         Send !{Esc}
     }
