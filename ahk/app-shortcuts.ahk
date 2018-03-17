@@ -7,7 +7,7 @@ if WinExist("Google Chrome")
 {
     if WinActive("Google Chrome")
     {
-        SendInput !{Tab}
+        SendInput !{Esc}
     }
     else
         WinActivate
@@ -21,7 +21,13 @@ return
 #c:: ;Chromium
 if WinExist("Chromium")
 {
-	WinActivate
+    if WinActive("Chromium")
+    {
+        SendInput !{Esc}
+    }
+    else
+        WinActivate
+    return
 }
 else
     Run C:\Users\Admin\AppData\Local\Chromium\Application\Chrome.exe
@@ -30,7 +36,13 @@ return
 #e:: ;Emacs
 if WinExist("ahk_class Emacs")
 {
-	WinActivate
+    if WinActive("ahk_class Emacs")
+    {
+        SendInput !{Esc}
+    }
+    else
+        WinActivate
+    return
 }
 else
     Run C:\Program Files\emacs\bin\runemacs.exe
