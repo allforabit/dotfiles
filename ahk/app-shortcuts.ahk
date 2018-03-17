@@ -18,7 +18,7 @@ if WinExist("Chromium")
 	WinActivate
 }
 else
-    Run C:\Program Files\Chromium\Chrome.exe
+    Run C:\Users\Admin\AppData\Local\Chromium\Application\Chrome.exe
 return
 
 #e:: ;Emacs
