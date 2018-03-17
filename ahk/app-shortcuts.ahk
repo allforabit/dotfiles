@@ -7,11 +7,7 @@ if WinExist("Google Chrome")
 {
     if WinActive("Google Chrome")
     {
-        MsgBox, 4,, Would you like to continue? (press Yes or No)
-        IfMsgBox Yes
-            MsgBox You pressed Yes.
-        else
-            MsgBox You pressed No.
+        SendInput !{Tab}
     }
     else
         WinActivate
