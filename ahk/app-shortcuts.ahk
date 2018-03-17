@@ -34,7 +34,7 @@ return
 #v:: ;Visual studio code
 if WinExist("Visual Studio Code")
 {
-    if WinActive
+    IfWinActive "Visual Studio Code"
     {
         SendInput !{Tab}
     }
