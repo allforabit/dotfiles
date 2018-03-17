@@ -30,4 +30,14 @@ else
     Run C:\Program Files\emacs\bin\runemacs.exe
 return
 
+
+#v:: ;Visual studio code
+if WinExist("Visual Studio Code")
+{
+	WinActivate
+}
+else
+    Run C:\Program Files\Microsoft VS Code\Code.exe
+return
+
 ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
