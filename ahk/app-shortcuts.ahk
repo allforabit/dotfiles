@@ -40,9 +40,9 @@ return
 #v:: ;Visual studio code
 if WinExist("Visual Studio Code")
 {
-    IfWinActive "Visual Studio Code"
+    if WinActive("Visual Studio Code")
     {
-        SendInput !{Tab}
+        SendInput !{Esc}
     }
     else
         WinActivate
