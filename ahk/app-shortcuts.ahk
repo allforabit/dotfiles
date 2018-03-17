@@ -36,7 +36,7 @@ if WinExist("Visual Studio Code")
 {
     if WinActive
     {
-        Send !{Esc}
+        SendInput !{Tab}
     }
     else
         WinActivate
