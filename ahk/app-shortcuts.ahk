@@ -34,7 +34,13 @@ return
 #v:: ;Visual studio code
 if WinExist("Visual Studio Code")
 {
-	WinActivate
+    ifWinActive("Visual Studio Code")
+    {
+        Send !{Esc}
+    }
+    else
+        WinActivate
+    return
 }
 else
     Run C:\Program Files\Microsoft VS Code\Code.exe
