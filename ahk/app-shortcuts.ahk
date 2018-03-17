@@ -5,7 +5,7 @@ Return
 #b:: ;Browser (chrome)
 if WinExist("Google Chrome")
 {
-    IfWinActive "Visual Studio Code"
+    IfWinActive "Google Chrome"
     {
         MsgBox, 4,, Would you like to continue? (press Yes or No)
         IfMsgBox Yes
