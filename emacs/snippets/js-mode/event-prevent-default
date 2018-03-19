@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Event prevent default
+# key: evpd
+# --
+evt.preventDefault();

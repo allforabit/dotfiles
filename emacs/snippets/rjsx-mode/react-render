@@ -1,0 +1,5 @@
+# key: rr
+# name: React render
+# --
+ReactDOM.render(<App bus={bus} />,
+  document.getElementById("${1:app}"));

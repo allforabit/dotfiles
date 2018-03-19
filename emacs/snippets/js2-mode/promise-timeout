@@ -1,0 +1,6 @@
+# key: prto
+# name: Promise timeout
+# --
+const ${1:to} = new Promise((resolve) => {
+    setTimeout(${2:resolve}, ${3: 1000});
+});

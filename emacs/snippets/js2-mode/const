@@ -2,9 +2,5 @@
 # name: Const
 # key: const
 # --
-
-// ${1:$(make-string (string-width yas-text) ?\=)}
-// ${1:Title}
-// ${1:$(make-string (string-width yas-text) ?\=)}
-
+const ${1:EV$(upcase yas-text)}_${2:$(upcase (replace-regexp-in-string "-" "_" yas-text))} = "${2:title}";
 $0

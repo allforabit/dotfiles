@@ -1,0 +1,6 @@
+# key: expdf
+# name: Export default function
+# --
+export default function(){
+  return $1;
+}
