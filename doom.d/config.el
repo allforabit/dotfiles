@@ -126,6 +126,7 @@ fi
 (def-package! indium)
 
 (setq js2-basic-offset 2)
+(setq typescript-indent-level 2)
 
 (def-package! pdf-tools
   :if (display-graphic-p)
