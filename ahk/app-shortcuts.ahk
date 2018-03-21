@@ -33,6 +33,22 @@ else
     Run C:\Users\Admin\AppData\Local\Chromium\Application\Chrome.exe
 return
 
+
+#f:: ;Firefox
+if WinExist("ahk_class MozillaWindowClass")
+{
+    if WinActive("ahk_class MozillaWindowClass")
+    {
+        SendInput !{Esc}
+    }
+    else
+        WinActivate
+    return
+}
+else
+    Run "C:\Program Files (x86)\Mozilla Firefox\firefox.exe"
+return
+
 #e:: ;Emacs
 if WinExist("ahk_class Emacs")
 {
