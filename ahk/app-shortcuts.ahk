@@ -2,23 +2,6 @@
 SetTitleMatchMode, 2 ; match part of the title
 Return
 
-ToggleApp(name, exe)
-{
-if WinExist(name)
-{
-    if WinActive(name)
-    {
-        SendInput !{Esc}
-    }
-    else
-        WinActivate
-    return
-}
-else
-    Run exe 
-return
-}
-
 #b:: ;Browser (chrome)
 if WinExist("Google Chrome")
 {
@@ -67,20 +50,19 @@ else
 return
 
 #e:: ;Emacs
-toggleApp("ahk_class Emacs", "C:\emacs\bin\runemacs.exe")
-; if WinExist("ahk_class Emacs")
-; {
-;     if WinActive("ahk_class Emacs")
-;     {
-;         SendInput !{Esc}
-;     }
-;     else
-;         WinActivate
-;     return
-; }
-; else
-;     Run C:\Program Files\emacs\bin\runemacs.exe
-; return
+if WinExist("ahk_class Emacs")
+{
+    if WinActive("ahk_class Emacs")
+    {
+        SendInput !{Esc}
+    }
+    else
+        WinActivate
+    return
+}
+else
+    Run  C:\emacs\bin\runemacs.exe
+return
 
 
 #v:: ;Visual studio code
