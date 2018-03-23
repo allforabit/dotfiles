@@ -67,7 +67,7 @@ else
 return
 
 #e:: ;Emacs
-toggleApp("ahk_class Emacs", C:\emacs\bin\runemacs.exe)
+toggleApp("ahk_class Emacs", "C:\emacs\bin\runemacs.exe")
 ; if WinExist("ahk_class Emacs")
 ; {
 ;     if WinActive("ahk_class Emacs")
