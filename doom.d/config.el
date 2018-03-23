@@ -383,3 +383,5 @@ It is for commands that depend on the major mode. One example is
 (def-project-mode! +web-tachyons-mode
   :modes (js2-mode typescript-mode)
   :files (and "webpack.config.js" "tsconfig.json"))
+
+(def-package! ahk-mode)
