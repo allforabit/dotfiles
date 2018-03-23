@@ -2,7 +2,7 @@
 SetTitleMatchMode, 2 ; match part of the title
 Return
 
-SetupApp(name, exe)
+ToggleApp(name, exe)
 {
 if WinExist(name)
 {
