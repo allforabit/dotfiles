@@ -48,3 +48,6 @@
   :recipe (:fetcher github
            :repo "d5884/fakecygpty"
            :files ("*")))
+
+
+(package! ahk-mode)
