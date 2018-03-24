@@ -100,9 +100,10 @@ fi
    :stop-signal 'sigkill
    :kill-process-buffer-on-stop t)
   (prodigy-define-service
-   :name "Yarn"
+   :name "Yarn test"
    :command "yarn"
-   :args '("test")
+   :args '("run" "test")
+   :cwd "c:/Users/admin/Documents/Github/elephentbrain"
    :tags '(play)
    :stop-signal 'sigkill
    :kill-process-buffer-on-stop t)
