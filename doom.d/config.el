@@ -68,59 +68,66 @@ fi
 ;; TODO move out of public repo
 (after! prodigy
   (prodigy-define-service
-    :name "WLB electron"
-    :command "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/node_modules/.bin/electron.cmd"
-    :args '(".")
-    :cwd "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/app"
-    :tags '(work)
-    :stop-signal 'sigkill
-    :kill-process-buffer-on-stop t)
+   :name "WLB electron"
+   :command "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/node_modules/.bin/electron.cmd"
+   :args '(".")
+   :cwd "c:/Users/admin/Documents/Bitbucket/wlb/wlb-ui-desktop/app"
+   :tags '(work)
+   :stop-signal 'sigkill
+   :kill-process-buffer-on-stop t)
   (prodigy-define-service
-    :name "Plein Air"
-    :command "yarn"
-    :args '("run" "start")
-    :cwd "~/Documents/Github/plein-air/wp-content/themes/plein-air"
-    :tags '(work)
-    :stop-signal 'sigkill
-    :kill-process-buffer-on-stop t)
+   :name "Plein Air"
+   :command "yarn"
+   :args '("run" "start")
+   :cwd "~/Documents/Github/plein-air/wp-content/themes/plein-air"
+   :tags '(work)
+   :stop-signal 'sigkill
+   :kill-process-buffer-on-stop t)
   (prodigy-define-service
-    :name "Campus 2017"
-    :command "gulp"
-    :args '("watch")
-    :cwd "c:/Users/admin/Documents/Bitbucket/campus/wp-content/themes/campus-theme/"
-    :tags '(work)
-    :stop-signal 'sigkill
-    :kill-process-buffer-on-stop t)
+   :name "Campus 2017"
+   :command "gulp"
+   :args '("watch")
+   :cwd "c:/Users/admin/Documents/Bitbucket/campus/wp-content/themes/campus-theme/"
+   :tags '(work)
+   :stop-signal 'sigkill
+   :kill-process-buffer-on-stop t)
   (prodigy-define-service
-    :name "React sandbox"
-    :command "yarn"
-    :args '("start")
-    :cwd "c:/Users/admin/Documents/Bitbucket/org/code/js/react"
-    :tags '(play)
-    :stop-signal 'sigkill
-    :kill-process-buffer-on-stop t)
-(prodigy-define-service
-    :name "Mailcatcher (1080, 1025)"
-    :command "mailcatcher"
-    :tags '(work)
-    :stop-signal 'sigkill
-    :kill-process-buffer-on-stop t)
-(prodigy-define-service
-    :name "Elephant brain"
-    :command "yarn"
-    :args '("run" "start")
-    :cwd "~/Documents/GitHub/elephantbrain/"
-    :tags '(personal)
-    :stop-signal 'sigkill
-    :kill-process-buffer-on-stop t)
-)
+   :name "React sandbox"
+   :command "yarn"
+   :args '("start")
+   :cwd "c:/Users/admin/Documents/Bitbucket/org/code/js/react"
+   :tags '(play)
+   :stop-signal 'sigkill
+   :kill-process-buffer-on-stop t)
+  (prodigy-define-service
+   :name "Yarn"
+   :command "yarn"
+   :args '("test")
+   :tags '(play)
+   :stop-signal 'sigkill
+   :kill-process-buffer-on-stop t)
+  (prodigy-define-service
+   :name "Mailcatcher (1080, 1025)"
+   :command "mailcatcher"
+   :tags '(work)
+   :stop-signal 'sigkill
+   :kill-process-buffer-on-stop t)
+  (prodigy-define-service
+   :name "Elephant brain"
+   :command "yarn"
+   :args '("run" "start")
+   :cwd "~/Documents/GitHub/elephantbrain/"
+   :tags '(personal)
+   :stop-signal 'sigkill
+   :kill-process-buffer-on-stop t)
+  )
 ;; (setq +lookup-open-url-fn 'eww)
 (setenv "NODE_PATH"
-  (concat
-   "~/Documents/Bitbucket/org/node_modules" ":"
-   (getenv "NODE_PATH")
-  )
-)
+        (concat
+         "~/Documents/Bitbucket/org/node_modules" ":"
+         (getenv "NODE_PATH")
+         )
+        )
 
 ;; Javascript
 
