@@ -103,7 +103,7 @@ fi
    :name "Yarn test"
    :command "yarn"
    :args '("run" "test")
-   :cwd "c:/Users/admin/Documents/Github/elephentbrain"
+   :cwd "~/Documents/Github/elephantbrain"
    :tags '(play)
    :stop-signal 'sigkill
    :kill-process-buffer-on-stop t)
