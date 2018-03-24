@@ -1,3 +1,7 @@
 * TODO Add this to agenda
 * TODO Rename autoit >> autohotkey
+* TODO use projectile timeout to do git syncing
+#+BEGIN_SRC emacs-lisp
+(add-hook 'projectile-idle-timer-hook #'my-projectile-idle-timer-function)
+#+END_SRC
 
