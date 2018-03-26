@@ -12,6 +12,9 @@
 ;;   ; (evil-collection-init)
 ;; )
 
+;; Project list for use by prodigy / doom projects
+(setq a4b-project-file '("~/Bitbucket/org/projects.el"))
+
 (setq gac-automatically-push-p t)
 (def-package! git-auto-commit-mode
   :config
