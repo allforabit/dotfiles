@@ -25,7 +25,7 @@
 (package! indium)
 
 ;; Git requirements
-(package! evil-magit)
+;; (package! evil-magit)
 ;; (packp)
 
 ;; (package! solarized-theme)
