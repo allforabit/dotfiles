@@ -18,8 +18,6 @@
   ;; Push automatically
   )
 
-(def-package! evil-magit)
-
 (defun a4b-git-pull-if-clean ()
   (interactive)
   (message (shell-command-to-string "
