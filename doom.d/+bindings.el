@@ -76,14 +76,14 @@
      :desc "Switch to 8th workspace"  :n "8"   (λ! (+workspace/switch-to 7))
      :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
      :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last)
-   
-   (:desc "open" :prefix "o"
-          :desc "Terminal"              :n  "t" #'+eshell/open-popup
-          :desc "Terminal in project"   :n  "T" #'projectile-run-eshell)
-   
+
+   ;; (:desc "open" :prefix "o"
+   ;;        :desc "Terminal"              :n  "t" #'+eshell/open-popup
+   ;;        :desc "Terminal in project"   :n  "T" #'projectile-run-eshell)
+
    (:desc "project" :prefix "p"
           :desc "Pop term in project"     :n  "o" #'projectile-run-eshell)
-   
+
    )
 (:map evil-window-map ; prefix "C-w"
         "C"     #'ace-delete-window)
@@ -97,7 +97,7 @@
     :map ivy-minibuffer-map
     "C-h" #'ivy-backward-delete-char)
 
- 
+
   ;; Add j/k bindings
   (:after company
     (:map company-active-map
