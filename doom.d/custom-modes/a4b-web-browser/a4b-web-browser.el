@@ -106,6 +106,17 @@
   (use-local-map a4b-web-browser-mode-map)
   (run-hooks 'a4b-web-browser-mode-hook))
 
+(setq epc (epc:start-epc "node" '("echo.js")))
+
+(deferred:$
+  (epc:call-deferred epc 'echo '("hello"))
+  (deferred:nextc it
+    (lambda (x) (message "Return : %S" x))))
+
+(message "%S" (epc:call-sync epc 'echo '(stuff)))
+
+(epc:stop-epc epc)
+
 ;; (defun a4b-web-browser-get-window-allocation (&optional window)
 ;;   (let* ((window-edges (window-inside-pixel-edges window))
 ;;          (x (nth 0 window-edges))
