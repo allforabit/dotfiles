@@ -23,7 +23,7 @@
 ;;   )
 
 (defun a4b-git-pull-if-clean ()
-  "Some stuff here"
+  "Some stuff here."
   (interactive)
   (message (shell-command-to-string "
 if [ -z '$(git status --porcelain)' ]; then
