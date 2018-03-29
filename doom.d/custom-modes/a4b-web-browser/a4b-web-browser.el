@@ -113,7 +113,7 @@
   (deferred:nextc it
     (lambda (x) (message "Return : %S" x))))
 
-(epc:call-sync epc 'ss '("http://google.ie" "go.png"))
+(epc:call-sync epc 'ss '("http://twitter.com" "go.png"))
 
 (epc:stop-epc epc)
 
