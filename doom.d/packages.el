@@ -1,6 +1,6 @@
 (package! evil-collection)
 
-; (package! git-auto-commit-mode)
+(package! git-auto-commit-mode)
 
 ;; TODO should config not be in config.el
 (package! drupal-mode
@@ -42,5 +42,12 @@
 ;;   :recipe (:fetcher file
 ;;            :path "~/Documents/GitHub/emacs-snippets"
 ;;            :files ("*")))
+
+;; Should only be windows
+(package! fakecygpty
+  :recipe (:fetcher github
+           :repo "d5884/fakecygpty"
+           :files ("*")))
+
 
 (package! ahk-mode)
