@@ -1,12 +1,14 @@
 const epc = require("elrpc");
 const puppeteer = require("puppeteer");
 
-epc.startServer().then(function(server) {
+epc.startServer().then(async function(server) {
+
+  // Boot browser
+  const browser = await puppeteer.launch();
+  // Open page
+  const page = await browser.newPage();
 
   server.defineMethod("ss", async function(url, path) {
-
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
     await page.goto(url);
     await page.screenshot({path: path});
 
