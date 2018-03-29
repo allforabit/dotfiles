@@ -13,14 +13,14 @@
 (package! ob-async)
 (package! firestarter)
 
-(package! ob-clojure-literate)
+;; (package! ob-clojure-literate)
 
 (package! ob-typescript)
 (package! rich-minority)
 (package! lispy)
 ;; (package! psysh)
 (package! livid-mode)
-(package! list-processes+)
+;; (package! list-processes+)
 (package! xmlgen)
 (package! indium)
 
