@@ -1,5 +1,5 @@
 const epc = require("elrpc");
-const puppetteer = require("puppeteer");
+const puppeteer = require("puppeteer");
 
 epc.startServer().then(function(server) {
 
