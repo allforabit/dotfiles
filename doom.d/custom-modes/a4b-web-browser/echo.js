@@ -1,9 +1,9 @@
 const epc = require("elrpc");
 const puppeteer = require("puppeteer");
 
-epc.startServer().then(async function(server) {
+epc.startServer().then(function(server) {
 
-  server.defineMethod("ss", function(path) {
+  server.defineMethod("ss", async function(path) {
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
