@@ -113,7 +113,7 @@
   (deferred:nextc it
     (lambda (x) (message "Return : %S" x))))
 
-(message "%S" (epc:call-sync epc 'echo '(stuff)))
+(epc:call-sync epc 'ss '("http://google.ie" "go.png"))
 
 (epc:stop-epc epc)
 
