@@ -1,4 +1,6 @@
 # -*- firestarter: org-babel-tangle -*- 
+* NB deprecated
+** Using emacs lisp directly instead of through org mode
 * Introduction
 Emacs config based on doom emacs. All config is divided up as much as is possible.
 ** Ideas

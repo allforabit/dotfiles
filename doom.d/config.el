@@ -35,7 +35,7 @@ fi
 ")))
 
 ;; Make magit work
-(set! :popup "^\\*magit" :ignore)
+;; (set! :popup "^\\*magit" :ignore)
 
 
 
@@ -179,7 +179,8 @@ fi
 ;;   "require('sys').print(require('sys').inspect(function(){\n%s\n}()));")
 
 ;; Setup org src to use more space
-(set! :popup "^\\*Org Src"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
+;; (set! :popup "^\\*Org Src"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
+;; (set! :popup "^\\*eww\\*$"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
 
 (remove-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
 (add-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
@@ -352,6 +353,8 @@ It is for commands that depend on the major mode. One example is
 ;; (def-package! ob-php)
 
 (load! +bindings)  ; my key bindings
+(load! +web-browser) ; internal emacs browser settings
+(load! +javascript) ; js related config
 (when IS-WINDOWS
   (load! +windows))
 
