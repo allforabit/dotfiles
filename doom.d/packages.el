@@ -18,7 +18,6 @@
 (package! ob-typescript)
 (package! rich-minority)
 (package! lispy)
-;; (package! psysh)
 (package! livid-mode)
 ;; (package! list-processes+)
 (package! xmlgen)
