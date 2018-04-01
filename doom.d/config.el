@@ -22,22 +22,6 @@
 ;;   ;; Push automatically
 ;;   )
 
-(defun a4b-git-pull-if-clean ()
-  "Some stuff here."
-  (interactive)
-  (message (shell-command-to-string "
-if [ -z '$(git status --porcelain)' ]; then
-  echo 'clean'
-  git pull
-else
-  echo 'dirty'
-fi
-")))
-
-;; Make magit work
-;; (set! :popup "^\\*magit" :ignore)
-
-
 
 ;; temp-mode.el
 ;; Temporary minor mode
@@ -180,7 +164,10 @@ fi
 
 ;; Setup org src to use more space
 ;; (set! :popup "^\\*Org Src"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
-;; (set! :popup "^\\*eww\\*$"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
+(set! :popup "^\\*eww\\*$"    '((size . 0.8) (slot 0) (side . left)) '((quit) (select . t) (modeline . t)))
+(set! :popup "^\\*[Hh]elp" '((size . 70) (slot 0) (side . left)) '((quit) (select . t) ))
+
+
 
 (remove-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
 (add-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
@@ -353,6 +340,7 @@ It is for commands that depend on the major mode. One example is
 ;; (def-package! ob-php)
 
 (load! +bindings)  ; my key bindings
+(load! +git)
 (load! +web-browser) ; internal emacs browser settings
 (load! +javascript) ; js related config
 (when IS-WINDOWS

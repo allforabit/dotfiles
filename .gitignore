@@ -6,5 +6,7 @@ vim/bundle/*
 /spacemacs.d/init.bck.el
 /nil
 /README.el
-/node_modules
+node_modules
 /tmp
+*.stackdump
+yarn-error.log
