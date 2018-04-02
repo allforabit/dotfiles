@@ -164,8 +164,8 @@
 
 ;; Setup org src to use more space
 ;; (set! :popup "^\\*Org Src"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
-(set! :popup "^\\*eww\\*$"    '((size . 0.8) (slot 0) (side . left)) '((quit) (select . t) (modeline . t)))
-(set! :popup "^\\*[Hh]elp" '((size . 70) (slot 0) (side . left)) '((quit) (select . t) ))
+(set! :popup "^\\*eww\\*$"    '((size . 0.8) (slot . 0) (side . left)) '((quit) (select . t) (modeline . t)))
+(set! :popup "^\\*[Hh]elp" '((size . 70) (slot . 0) (side . left)) '((quit) (select . t) ))
 
 
 
