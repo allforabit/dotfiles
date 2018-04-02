@@ -1,4 +1,4 @@
-;;; private/allforabit/+bindings.el -*- lexical-binding: t; -*-
+;;; config.el --- Bindings -*- lexical-binding: t; -*-
 
 (defun spacemacs/helm-jump-in-buffer ()
   "Jump in buffer using `imenu' facilities and helm."

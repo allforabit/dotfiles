@@ -168,7 +168,6 @@
 (set! :popup "^\\*[Hh]elp" '((size . 70) (slot . 0) (side . left)) '((quit) (select . t) ))
 
 
-
 (remove-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
 (add-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
 
