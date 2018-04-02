@@ -118,8 +118,15 @@
        ;; your own modules.
        (default +bindings +snippets +evil-commands)
 
+       ;; Below here are custom modules
+       ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+       :feature
+       +eww
        :lang
        +php
+       ;; :config
+       ;; +bindings
        )
 
 
