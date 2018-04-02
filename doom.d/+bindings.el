@@ -1,6 +1,5 @@
 ;;; private/allforabit/+bindings.el -*- lexical-binding: t; -*-
 
-
 (defun spacemacs/helm-jump-in-buffer ()
   "Jump in buffer using `imenu' facilities and helm."
   (interactive)
@@ -77,9 +76,10 @@
      :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
      :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last)
 
-   ;; (:desc "open" :prefix "o"
-   ;;        :desc "Terminal"              :n  "t" #'+eshell/open-popup
-   ;;        :desc "Terminal in project"   :n  "T" #'projectile-run-eshell)
+   (:when IS-WINDOWS
+     (:desc "open" :prefix "o"
+       :desc "Terminal"              :n  "t" #'+eshell/open-popup
+       :desc "Terminal in project"   :n  "T" #'projectile-run-eshell))
 
    (:desc "project" :prefix "p"
           :desc "Pop term in project"     :n  "o" #'projectile-run-eshell)

@@ -15,26 +15,12 @@
 ;; Project list for use by prodigy / doom projects
 (setq a4b-project-file '("~/Bitbucket/org/projects.el"))
 
-(setq gac-automatically-push-p t)
-(def-package! git-auto-commit-mode
-  :config
-  ;; Push automatically
-  )
-
-(defun a4b-git-pull-if-clean ()
-  (interactive)
-  (message (shell-command-to-string "
-if [ -z '$(git status --porcelain)' ]; then
-  echo 'clean'
-  git pull
-else
-  echo 'dirty'
-fi
-")))
-
-;; Make magit work
-(set! :popup "^\\*magit" :ignore)
-
+;; Disable for now
+;; (setq gac-automatically-push-p t)
+;; (def-package! git-auto-commit-mode
+;;   :config
+;;   ;; Push automatically
+;;   )
 
 
 ;; temp-mode.el
@@ -123,7 +109,9 @@ fi
    :stop-signal 'sigkill
    :kill-process-buffer-on-stop t)
   )
+
 ;; (setq +lookup-open-url-fn 'eww)
+;; TODO remove / make more generic
 (setenv "NODE_PATH"
         (concat
          "~/Documents/Bitbucket/org/node_modules" ":"
@@ -175,7 +163,11 @@ fi
 ;;   "require('sys').print(require('sys').inspect(function(){\n%s\n}()));")
 
 ;; Setup org src to use more space
-(set! :popup "^\\*Org Src"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
+;; (set! :popup "^\\*Org Src"    '((size . 0.8)) '((quit) (select . t) (modeline . t)))
+(set! :popup "^\\*eww\\*$"    '((size . 0.8) (slot 0) (side . left)) '((quit) (select . t) (modeline . t)))
+(set! :popup "^\\*[Hh]elp" '((size . 70) (slot 0) (side . left)) '((quit) (select . t) ))
+
+
 
 (remove-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
 (add-hook 'skewer-js-hook 'a4b-org-babel-skewer-js-hook)
@@ -348,6 +340,11 @@ It is for commands that depend on the major mode. One example is
 ;; (def-package! ob-php)
 
 (load! +bindings)  ; my key bindings
+(load! +git)
+(load! +web-browser) ; internal emacs browser settings
+(load! +javascript) ; js related config
+(when IS-WINDOWS
+  (load! +windows))
 
 ;;
 ;; (after! doom-themes
