@@ -50,7 +50,7 @@
        impatient-mode    ; show off code over HTTP
       ;macos             ; MacOS-specific commands
        make              ; run make tasks from Emacs
-      ;magit             ;
+       magit             ;
        neotree           ; a project drawer, like NERDTree for vim
        password-store    ; password manager for nerds
        pdf               ; pdf enhancements
@@ -59,6 +59,7 @@
        term              ; terminals in Emacs
        tmux              ; an API for interacting with tmux
        upload            ; map local to remote projects via ssh/ftp
+       +image
 
        :lang
        assembly          ; assembly for fun or debugging
