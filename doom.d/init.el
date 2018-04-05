@@ -1,103 +1,128 @@
-;;; private/allforabit/init.el -*- lexical-binding: t; -*-
+;;; init.example.el -*- lexical-binding: t; -*-
 
-(doom!
- :feature
- ;; TODO this should be called browser
- +browser
- :lang
- +php
- :config
- ;; Enable doom modules
- ;; This file resembled default config as much as possible to make diffing easier after upgrades
- +doom
- ;; +bindings
- )
+(doom! :feature
+       (popup            ; tame sudden yet inevitable temporary windows
+        +all             ; catch all popups that start with an asterix
+        +defaults)       ; default popup rules
+      ;debugger          ; FIXME stepping through code, to help you add bugs
+       eval              ; run code, run (also, repls)
+       (evil +everywhere); come to the dark side, we have cookies
+       file-templates    ; auto-snippets for empty files
+       (lookup           ; helps you navigate your code and documentation
+        +devdocs         ; ...on devdocs.io online
+        +docsets)        ; ...or in Dash docsets locally
+       services          ; TODO managing external services & code builders
+       snippets          ; my elves. They type so I don't have to
+       spellcheck        ; tasing you for misspelling mispelling
+       syntax-checker    ; tasing you for every semicolon you forget
+       version-control   ; remember, remember that commit in November
+       workspaces        ; tab emulation, persistence & separate workspaces
+       ;; +browser          ; Browser customization
+       +lsp              ; Language server protocol
+       a4b-web-browser   ; Experiment with headless chrome
 
+       :completion
+       company           ; the ultimate code completion backend
+      ;helm              ; the *other* search engine for love and life
+      ;ido               ; the other *other* search engine...
+       ivy               ; a search engine for love and life
 
-;; To fix node modules??
-;; Maybe should be only added in special circumstances
-(setq org-babel-temporary-directory "~/Documents/Bitbucket/org/tmp")
-;; TODO this slow down startup
+       :ui
+       doom              ; what makes DOOM look the way it does
+       doom-dashboard    ; a nifty splash screen for Emacs
+       doom-modeline     ; a snazzy Atom-inspired mode-line
+       doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       evil-goggles      ; display visual hints when editing in evil
+       hl-todo           ; highlight TODO/FIXME/NOTE tags
+       nav-flash         ; blink the current line after jumping
+      ;posframe          ; use child frames where possible (Emacs 26+ only)
+      ;tabbar            ; FIXME an (incomplete) tab bar for Emacs
+      ;unicode           ; extended unicode support for various languages
+       vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+       window-select     ; visually switch windows
 
-(unless (file-directory-p org-babel-temporary-directory)
-  (make-directory org-babel-temporary-directory))
+       :tools
+       dired             ; making dired pretty [functional]
+       electric-indent   ; smarter, keyword-based electric-indent
+       eshell            ; a consistent, cross-platform shell (WIP)
+       gist              ; interacting with github gists
+       imenu             ; an imenu sidebar and searchable code index
+       impatient-mode    ; show off code over HTTP
+      ;macos             ; MacOS-specific commands
+       make              ; run make tasks from Emacs
+      ;magit             ;
+       neotree           ; a project drawer, like NERDTree for vim
+       password-store    ; password manager for nerds
+       pdf               ; pdf enhancements
+      ;rgb               ; creating color strings
+       rotate-text       ; cycle region at point between text candidates
+       term              ; terminals in Emacs
+       tmux              ; an API for interacting with tmux
+       upload            ; map local to remote projects via ssh/ftp
 
-(defvar +org-babel-languages
-  '(calc
-    clojure
-    css
-    emacs-lisp
-    haskell
-    ;; browser
-    js
-    ;; typescript
-    latex
-    ledger
-    lilypond
-    lisp
-    matlab
-    plantuml
-    python
-    ;; restclient ; ob-restclient
-    ruby
-    rust       ; ob-rust
-    shell
-    sqlite
-    sql-mode   ; ob-sql-mode
-    translate) ; ob-translate
-  "A list of org-babel languages to load.")
+       :lang
+       assembly          ; assembly for fun or debugging
+       cc                ; C/C++/Obj-C madness
+       crystal           ; ruby at the speed of c
+       clojure           ; java with a lisp
+       csharp            ; unity, .NET, and mono shenanigans
+       data              ; config/data formats
+       elixir            ; erlang done right
+       elm               ; care for a cup of TEA?
+       emacs-lisp        ; drown in parentheses
+       ess               ; emacs speaks statistics
+       go                ; the hipster dialect
+       (haskell +intero) ; a language that's lazier than I am
+       hy                ; readability of scheme w/ speed of python
+       (java +meghanada) ; the poster child for carpal tunnel syndrome
+       javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       +javascript       ; custom additional javascript config
+       julia             ; a better, faster MATLAB
+       latex             ; writing papers in Emacs has never been so fun
+       ledger            ; an accounting system in Emacs
+       lua               ; one-based indices? one-based indices
+       markdown          ; writing docs for people to ignore
+       nix               ; I hereby declare "nix geht mehr!"
+       ocaml             ; an objective camel
+       (org              ; organize your plain life in plain text
+        +attach          ; custom attachment system
+        +babel           ; running code in org
+        +capture         ; org-capture in and outside of Emacs
+        +export          ; Exporting org to whatever you want
+        +present         ; Emacs for presentations
+        +publish)        ; Emacs+Org as a static site generator
+       perl              ; write code no one else can comprehend
+       php               ; perl's insecure younger brother
+       +php              ; addtional php config
+       plantuml          ; diagrams for confusing people more
+       purescript        ; javascript, but functional
+       python            ; beautiful is better than ugly
+       rest              ; Emacs as a REST client
+       ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       scala             ; java, but good
+       sh                ; she sells (ba|z)sh shells on the C xor
+       swift             ; who asked for emoji variables?
+       typescript        ; javascript, but better
+       web               ; the tubes
 
-;; I've swapped these keys on my keyboard
-(setq x-super-keysym 'alt
-      x-alt-keysym   'meta
-      user-mail-address "kevnolan@gmail.com"
-      user-full-name    "Kevin Nolan")
+       ;; Applications are complex and opinionated modules that transform Emacs
+       ;; toward a specific purpose. They may have additional dependencies and
+       ;; should be loaded late.
+       :app
+      ;(email +gmail)    ; emacs as an email client
+      ;irc               ; how neckbeards socialize
+      ;(rss +org)        ; emacs as an RSS reader
+      ;twitter           ; twitter client https://twitter.com/vnought
+      ;(write            ; emacs as a word processor (latex + org + markdown)
+      ; +wordnut         ; wordnet (wn) search
+      ; +langtool)       ; a proofreader (grammar/style check) for Emacs
 
-
-(def-package-hook! rtags :disable)
-
-;; Org stuff
-(setq +org-dir "~/Bitbucket/org/")
-
-(after! org
-  ;; TODO Figure out how to get this to work
-  ;; This isn't working and is taking over other modes
-  ;; (map! (:mode org-mode (:map ivy-mode-map
-  ;;       [remap imenu] #'counsel-org-goto)))
-  (setq org-ellipsis "…"))
-
-(setq org-default-notes-file (concat +org-dir "notes.org")
-      org-capture-templates
-      '(("t" "Todo" entry
-         (file+headline (expand-file-name "gtd.org" +org-dir) "Inbox")
-         "* [ ] %?\n%i" :prepend t :kill-buffer t)
-        ("c" "Code journal" entry (file+olp+datetree "~/Bitbucket/org/code.org" "Journal")
-         "* %?\nEntered on %U\n  %i\n  %a"
-         :jump-to-captured t)
-        ("n" "Notes" entry
-         (file+headline org-default-notes-file "Inbox")
-         "* %u %?\n%i" :prepend t :kill-buffer t)))
-
-;; Use git bash for shell
-;; TODO maybe should be msys2??
-;; (setq explicit-shell-file-name
-;;       "C:/Program Files (x86)/Git/bin/bash.exe")
-;; (setq shell-file-name explicit-shell-file-name)
-;; (add-to-list 'exec-path "C:/Program Files (x86)/Git/bin")
-
-;; An extra measure to prevent the flash of unstyled mode-line while Emacs is
-;; booting up (when Doom is byte-compiled).
-;; (setq-default mode-line-format nil)
-;; TODO try Fira Mono
-(setq doom-big-font (font-spec :family "Source Code Pro" :size 19))
-(setq doom-font (font-spec :family "Source Code Pro" :size 14)
-      doom-variable-pitch-font (font-spec :family "Georgia")
-      doom-unicode-font (font-spec :family "Symbola")
-      ;; ui/doom-modeline
-      +doom-modeline-height 23
-      ;; `doom-themes'
-      doom-neotree-enable-variable-pitch nil
-      doom-neotree-project-size 1.2
-      doom-neotree-line-spacing 0
-      doom-neotree-folder-size 1.0
-      doom-neotree-chevron-size 0.6)
+       :config
+       ;; The default module set reasonable defaults for Emacs. It also provides
+       ;; a Spacemacs-inspired keybinding scheme, a custom yasnippet library,
+       ;; and additional ex commands for evil-mode. Use it as a reference for
+       ;; your own modules.
+       (default +bindings +snippets +evil-commands)
+       +private          ; Misc personal config to be organized
+       )

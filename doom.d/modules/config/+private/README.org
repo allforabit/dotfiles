@@ -1,0 +1,4 @@
+#+TITLE: + Private
+
+For now private is a misc config location until a proper home is found for the
+pieces of config.

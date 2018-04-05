@@ -1,4 +1,5 @@
-;;; a4b-web-browser.el A web browser based on headless chrome -*- lexical-binding: t; -*-
+;;; config.el --- A4b browser -*- lexical-binding: t; -*-
+
 
 ;; Filename: a4b-web-browser.el
 ;; Description: Running A4b-Web-Browser browser in Emacs (based on https://raw.githubusercontent.com/allforabit/emacs-webkit/master/webkit.el)
@@ -107,15 +108,17 @@
   (run-hooks 'a4b-web-browser-mode-hook))
 
 (setq epc (epc:start-epc "node" '("echo.js")))
-
 (deferred:$
   (epc:call-deferred epc 'echo '("hello"))
   (deferred:nextc it
     (lambda (x) (message "Return : %S" x))))
-
 (epc:call-sync epc 'ss '("http://twitter.com" "go.png"))
-
 (epc:stop-epc epc)
+
+(defun a4b-web-browser-hello()
+  (interactive)
+  (message "Hello"))
+
 
 ;; (defun a4b-web-browser-get-window-allocation (&optional window)
 ;;   (let* ((window-edges (window-inside-pixel-edges window))
@@ -332,6 +335,6 @@
 ;;                      (a4b-web-browser-focus-browser-view)
 ;;                      ))
 
-;; (provide 'a4b-web-browser)
+(provide 'a4b-web-browser)
 
 ;; ;;; a4b-web-browser.el ends here
