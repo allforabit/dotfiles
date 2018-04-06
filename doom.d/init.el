@@ -20,6 +20,7 @@
        ;; +browser          ; Browser customization
        +lsp              ; Language server protocol
        a4b-web-browser   ; Experiment with headless chrome
+       +evil
 
        :completion
        company           ; the ultimate code completion backend
