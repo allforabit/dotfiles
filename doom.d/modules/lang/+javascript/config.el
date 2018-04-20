@@ -1,6 +1,6 @@
 ;;; config.el --- Additional js config -*- lexical-binding: t; -*-
 
-(def-package! lsp-javascript-typescript-enable
+(def-package! lsp-javascript-typescript
   :when (featurep! :feature +lsp)
   :commands (lsp-javascript-typescript-enable)
   :config

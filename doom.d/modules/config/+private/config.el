@@ -335,13 +335,30 @@ It is for commands that depend on the major mode. One example is
 
 (def-package! ahk-mode)
 
-;; Workspace fix
-;; TODO move elsewhere
-(defun +workspaces|select-non-side-window (&rest _)
-  "Ensure a side window isn't current when switching workspaces."
+
   (when (window-parameter nil 'window-side)
     (select-window
      (cl-loop for win in (window-list)
               unless (window-parameter win 'window-side)
-              return win))))
+              return win)))
 (add-hook 'persp-before-deactivate-functions #'+workspaces|select-non-side-window)
+
+;;   (when (window-parameter nil 'window-side)
+;;     (select-window
+;;      (cl-loop for win in (window-list)
+;;               unless (window-parameter win 'window-side)
+;;               return win))))
+;; (add-hook 'persp-before-deactivate-functions #'+workspaces|select-non-side-window)
+
+;; ;; Auto-rename new eww buffers
+;; (defun xah-rename-eww-hook ()
+;;   "Rename eww browser's buffer so sites open in new page."
+;;   (rename-buffer "eww" t))
+;; (add-hook 'eww-mode-hook #'xah-rename-eww-hook)
+
+;; (defun +neotree|maybe-refresh ()
+;;   (when (and (neo-global--window-exists-p)
+;;              (get-buffer-window neo-buffer-name t))
+;;     (neo-buffer--refresh t t)))
+;; (add-hook 'persp-activated-functions #'+neotree|maybe-refresh)
+

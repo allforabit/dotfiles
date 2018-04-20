@@ -107,6 +107,8 @@
        swift             ; who asked for emoji variables?
        typescript        ; javascript, but better
        web               ; the tubes
+       +web
+       +css
 
        ;; Applications are complex and opinionated modules that transform Emacs
        ;; toward a specific purpose. They may have additional dependencies and
