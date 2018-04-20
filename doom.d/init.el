@@ -17,7 +17,7 @@
        syntax-checker    ; tasing you for every semicolon you forget
        version-control   ; remember, remember that commit in November
        workspaces        ; tab emulation, persistence & separate workspaces
-       ;; +browser          ; Browser customization
+       +browser          ; Browser customization
        +lsp              ; Language server protocol
        a4b-web-browser   ; Experiment with headless chrome
        +evil

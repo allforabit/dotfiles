@@ -11,8 +11,8 @@
 ;;     (push `(prelude-mode . ,newmap) minor-mode-overriding-map-alist))
 
 (define-minor-mode evil-structural-mode
-    "A minor mode for integrating evil with lispy."
-  :lighter " LYVLE"
+  "A minor mode for integrating evil with lispy."
+  :lighter " ES"
   :keymap (make-sparse-keymap))
 
 (defcustom evil-structural-mode-list
@@ -29,11 +29,23 @@ mode symbol and `cdr' the packages to register."
 
 (defun evil-structural-web-mode-setup ()
   "Set up `evil' bindings for `image-mode'."
-
   (evil-define-key 'normal web-mode-map
     ;; motion
-    "ZZ" 'evil-structural-hi)
-  )
+    "j" 'evil-structural-hi))
+
+(add-hook 'web-mode-hook
+          (lambda ()
+            (push
+             '("<script" . (?x (Br . Bc) ?- (Br . Bc) ?S)) prettify-symbols-alist)))
+
+(defun evil-structural-hide-stuff ()
+  "Hello yo"
+  (interactive)
+  (let ((beg 1)
+        (end 2))
+        (setq overlay (make-overlay beg end))
+        (overlay-put overlay 'font-lock-face 'web-mode-folded-face)
+        (put-text-property beg end 'invisible t)))
 
 ;;;###autoload
 (defun evil-structural-init ()

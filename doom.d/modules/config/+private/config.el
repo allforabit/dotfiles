@@ -334,3 +334,14 @@ It is for commands that depend on the major mode. One example is
   :files (and "webpack.config.js" "tsconfig.json"))
 
 (def-package! ahk-mode)
+
+;; Workspace fix
+;; TODO move elsewhere
+(defun +workspaces|select-non-side-window (&rest _)
+  "Ensure a side window isn't current when switching workspaces."
+  (when (window-parameter nil 'window-side)
+    (select-window
+     (cl-loop for win in (window-list)
+              unless (window-parameter win 'window-side)
+              return win))))
+(add-hook 'persp-before-deactivate-functions #'+workspaces|select-non-side-window)
