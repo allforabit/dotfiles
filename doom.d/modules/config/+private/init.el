@@ -39,9 +39,6 @@
       user-mail-address "kevnolan@gmail.com"
       user-full-name    "Kevin Nolan")
 
-
-(def-package-hook! rtags :disable)
-
 ;; Org stuff
 (setq +org-dir "~/Bitbucket/org/")
 

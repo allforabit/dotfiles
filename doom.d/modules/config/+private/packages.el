@@ -1,11 +1,9 @@
-(package! evil-collection)
-
 (package! git-auto-commit-mode)
+(package! webkit-color-picker)
+
 
 ;; TODO should config not be in config.el
-(package! drupal-mode
- :config
- (setq drupal-drush-program "c:/Bitnami/drupal-7.56-2/apps/drupal/drush/dr.bat"))
+(package! drupal-mode)
 
 (package! pdf-tools)
 
@@ -31,10 +29,10 @@
 
 ;; (package! org-trello)
 
-(package! emacs-snippets
-  :recipe (:fetcher github
-           :repo "allforabit/emacs-snippets"
-           :files ("*")))
+;; (package! emacs-snippets
+;;   :recipe (:fetcher github
+;;            :repo "allforabit/emacs-snippets"
+;;            :files ("*")))
 
 ;; Would prefer this but it's not working!!!
 ;; (package! emacs-snippets
@@ -43,10 +41,12 @@
 ;;            :files ("*")))
 
 ;; Should only be windows
-(package! fakecygpty
-  :recipe (:fetcher github
-           :repo "d5884/fakecygpty"
-           :files ("*")))
+;; (package! fakecygpty
+;;   :recipe (:fetcher github
+;;            :repo "d5884/fakecygpty"
+;;            :files ("*")))
 
 
 (package! ahk-mode)
+
+(package! rtags :disable)

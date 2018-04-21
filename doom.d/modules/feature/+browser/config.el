@@ -15,3 +15,5 @@
   "Rename eww browser's buffer so sites open in new page."
   (rename-buffer "eww" t))
 (add-hook 'eww-mode-hook #'xah-rename-eww-hook)
+
+(def-package! xwidgete)
