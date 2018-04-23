@@ -11,3 +11,5 @@
          "C:/msys64/mingw64/bin" ";"
          "C:/msys64/usr/bin" ";"
          (getenv "PATH")))
+
+(setq wordnut-cmd "c:/Program Files/WordNet/3.0/bin/wn.exe")

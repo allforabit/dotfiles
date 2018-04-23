@@ -335,7 +335,6 @@ It is for commands that depend on the major mode. One example is
 
 (def-package! ahk-mode)
 
-
 ;; ;; TODO move elsewhere
 ;; (defun +workspaces|select-non-side-window (&rest _)
 ;;   "Ensure a side window isn't current when switching workspaces."
