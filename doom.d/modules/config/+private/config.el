@@ -4,7 +4,7 @@
  ;; :commands (webkit-color-picker-show))
 
 ;; Project list for use by prodigy / doom projects
-;; (setq a4b-project-file '("~/Bitbucket/org/projects.el"))
+(setq a4b-project-file '("~/Bitbucket/org/projects.el"))
 
 ;; Disable for now
 ;; (setq gac-automatically-push-p t)
@@ -19,30 +19,20 @@
 ;; Main use is to enable it only in specific buffers to achieve the goal of
 ;; buffer-specific keymaps
 
-;; (defvar temp-mode-map (make-sparse-keymap)
-;;   "Keymap while temp-mode is active.")
+(defvar temp-mode-map (make-sparse-keymap)
+  "Keymap while temp-mode is active.")
 
 ;; ;;;###autoload
-;; (define-minor-mode temp-mode
-;;   "A temporary minor mode to be activated only specific to a buffer."
-;;   nil
-;;   :lighter " Temp"
-;;   temp-mode-map)
+(define-minor-mode temp-mode
+  "A temporary minor mode to be activated only specific to a buffer."
+  nil
+  :lighter " Temp"
+  temp-mode-map)
 
 ;; Source: https://emacs.stackexchange.com/questions/519/key-bindings-specific-to-a-buffer
 ;; Usage:
 ;; eval: (temp-mode 1)
 ;; eval: (define-key temp-mode-map (kbd "<f10>") 'function-ONE)
-;; (def-package! fakecygpty
-;;   :config
-;;   (message "Activating Fake cyg pty")
-;;   (fakecygpty-activate))
-
-;; (make-comint-in-buffer "cmd" nil "cmd" nil)
-;; (setq explicit-shell-file-name "c:/msys64/usr/bin/bash.exe")
-;; (setq shell-file-name explicit-shell-file-name)
-;; (after! prodigy
-;;   (load (concat +org-dir "+projects.el")))
 
 ;; (setq +lookup-open-url-fn 'eww)
 ;; TODO remove / make more generic
@@ -85,20 +75,13 @@
 
 ;; ;; Image refresh fix
 ;; ;; https://emacs.stackexchange.com/questions/2303/making-an-image-ie-image-mode-auto-reload-changes-from-disk
-;; (add-hook 'image-mode #'auto-image-file-mode)
+(add-hook 'image-mode #'auto-image-file-mode)
 
 ;; ;; UTF-8 everywhere
-;; (setq-default buffer-file-coding-system 'utf-8-unix)
-;; (setq-default default-buffer-file-coding-system 'utf-8-unix)
-;; (set-default-coding-systems 'utf-8-unix)
-;; (prefer-coding-system 'utf-8-unix)
-
-;; Package to filter modeline items
-;; TODO not working at the moment
-;; (def-package! rich-minority
-;;   :config
-;;   (rich-minority-mode 1)
-;;   (setq rm-whitelist ""))
+(setq-default buffer-file-coding-system 'utf-8-unix)
+(setq-default default-buffer-file-coding-system 'utf-8-unix)
+(set-default-coding-systems 'utf-8-unix)
+(prefer-coding-system 'utf-8-unix)
 
 ;; (def-package! list-processes+)
 
@@ -154,11 +137,11 @@
 ;;       (mu4e-compose-signature . "---\nKevin Nolan")))
 ;;   )
 
-;; (after! evil-escape
-;;   (setq evil-escape-excluded-states '(normal visual multiedit emacs motion)
-;;         evil-escape-excluded-major-modes '(neotree-mode)
-;;         evil-escape-key-sequence "fd"
-;;         evil-escape-delay 0.25))
+(after! evil-escape
+  (setq evil-escape-excluded-states '(normal visual multiedit emacs motion)
+        evil-escape-excluded-major-modes '(neotree-mode)
+        evil-escape-key-sequence "fd"
+        evil-escape-delay 0.25))
 
 ;; ;; Will need to be more specific
 ;; (def-project-mode! +web-thing-mode
@@ -170,35 +153,16 @@
 ;;   :modes (js2-mode typescript-mode)
 ;;   :files (and "webpack.config.js" "tsconfig.json"))
 
-;; (def-package! ahk-mode)
+(def-package! ahk-mode)
 
-
-<<<<<<< HEAD
-;; ;; TODO move elsewhere
-;; (defun +workspaces|select-non-side-window (&rest _)
-;;   "Ensure a side window isn't current when switching workspaces."
-=======
-;; (when (window-parameter nil 'window-side)
-;;   (select-window
-;;    (cl-loop for win in (window-list)
-;;             unless (window-parameter win 'window-side)
-;;             return win)))
-;; (add-hook 'persp-before-deactivate-functions #'+workspaces|select-non-side-window)
-
->>>>>>> origin/master
-;;   (when (window-parameter nil 'window-side)
-;;     (select-window
-;;      (cl-loop for win in (window-list)
-;;               unless (window-parameter win 'window-side)
-;;               return win))))
-;; (add-hook 'persp-before-deactivate-functions #'+workspaces|select-non-side-window)
 
 ;; ;; Auto-rename new eww buffers
-;; (defun xah-rename-eww-hook ()
-;;   "Rename eww browser's buffer so sites open in new page."
-;;   (rename-buffer "eww" t))
-;; (add-hook 'eww-mode-hook #'xah-rename-eww-hook)
+(defun xah-rename-eww-hook ()
+  "Rename eww browser's buffer so sites open in new page."
+  (rename-buffer "eww" t))
+(add-hook 'eww-mode-hook #'xah-rename-eww-hook)
 
+;; TODO don't think this is working
 ;; (defun +neotree|maybe-refresh ()
 ;;   (when (and (neo-global--window-exists-p)
 ;;              (get-buffer-window neo-buffer-name t))
