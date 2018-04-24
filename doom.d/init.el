@@ -24,6 +24,7 @@
 
        :completion
        company           ; the ultimate code completion backend
+       +company
       ;helm              ; the *other* search engine for love and life
       ;ido               ; the other *other* search engine...
        ivy               ; a search engine for love and life
@@ -131,3 +132,24 @@
        (default +bindings +snippets +evil-commands)
        +private          ; Misc personal config to be organized
        )
+
+;;;###autoload
+(defun +workspace/save (name)
+  "Save the current workspace. If called with C-u, autosave the current
+workspace."
+  (interactive
+   (list
+    (if current-prefix-arg
+        (+workspace-current-name)
+      (completing-read "Workspace to save: " (+workspace-list-names)))))
+  (if (+workspace-save name)
+      (+workspace-message (format "'%s' workspace saved" name) 'success)
+    (+workspace-error (format "Couldn't save workspace %s" name))))
+
+(defvar web-mode-map
+  (let ((km (make-sparse-keymap)))
+    (define-key km "\C-c\C-c" 'web-mode)
+    km)
+  "Keymap used in `web-mode'.")
+
+(defun hi () (message "hello"))

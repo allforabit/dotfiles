@@ -16,4 +16,4 @@
   (rename-buffer "eww" t))
 (add-hook 'eww-mode-hook #'xah-rename-eww-hook)
 
-(def-package! xwidgete)
+;; (def-package! xwidgete)

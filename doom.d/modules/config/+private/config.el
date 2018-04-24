@@ -154,11 +154,11 @@
 ;;       (mu4e-compose-signature . "---\nKevin Nolan")))
 ;;   )
 
-;; (after! evil-escape
-;;   (setq evil-escape-excluded-states '(normal visual multiedit emacs motion)
-;;         evil-escape-excluded-major-modes '(neotree-mode)
-;;         evil-escape-key-sequence "fd"
-;;         evil-escape-delay 0.25))
+(after! evil-escape
+  (setq evil-escape-excluded-states '(normal visual multiedit emacs motion)
+        evil-escape-excluded-major-modes '(neotree-mode)
+        evil-escape-key-sequence "fd"
+        evil-escape-delay 0.25))
 
 ;; ;; Will need to be more specific
 ;; (def-project-mode! +web-thing-mode
