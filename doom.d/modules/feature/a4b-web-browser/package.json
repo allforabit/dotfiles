@@ -1,0 +1,19 @@
+{
+    "name": "a4b-web-browser",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "dependencies": {
+        "@thi.ng/hiccup": "^1.3.9",
+        "micro": "^9.3.0",
+        "serve": "^6.5.6"
+    },
+    "scripts": {
+        "start": "micro",
+        "dev": "micro-dev",
+        "debug": "node --inspect ./node_modules/.bin/micro-dev"
+    },
+    "devDependencies": {
+        "micro-dev": "^2.2.2"
+    }
+}

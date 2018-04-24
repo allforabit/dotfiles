@@ -3,3 +3,5 @@
 (when (featurep! :feature +lsp)
   (package! lsp-javascript-typescript))
 
+(package! indium)
+

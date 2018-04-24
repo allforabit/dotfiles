@@ -19,7 +19,6 @@
 (package! livid-mode)
 ;; (package! list-processes+)
 (package! xmlgen)
-(package! indium)
 
 ;; Git requirements
 ;; (package! evil-magit)
