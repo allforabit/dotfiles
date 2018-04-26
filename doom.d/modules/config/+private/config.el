@@ -4,7 +4,7 @@
  ;; :commands (webkit-color-picker-show))
 
 ;; Project list for use by prodigy / doom projects
-;; (setq a4b-project-file '("~/Bitbucket/org/projects.el"))
+(setq a4b-project-file '("~/Bitbucket/org/projects.el"))
 
 ;; Disable for now
 ;; (setq gac-automatically-push-p t)
@@ -80,19 +80,13 @@
 ;; (add-hook 'image-mode #'auto-image-file-mode)
 
 ;; ;; UTF-8 everywhere
-;; (setq-default buffer-file-coding-system 'utf-8-unix)
-;; (setq-default default-buffer-file-coding-system 'utf-8-unix)
-;; (set-default-coding-systems 'utf-8-unix)
-;; (prefer-coding-system 'utf-8-unix)
-
-;; Package to filter modeline items
-;; TODO not working at the moment
-;; (def-package! rich-minority
-;;   :config
-;;   (rich-minority-mode 1)
-;;   (setq rm-whitelist ""))
+(setq-default buffer-file-coding-system 'utf-8-unix)
+(setq-default default-buffer-file-coding-system 'utf-8-unix)
+(set-default-coding-systems 'utf-8-unix)
+(prefer-coding-system 'utf-8-unix)
 
 ;; (def-package! list-processes+)
+
 
 ;; (def-package! emacs-snippets
 ;;   :after yasnippet
@@ -179,15 +173,7 @@
 ;;               return win))))
 ;; (add-hook 'persp-before-deactivate-functions #'+workspaces|select-non-side-window)
 
-;; ;; Auto-rename new eww buffers
-;; (defun xah-rename-eww-hook ()
-;;   "Rename eww browser's buffer so sites open in new page."
-;;   (rename-buffer "eww" t))
-;; (add-hook 'eww-mode-hook #'xah-rename-eww-hook)
 
-;; (defun +neotree|maybe-refresh ()
-;;   (when (and (neo-global--window-exists-p)
-;;              (get-buffer-window neo-buffer-name t))
-;;     (neo-buffer--refresh t t)))
-;; (add-hook 'persp-activated-functions #'+neotree|maybe-refresh)
-
+(def-package! request)
+(def-package! refine
+  :commands (refine))

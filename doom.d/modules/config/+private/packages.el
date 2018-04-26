@@ -49,3 +49,8 @@
 (package! ahk-mode)
 
 (package! rtags :disable)
+
+;; Jquery style http request lib
+(package! request)
+;; Edit emacs lisp variables
+(package! refine)

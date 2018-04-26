@@ -13,8 +13,8 @@ function stuff() {
                            background: "white"
                          }
                        },
-                       ["div.yo", "Oh hi there how are you??", 
-                        ["div", ["a", {href: "http://google.ie"}, "A link to google"], ["img", {src: "https://vignette.wikia.nocookie.net/vsbattles/images/8/82/The_thing_render_by_bobhertley-d5roo6y.png/revision/latest/scale-to-width-down/1000?cb=20170505072956"}]],
+                       ["div.yo", "Oh hi there how are you there??", 
+                        ["div", ["a", {href: "http://google.ie"}, "A link to google yo"], ["img", {src: "https://vignette.wikia.nocookie.net/vsbattles/images/8/82/The_thing_render_by_bobhertley-d5roo6y.png/revision/latest/scale-to-width-down/1000?cb=20170505072956"}]],
                         ["section",
                          {
                            style: {
@@ -30,9 +30,6 @@ module.exports = async (req, res) => {
     const statusCode = 200;
     res.setHeader('content-type', 'text/html');
     send(res, statusCode, stuff());
+
 }
-
-
-// const hello = "hi";
-
 

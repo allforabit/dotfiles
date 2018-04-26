@@ -77,14 +77,13 @@ specific to eww, while also updating `modi/eww--file-notify-descriptors-list'."
   (message "Oh hi there")
   (message status))
 
-(url-retrieve "http://localhost:3000" 'my-switch-to-url-buffer))
+(url-retrieve "http://localhost:3000" 'my-switch-to-url-buffer)
 
 (with-current-buffer
     (url-retrieve-synchronously "http://localhost:3000")
   (goto-char (point-min))
   (buffer-string))
 
-;; TODO install request & refine
 
 (require 'request)
 (request
