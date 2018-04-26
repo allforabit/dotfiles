@@ -21,3 +21,5 @@
 ;; TODO use editorconfig system
 (setq js2-basic-offset 2)
 (setq typescript-indent-level 2)
+
+(set! :popup "^.*js repl" '((slot . -1) (vslot . 1) (side . right) (size . 80)) '((select . t)))

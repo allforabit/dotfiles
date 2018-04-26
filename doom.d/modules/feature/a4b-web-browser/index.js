@@ -1,18 +1,38 @@
 const h = require('@thi.ng/hiccup');
 const micro = require('micro');
-// const files = 
 
 const {send} = require('micro')
 
-// module.exports = async (req, res) => {
-//     const statusCode = 200;
-//     res.setHeader('content-type', 'text/html');
-//     send(res, statusCode, h.serialize(["html", ["head"], ["body", ["div.yo", "hi ho"]]]));
-// }
+function stuff() {
+  return h.serialize(["html",
+                      ["head",
+                       ["title", "Hello world"]],
+                      ["body",
+                       {
+                         style: {
+                           background: "white"
+                         }
+                       },
+                       ["div.yo", "Oh hi there how are you??", 
+                        ["div", ["a", {href: "http://google.ie"}, "A link to google"], ["img", {src: "https://vignette.wikia.nocookie.net/vsbattles/images/8/82/The_thing_render_by_bobhertley-d5roo6y.png/revision/latest/scale-to-width-down/1000?cb=20170505072956"}]],
+                        ["section",
+                         {
+                           style: {
+                             background: "blue", 
+                             color: "grey"
+                           }
+                         }
+                         , "Here's a section!!!"]
+                       ]]]);
+}
 
-const server = micro(async (req, res) => {
-  await sleep(500);
-  return 'Hello world';
-});
+module.exports = async (req, res) => {
+    const statusCode = 200;
+    res.setHeader('content-type', 'text/html');
+    send(res, statusCode, stuff());
+}
 
-server.listen(3000);
+
+// const hello = "hi";
+
+

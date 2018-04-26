@@ -67,11 +67,11 @@
 ;; ;; (after! org
 ;; ;;   (setq ob-clojure-literate-auto-jackin-p t)
 ;; ;;   (add-hook 'org-mode-hook #'ob-clojure-literate-mode))
-;; (def-package! firestarter
-;; :config
-;;   ;; Start by default
-;;   (firestarter-mode))
-;; (put 'firestarter 'safe-local-variable 'identity)
+(def-package! firestarter
+:config
+  ;; Start by default
+  (firestarter-mode))
+(put 'firestarter 'safe-local-variable 'identity)
 
 ;; (def-package! xmlgen)
 
