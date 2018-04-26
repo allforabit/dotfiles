@@ -75,7 +75,7 @@ function stuff(ssBase64) {
 
     const statusCode = 200;
 
-    const ss = await browser.getScreenshot("https://clojurescript.org");
+    const ss = await browser.getScreenshot("http://localhost:9000");
     const base64EncodedSS = ss.toString('base64');
 
     res.setHeader('content-type', 'text/html');

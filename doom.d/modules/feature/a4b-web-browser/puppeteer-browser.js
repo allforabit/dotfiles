@@ -5,6 +5,7 @@ var browser;
 async function getBrowser() {
   const browser = await puppeteer.launch({
     // headless: false,
+    executablePath: "C:/Users/Admin/AppData/Local/Chromium/Application/chrome.exe",
     args: [
       '--remote-debugging-port=9222'
     ],

@@ -68,6 +68,8 @@ specific to eww, while also updating `modi/eww--file-notify-descriptors-list'."
 (add-hook 'eww-mode-hook
           (lambda ()
             (message "Adding revert functions")
+            ;; Faster updates
+            (setq-local auto-revert-interval 0.1)
             (setq-local buffer-stale-function
                         #'(lambda (&optional noconfirm) (if (eq a4b-eww-should-update t)
                                                             (progn
