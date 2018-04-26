@@ -69,7 +69,11 @@ specific to eww, while also updating `modi/eww--file-notify-descriptors-list'."
           (lambda ()
             (message "Adding revert functions")
             (setq-local buffer-stale-function
-                        #'(lambda (&optional noconfirm) 'fast))
+                        #'(lambda (&optional noconfirm) (if (eq a4b-eww-should-update t)
+                                                            (progn
+                                                              (setq a4b-eww-should-update nil)
+                                                              t)
+                                                            nil)))
             (setq-local revert-buffer-function
                         #'(lambda (&rest -) (eww-reload)))))
 
@@ -104,3 +108,9 @@ specific to eww, while also updating `modi/eww--file-notify-descriptors-list'."
  :complete (lambda (&rest _) (message "Finished!"))
  :status-code '((400 . (lambda (&rest _) (message "Got 400.")))
                 (418 . (lambda (&rest _) (message "Got 418.")))))
+
+
+(defun a4b-open-ss ()
+  "Open the screenshot to the right"
+  (interactive)
+  (display-buffer-in-side-window ))
