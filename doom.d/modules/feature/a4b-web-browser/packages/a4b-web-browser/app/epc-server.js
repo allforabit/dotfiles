@@ -1,18 +1,43 @@
 const epc = require("elrpc");
-const puppeteer = require("puppeteer");
+const browser = require("./puppeteer-browser");
 
+async function scrollTo(pageInstance, xPos, yPos) {
+  pageMessage = `Scroll to (${xPos}, ${yPos})`;
+  pageInstance.evaluate((xPos, yPos) => {
+    window.scrollTo(xPos, yPos);
+  }, xPos, yPos);
+}
 
 (async () => {
-  await epc.startServer();
+  const server = await epc.startServer();
   
-  // Boot browser
-  const browser = await puppeteer.launch();
-  // Open page
-  const page = await browser.newPage();
+  server.defineMethod("helloWorld", (msg) => console.log(`Hello world: ${msg}`));
 
-  server.defineMethod("scroll", async function(url, path) {
+  const browserInstance = await browser.get();
+  const pageInstance = await browser.getPage(browserInstance);
+
+  server.defineMethod("scrollTo", async (x, y) => scrollTo(pageInstance, x, y));
+
+  server.defineMethod("goto", async (url) => {
+    pageInstance.goto(url);
+    pageMessage = `Went to yo ${url}`;
+    console.log(pageMessage);
   });
-  server.defineMethod("go", async function(url, path) {
+  
+  server.defineMethod("scrollToTop", async () => {
+    pageMessage = `Scroll to top`;
+    pageInstance.evaluate(() => {
+      window.scrollTo(0, 0);
+    });
   });
+  
+
+  server.defineMethod("click", async (x, y) => {
+    pageMessage = `Click ${x}, ${y}`;
+    console.log(pageMessage);
+    pageInstance.mouse.click(x, y);
+  });
+
   server.wait();
+
 })();

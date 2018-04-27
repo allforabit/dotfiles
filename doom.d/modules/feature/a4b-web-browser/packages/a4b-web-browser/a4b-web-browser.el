@@ -108,6 +108,9 @@
   (run-hooks 'a4b-web-browser-mode-hook))
 
 
+(setq epc:accept-process-timeout 1500)
+(setq epc:accept-process-timeout-count 1000)
+
 ;; (deferred:$
 ;;   (epc:call-deferred epc 'echo '("hello"))
 ;;   (deferred:nextc it
@@ -130,6 +133,14 @@
   (setq a4b-eww-should-update t)
   (epc:call-sync epc 'goto `(,url)))
 
+(defun a4b-web-browser-to-top ()
+  (interactive)
+  (setq a4b-eww-should-update t)
+  (epc:call-sync epc 'scrollToTop '()))
+
+(defun a4b-web-browser-click (xy)
+  (setq a4b-eww-should-update t)
+  (epc:call-sync epc 'click xy))
 
 ;; (defun a4b-web-browser-get-window-allocation (&optional window)
 ;;   (let* ((window-edges (window-inside-pixel-edges window))

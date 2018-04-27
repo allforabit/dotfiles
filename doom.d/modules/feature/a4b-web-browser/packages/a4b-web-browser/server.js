@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const chokidar = require('chokidar');
 const watcher = chokidar.watch('./app');
-const epc = require("elrpc");
+
+require("./app/epc-server");
 
 watcher.on('ready', function() {
   watcher.on('all', function() {
@@ -16,3 +17,4 @@ app.use(function (req, res, next) {
   require('./app/index')(req, res, next);
 });
 app.listen(9001);
+

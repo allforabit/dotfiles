@@ -3,14 +3,9 @@ const micro = require('micro');
 
 const express = require('express')
 const router = express.Router()
-const puppeteer = require('puppeteer');
-const epc = require("elrpc");
-
+const browser = require("./puppeteer-browser");
 
 var requestCount = 0;
-// For now hold browser in a global
-var browser;
-var browserPage;
 
 var pageMessage = "";
 
@@ -77,46 +72,14 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function getBrowser() {
-  if(browser) {
-    return browser;
-  }
-  browser = await puppeteer.launch({
-    // headless: false,
-    // executablePath: "C:/Users/Admin/AppData/Local/Chromium/Application/chrome.exe",
-    // args: [
-    //   '--remote-debugging-port=9222'
-    // ]
-  });
-  return browser;
-}
-
-async function getBrowserPage(browser) {
-  if(browserPage) {
-    return browserPage;
-  }
-  browserPage = await browser.newPage();
-  browserPage.on('console', msg => console.log('PAGE LOG:', msg.text()));
-  return browserPage;
-}
-
-async function goToUrl(page, url){
-  page.goto(url);
-}
-
-async function getScreenshot(page) {
-  const ss = await page.screenshot();
-  // Return the screenshot buffer
-  return ss;
-}
 
 router.get('/', async (req, res) => {
   try{
     
-    const browserInstance = await getBrowser();
-    const pageInstance = await getBrowserPage(browserInstance);
+    const browserInstance = await browser.get();
+    const pageInstance = await browser.getPage(browserInstance);
     
-    const ss = await getScreenshot(pageInstance);
+    const ss = await pageInstance.screenshot();
 
     requestCount++;
 
@@ -148,28 +111,5 @@ module.exports = router;
 
 // const {send} = require('micro')
 
-(async () => {
-  const server = await epc.startServer();
-  
-  server.defineMethod("helloWorld", (msg) => console.log(`Hello world: ${msg}`));
 
-  const browserInstance = await getBrowser();
-  const pageInstance = await getBrowserPage(browserInstance);
-
-  server.defineMethod("scrollTo", async function(xPos, yPos) {
-    pageMessage = `Scroll to (${xPos}, ${yPos})`;
-    pageInstance.evaluate(yPos => {
-      window.scrollBy(0, yPos);
-    }, yPos);
-  });
-
-  server.defineMethod("goto", async (url) => {
-    pageInstance.goto(url);
-    pageMessage = `Went to yo ${url}`;
-    console.log(pageMessage);
-  });
-
-  server.wait();
-
-})();
 
