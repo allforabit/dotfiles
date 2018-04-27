@@ -1,13 +1,18 @@
 const h = require('@thi.ng/hiccup');
 const micro = require('micro');
 
-// https://gist.github.com/companje/eea17988257a10dcbf04
+const express = require('express')
+const router = express.Router()
+const puppeteer = require('puppeteer');
+const epc = require("elrpc");
 
-const browserSystem = require('./puppeteer-browser');
 
-const {send} = require('micro')
+var requestCount = 0;
+// For now hold browser in a global
+var browser;
+var browserPage;
 
-function stuff(ssBase64) {
+function stuff(ssBase64, requestCount) {
   return h.serialize(["html",
                       ["head",
                        ["title", "Hello world"],
@@ -28,7 +33,7 @@ function stuff(ssBase64) {
                            background: "white"
                          }
                        },
-                       ["div.yo", "Oh hi there how are you there??", 
+                       ["div.yo", `Request count: ${requestCount}`, 
                         ["div", ["a", {href: "http://google.ie"}, "A link to google yo"], ["img", {src: `data:image/png;base64, ${ssBase64}`}]],
                         ["section",
                          {
@@ -66,29 +71,87 @@ function stuff(ssBase64) {
                        ]]]);
 }
 
-// Async iffe
-(async () => {
-  
-  const browser = await browserSystem();
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-  const server = micro(async (req, res) => {
-
-    const statusCode = 200;
-
-    const ss = await browser.getScreenshot("http://localhost:9000");
-    const base64EncodedSS = ss.toString('base64');
-
-    res.setHeader('content-type', 'text/html');
-
-    console.log('Serving index.html');
-    res.end(stuff(base64EncodedSS));
+async function getBrowser() {
+  if(browser) {
+    return browser;
+  }
+  browser = await puppeteer.launch({
+    // headless: false,
+    // executablePath: "C:/Users/Admin/AppData/Local/Chromium/Application/chrome.exe",
+    // args: [
+    //   '--remote-debugging-port=9222'
+    // ]
   });
+  return browser;
+}
 
-  const io = require('socket.io')(server);
+async function getBrowserPage(browser) {
+  if(browserPage) {
+    return browserPage;
+  }
+  browserPage = await browser.newPage();
+  browserPage.on('console', msg => console.log('PAGE LOG:', msg.text()));
+  return browserPage;
+}
 
-  // socket-io handlers are in websocket-server.js
-  require('./websocket-server.js')(browser)(io);
+async function goToUrl(page, url){
+  page.goto(url);
+}
 
-  server.listen(4000);
+async function getScreenshot(page) {
+  const ss = await page.screenshot();
+  // Return the screenshot buffer
+  return ss;
+}
 
+router.get('/', async (req, res) => {
+  try{
+    
+    const browserInstance = await getBrowser();
+    const pageInstance = await getBrowserPage(browserInstance);
+    
+    const ss = await getScreenshot(pageInstance);
+    res.send(stuff(ss.toString("base64"), requestCount));
+    
+    // if(req.query.url){
+    //   goToUrl(pageInstance, req.query.url);
+    // }else{
+    //   res.send("Please provide a url");
+    // }
+
+  }catch(err) {
+    console.error('There was an error reading the file!', err);
+    res.send("There was an error.");
+  }
+});
+
+
+// Let emacs join the party
+(async () => {
+  await epc.startServer();
+  
+  const browserInstance = await getBrowser();
+  const pageInstance = await getBrowserPage(browserInstance);
+
+  server.defineMethod("scrollY", async function(yPos) {
+    page.evaluate(_ => {
+      window.scrollBy(0, yPos);
+    });
+  });
+  server.defineMethod("goto", async function(url, path) {
+    pageInstance.goto(url);
+  });
+  server.wait();
 })();
+
+module.exports = router;
+
+// https://gist.github.com/companje/eea17988257a10dcbf04
+
+// const browserSystem = require('./puppeteer-browser');
+
+// const {send} = require('micro')
