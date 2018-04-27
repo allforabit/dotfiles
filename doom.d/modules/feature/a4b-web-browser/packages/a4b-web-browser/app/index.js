@@ -12,7 +12,9 @@ var requestCount = 0;
 var browser;
 var browserPage;
 
-function stuff(ssBase64, requestCount) {
+var pageMessage = "";
+
+function stuff(params) {
   return h.serialize(["html",
                       ["head",
                        ["title", "Hello world"],
@@ -33,8 +35,8 @@ function stuff(ssBase64, requestCount) {
                            background: "white"
                          }
                        },
-                       ["div.yo", `Request count: ${requestCount}`, 
-                        ["div", ["a", {href: "http://google.ie"}, "A link to google yo"], ["img", {src: `data:image/png;base64, ${ssBase64}`}]],
+                       ["div.yo", `Request count: ${params.requestCount}`, 
+                        ["div", ["div.messages", `MSG: ${params.msg}`], ["img", {src: `data:image/png;base64, ${params.ssBase64}`}]],
                         ["section",
                          {
                            style: {
@@ -115,7 +117,14 @@ router.get('/', async (req, res) => {
     const pageInstance = await getBrowserPage(browserInstance);
     
     const ss = await getScreenshot(pageInstance);
-    res.send(stuff(ss.toString("base64"), requestCount));
+
+    requestCount++;
+
+    res.send(stuff({
+      ssBase64: ss.toString("base64"),
+      requestCount: requestCount,
+      msg: pageMessage
+    }));
     
     // if(req.query.url){
     //   goToUrl(pageInstance, req.query.url);
@@ -131,23 +140,6 @@ router.get('/', async (req, res) => {
 
 
 // Let emacs join the party
-(async () => {
-  await epc.startServer();
-  
-  const browserInstance = await getBrowser();
-  const pageInstance = await getBrowserPage(browserInstance);
-
-  server.defineMethod("scrollY", async function(yPos) {
-    page.evaluate(_ => {
-      window.scrollBy(0, yPos);
-    });
-  });
-  server.defineMethod("goto", async function(url, path) {
-    pageInstance.goto(url);
-  });
-  server.wait();
-})();
-
 module.exports = router;
 
 // https://gist.github.com/companje/eea17988257a10dcbf04
@@ -155,3 +147,29 @@ module.exports = router;
 // const browserSystem = require('./puppeteer-browser');
 
 // const {send} = require('micro')
+
+(async () => {
+  const server = await epc.startServer();
+  
+  server.defineMethod("helloWorld", (msg) => console.log(`Hello world: ${msg}`));
+
+  const browserInstance = await getBrowser();
+  const pageInstance = await getBrowserPage(browserInstance);
+
+  server.defineMethod("scrollTo", async function(xPos, yPos) {
+    pageMessage = `Scroll to (${xPos}, ${yPos})`;
+    pageInstance.evaluate(yPos => {
+      window.scrollBy(0, yPos);
+    }, yPos);
+  });
+
+  server.defineMethod("goto", async (url) => {
+    pageInstance.goto(url);
+    pageMessage = `Went to yo ${url}`;
+    console.log(pageMessage);
+  });
+
+  server.wait();
+
+})();
+

@@ -107,17 +107,28 @@
   (use-local-map a4b-web-browser-mode-map)
   (run-hooks 'a4b-web-browser-mode-hook))
 
-(setq epc (epc:start-epc "node" '("echo.js")))
-(deferred:$
-  (epc:call-deferred epc 'echo '("hello"))
-  (deferred:nextc it
-    (lambda (x) (message "Return : %S" x))))
-(epc:call-sync epc 'ss '("http://twitter.com" "go.png"))
-(epc:stop-epc epc)
 
-(defun a4b-web-browser-hello()
+;; (deferred:$
+;;   (epc:call-deferred epc 'echo '("hello"))
+;;   (deferred:nextc it
+;;     (lambda (x) (message "Return : %S" x))))
+(epc:stop-epc epc)
+(setq epc (epc:start-epc "node" '("server.js")))
+
+(defun a4b-web-browser-hello-world (msg) 
   (interactive)
-  (message "Hello"))
+  (setq a4b-eww-should-update t)
+  (epc:call-sync epc 'helloWorld '(msg)))
+
+(defun a4b-web-browser-scroll-to-y (ypos)
+  (interactive "NYPos: ")
+  (setq a4b-eww-should-update t)
+  (epc:call-sync epc 'scrollTo `(0 ,ypos)))
+
+(defun a4b-web-browser-goto (url)
+  (interactive "sURL: ")
+  (setq a4b-eww-should-update t)
+  (epc:call-sync epc 'goto `(,url)))
 
 
 ;; (defun a4b-web-browser-get-window-allocation (&optional window)
