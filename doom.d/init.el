@@ -62,6 +62,7 @@
        tmux              ; an API for interacting with tmux
        upload            ; map local to remote projects via ssh/ftp
        +image
+       +annex
 
        :lang
        assembly          ; assembly for fun or debugging
@@ -89,12 +90,14 @@
        nix               ; I hereby declare "nix geht mehr!"
        ;; ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
-        +attach          ; custom attachment system
+        ;; Will use built in org attach
+        ;; +attach          ; custom attachment system
         +babel           ; running code in org
         +capture         ; org-capture in and outside of Emacs
         +export          ; Exporting org to whatever you want
         +present         ; Emacs for presentations
         +publish)        ; Emacs+Org as a static site generator
+       +org
        perl              ; write code no one else can comprehend
        php               ; perl's insecure younger brother
        +php              ; addtional php config

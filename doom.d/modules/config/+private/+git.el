@@ -14,6 +14,7 @@ fi
 ")))
 
 ;; Make magit work
+;; TODO popups disabled for now
 (set! :popup "^.*magit" '((slot . -1) (vslot . 1) (side . right) (size . 80)) '((select . t)))
 (set! :popup "^\\*magit.*popup\\*" '((slot . 0) (vslot . 1) (side . right)) '((select . t)))
 (set! :popup "^.*magit-revision:.*" '((slot . 2) (vslot . 1) (side . right) (window-height . 0.6)) '((select . t)))
