@@ -3,16 +3,13 @@ const micro = require('micro');
 
 const express = require('express')
 const router = express.Router()
-const puppeteer = require('puppeteer');
-const epc = require("elrpc");
-
+const browser = require("./puppeteer-browser");
 
 var requestCount = 0;
-// For now hold browser in a global
-var browser;
-var browserPage;
 
-function stuff(ssBase64, requestCount) {
+var pageMessage = "";
+
+function stuff(params) {
   return h.serialize(["html",
                       ["head",
                        ["title", "Hello world"],
@@ -33,8 +30,8 @@ function stuff(ssBase64, requestCount) {
                            background: "white"
                          }
                        },
-                       ["div.yo", `Request count: ${requestCount}`, 
-                        ["div", ["a", {href: "http://google.ie"}, "A link to google yo"], ["img", {src: `data:image/png;base64, ${ssBase64}`}]],
+                       ["div.yo", `Request count: ${params.requestCount}`, 
+                        ["div", ["div.messages", `MSG: ${params.msg}`], ["img", {src: `data:image/png;base64, ${params.ssBase64}`}]],
                         ["section",
                          {
                            style: {
@@ -75,47 +72,22 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function getBrowser() {
-  if(browser) {
-    return browser;
-  }
-  browser = await puppeteer.launch({
-    // headless: false,
-    // executablePath: "C:/Users/Admin/AppData/Local/Chromium/Application/chrome.exe",
-    // args: [
-    //   '--remote-debugging-port=9222'
-    // ]
-  });
-  return browser;
-}
-
-async function getBrowserPage(browser) {
-  if(browserPage) {
-    return browserPage;
-  }
-  browserPage = await browser.newPage();
-  browserPage.on('console', msg => console.log('PAGE LOG:', msg.text()));
-  return browserPage;
-}
-
-async function goToUrl(page, url){
-  page.goto(url);
-}
-
-async function getScreenshot(page) {
-  const ss = await page.screenshot();
-  // Return the screenshot buffer
-  return ss;
-}
 
 router.get('/', async (req, res) => {
   try{
     
-    const browserInstance = await getBrowser();
-    const pageInstance = await getBrowserPage(browserInstance);
+    const browserInstance = await browser.get();
+    const pageInstance = await browser.getPage(browserInstance);
     
-    const ss = await getScreenshot(pageInstance);
-    res.send(stuff(ss.toString("base64"), requestCount));
+    const ss = await pageInstance.screenshot();
+
+    requestCount++;
+
+    res.send(stuff({
+      ssBase64: ss.toString("base64"),
+      requestCount: requestCount,
+      msg: pageMessage
+    }));
     
     // if(req.query.url){
     //   goToUrl(pageInstance, req.query.url);
@@ -131,23 +103,6 @@ router.get('/', async (req, res) => {
 
 
 // Let emacs join the party
-(async () => {
-  await epc.startServer();
-  
-  const browserInstance = await getBrowser();
-  const pageInstance = await getBrowserPage(browserInstance);
-
-  server.defineMethod("scrollY", async function(yPos) {
-    page.evaluate(_ => {
-      window.scrollBy(0, yPos);
-    });
-  });
-  server.defineMethod("goto", async function(url, path) {
-    pageInstance.goto(url);
-  });
-  server.wait();
-})();
-
 module.exports = router;
 
 // https://gist.github.com/companje/eea17988257a10dcbf04
@@ -155,3 +110,6 @@ module.exports = router;
 // const browserSystem = require('./puppeteer-browser');
 
 // const {send} = require('micro')
+
+
+

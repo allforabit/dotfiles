@@ -5,10 +5,19 @@
 (setq shr-color-visible-luminance-min 70)
 (setq +lookup-open-url-fn 'eww)
 
-(set! :popup "^\\*eww\\*$" '((size . 80) (slot . 0) (side . left)) '((quit) (select . t) (modeline . t)))
+;; (set! :popup "^\\*eww\\*$" '((size . 80) (slot . 0) (side . left)) '((quit) (select . t) (modeline . t)))
 
+(evil-define-key 'normal eww-mode-map (kbd "SPC") nil)
 (after! eww-mode
-  (evil-define-key 'normal eww-mode-map (kbd "SPC") nil))
+  (message "Hello from eww"))
+
+(evil-define-key 'normal eww-mode-map (kbd "<down-mouse-1>") 
+  (lambda (event)
+    (interactive "e")
+    (let* ((posn (elt event 1))
+           (xy (posn-object-x-y posn)))
+      (message "Clicked %s" xy)
+      (a4b-web-browser-click xy))))
 
 ;; Auto-rename new eww buffers
 (defun xah-rename-eww-hook ()
@@ -17,3 +26,4 @@
 (add-hook 'eww-mode-hook #'xah-rename-eww-hook)
 
 ;; (def-package! xwidgete)
+

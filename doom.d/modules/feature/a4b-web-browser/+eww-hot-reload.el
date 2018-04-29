@@ -4,7 +4,7 @@
 
 (defvar modi/eww--file-notify-descriptors-list ()
   "List to store file-notify descriptor for all files that have an
-associated auto-reloading eww buffer.")
+associated auto-re(down-mouse-1 (#<window 8 on +eww-hot-reload.el> 308 (191 . 109) 34200798 nil 308 (23 . 6) nil (7 . 1) (8 . 18))) yoloading eww buffer.")
 
 (defun modi/advice-eww-open-file-to-auto-reload (orig-fun &rest args)
   "When `eww-open-file' is called with \\[universal-argument], open
@@ -87,7 +87,7 @@ specific to eww, while also updating `modi/eww--file-notify-descriptors-list'."
 
 (with-current-buffer
     (url-retrieve-synchronously "http://localhost:3000")
-  (goto-char (point-min))
+  (goto-char (point-min))(down-mouse-1 (#<window 8 on +eww-hot-reload.el> 3628 (273 . 474) 34411458 nil 3628 (34 . 26) nil (33 . 6) (8 . 18))) yo
   (buffer-string))
 
 
@@ -112,7 +112,3 @@ specific to eww, while also updating `modi/eww--file-notify-descriptors-list'."
                 (418 . (lambda (&rest _) (message "Got 418.")))))
 
 
-(defun a4b-open-ss ()
-  "Open the screenshot to the right"
-  (interactive)
-  (display-buffer-in-side-window ))
