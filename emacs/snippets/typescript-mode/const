@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Const
+# key: const
+# --
+const ${1:EV$(upcase yas-text)}_${2:$(upcase (replace-regexp-in-string "-" "_" yas-text))} = "${2:title}";
+$0

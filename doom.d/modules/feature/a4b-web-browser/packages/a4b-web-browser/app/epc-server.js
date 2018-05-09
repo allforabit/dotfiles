@@ -31,6 +31,17 @@ async function scrollTo(pageInstance, xPos, yPos) {
     });
   });
   
+  server.defineMethod("scrollDown", async () => {
+    pageInstance.evaluate(() => {
+      window.scrollBy(0, 100);
+    });
+  });
+
+  server.defineMethod("scrollUp", async () => {
+    pageInstance.evaluate(() => {
+      window.scrollBy(0, -100);
+    });
+  });
 
   server.defineMethod("click", async (x, y) => {
     pageMessage = `Click ${x}, ${y}`;

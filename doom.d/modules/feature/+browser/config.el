@@ -7,17 +7,10 @@
 
 ;; (set! :popup "^\\*eww\\*$" '((size . 80) (slot . 0) (side . left)) '((quit) (select . t) (modeline . t)))
 
+;; TODO does not seem to be working!!!
 (evil-define-key 'normal eww-mode-map (kbd "SPC") nil)
 (after! eww-mode
   (message "Hello from eww"))
-
-(evil-define-key 'normal eww-mode-map (kbd "<down-mouse-1>") 
-  (lambda (event)
-    (interactive "e")
-    (let* ((posn (elt event 1))
-           (xy (posn-object-x-y posn)))
-      (message "Clicked %s" xy)
-      (a4b-web-browser-click xy))))
 
 ;; Auto-rename new eww buffers
 (defun xah-rename-eww-hook ()

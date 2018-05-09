@@ -2,7 +2,7 @@
 
 (doom! :feature
        (popup            ; tame sudden yet inevitable temporary windows
-        ;; +all             ; catch all popups that start with an asterix
+        +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
       ;debugger          ; FIXME stepping through code, to help you add bugs
        eval              ; run code, run (also, repls)
@@ -70,6 +70,7 @@
        crystal           ; ruby at the speed of c
        clojure           ; java with a lisp
        csharp            ; unity, .NET, and mono shenanigans
+       csound            ; csound audio dsl
        data              ; config/data formats
        elixir            ; erlang done right
        elm               ; care for a cup of TEA?
@@ -97,7 +98,7 @@
         +export          ; Exporting org to whatever you want
         +present         ; Emacs for presentations
         +publish)        ; Emacs+Org as a static site generator
-       +org
+       ;; +org
        perl              ; write code no one else can comprehend
        php               ; perl's insecure younger brother
        +php              ; addtional php config

@@ -69,7 +69,6 @@
 
 ;;; Acknowledgements:
 ;;
-;Z;
 ;;
 
 ;;; TODO
@@ -102,23 +101,30 @@
   (interactive)
   (kill-all-local-variables)
   (setq major-mode 'a4b-web-browser-mode)
-  (setq mode-name "A4b-Web-Browser")
+  (setq mode-name "A4b Web Browser")
   (set (make-local-variable 'buffer-id) (a4b-web-browser-generate-id))
   (use-local-map a4b-web-browser-mode-map)
   (run-hooks 'a4b-web-browser-mode-hook))
 
-
 (setq epc:accept-process-timeout 1500)
 (setq epc:accept-process-timeout-count 1000)
 
-;; (deferred:$
-;;   (epc:call-deferred epc 'echo '("hello"))
-;;   (deferred:nextc it
-;;     (lambda (x) (message "Return : %S" x))))
-(epc:stop-epc epc)
-(setq epc (epc:start-epc "node" '("server.js")))
+(setq epc nil)
 
-(defun a4b-web-browser-hello-world (msg) 
+(defun a4b-web-browser-boot ()
+  (interactive)
+  (setq epc (epc:start-epc "node" '("server.js"))))
+
+(defun a4b-web-browser-stop ()
+  (interactive)
+  (epc:stop-epc epc))
+
+(defun a4b-web-browser-restart ()
+  (interactive)
+  (a4b-web-browser-stop)
+  (a4b-web-browser-boot))
+
+(defun a4b-web-browser-hello-world (msg)
   (interactive)
   (setq a4b-eww-should-update t)
   (epc:call-sync epc 'helloWorld '(msg)))
@@ -127,6 +133,16 @@
   (interactive "NYPos: ")
   (setq a4b-eww-should-update t)
   (epc:call-sync epc 'scrollTo `(0 ,ypos)))
+
+(defun a4b-web-browser-scroll-up ()
+  (interactive)
+  (setq a4b-eww-should-update t)
+  (epc:call-sync epc 'scrollDown '()))
+
+(defun a4b-web-browser-scroll-down ()
+  (interactive)
+  (setq a4b-eww-should-update t)
+  (epc:call-sync epc 'scrollUp '()))
 
 (defun a4b-web-browser-goto (url)
   (interactive "sURL: ")
