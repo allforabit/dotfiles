@@ -50,7 +50,7 @@
        gist              ; interacting with github gists
        imenu             ; an imenu sidebar and searchable code index
        impatient-mode    ; show off code over HTTP
-      ;macos             ; MacOS-specific commands
+       macos             ; MacOS-specific commands
        make              ; run make tasks from Emacs
        magit             ;
        neotree           ; a project drawer, like NERDTree for vim
