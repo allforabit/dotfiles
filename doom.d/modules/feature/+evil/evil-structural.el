@@ -74,5 +74,16 @@ instance:
             (run-hook-with-args 'evil-structural-setup-hook
                                 m mode-keymaps)))))))
 
+;;;###autoload
+
+(evil-define-operator evil-structural-narrow-indirect (beg end type)
+  "Indirectly narrow the region from BEG to END."
+  (interactive "<R>")
+  (evil-normal-state)
+  (narrow-to-region-indirect beg end))
+
+(define-key evil-normal-state-map "m" 'evil-narrow-indirect)
+(define-key evil-visual-state-map "m" 'evil-narrow-indirect)
+
 (provide 'evil-structural)
 ;;; evil-structural.el ends here
