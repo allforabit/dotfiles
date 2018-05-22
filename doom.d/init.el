@@ -157,5 +157,3 @@ workspace."
     (define-key km "\C-c\C-c" 'web-mode)
     km)
   "Keymap used in `web-mode'.")
-
-(defun hi () (message "hello"))
