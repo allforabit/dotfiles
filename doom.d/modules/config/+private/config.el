@@ -33,10 +33,12 @@
 ;; Usage:
 ;; eval: (temp-mode 1)
 ;; eval: (define-key temp-mode-map (kbd "<f10>") 'function-ONE)
-;; (def-package! fakecygpty
-;;   :config
-;;   (message "Activating Fake cyg pty")
-;;   (fakecygpty-activate))
+
+(when IS-WINDOWS
+  (def-package! fakecygpty
+    :config
+    (message "Activating Fake cyg pty")
+    (fakecygpty-activate)))
 
 ;; (make-comint-in-buffer "cmd" nil "cmd" nil)
 ;; (setq explicit-shell-file-name "c:/msys64/usr/bin/bash.exe")

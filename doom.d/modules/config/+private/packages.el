@@ -40,10 +40,11 @@
 ;;            :files ("*")))
 
 ;; Should only be windows
-;; (package! fakecygpty
-;;   :recipe (:fetcher github
-;;            :repo "d5884/fakecygpty"
-;;            :files ("*")))
+(when IS-WINDOWS
+  (package! fakecygpty
+    :recipe (:fetcher github
+                      :repo "d5884/fakecygpty"
+                      :files ("*"))))
 
 
 (package! ahk-mode)

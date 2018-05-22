@@ -18,7 +18,10 @@
 (def-package! indium)
 (def-package! prettier-js
   :config
-    (add-hook! '(js2-mode-hook typescript-mode-hook) #'prettier-js-mode))
+  ;; Too troublesome for now
+  ;; TODO enable on a project by project basis
+    ;; (add-hook! '(js2-mode-hook typescript-mode-hook) #'prettier-js-mode)
+    )
 
 ;; TODO use editorconfig system
 (setq js2-basic-offset 2)
