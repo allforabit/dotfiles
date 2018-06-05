@@ -17,7 +17,35 @@
   evil-extra-operator-mode evil-extra-operator-mode-install
   "Global minor mode of Evil structural.")
 
-(evil-define-text-object )
+(defvar evil-structural-overrides '()
+  "A PLIST of overrides to be applied to
+each evil text object. Will use advice to apply overrides. Although this may
+  change in the future. E.g. could do the override using key maps.")
+
+(defun evil-structural-register (major-mode evil-symbol)
+  "Register an evil structural override(s) for major mode"
+  (if (listp evil-symbol)
+    (cl-loop for s in evil-symbol 
+             (evil-structural-register s))
+    (message (concat "Adding major mode: " "thing"))))
+
+(defun evil-structural-advice (orig-fun &rest args)
+  (if (bound-and-true-p evil-structural-mode)
+      (progn
+        ;; (apply orig-fun args)
+        (message "Do an override here based on evil-structural-overrides")
+        ;; TODO doesn't seem to be applying result like for like with original function
+        (apply 'evil-inner-symbol args)
+        ;; Cancel and go back to normal state
+        ;; (evil-normal-state)
+        )
+    (apply orig-fun args)))
+
+(advice-remove 'evil-inner-word #'evil-structural-advice)
+(advice-add 'evil-inner-word :around #'evil-structural-advice)
+
+(evil-structural-register 'org-mode '(evil-a-word evil-a-paragraph))
+
 
 ;; https://gist.github.com/hyone/1323137
 (setq evil-structural-move-defun-alist
