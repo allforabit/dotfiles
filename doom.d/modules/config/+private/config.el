@@ -43,8 +43,8 @@
 ;; (make-comint-in-buffer "cmd" nil "cmd" nil)
 ;; (setq explicit-shell-file-name "c:/msys64/usr/bin/bash.exe")
 ;; (setq shell-file-name explicit-shell-file-name)
-;; (after! prodigy
-;;   (load (concat +org-dir "+projects.el")))
+(after! prodigy
+  (load (concat +org-dir "+projects.el")))
 
 ;; (setq +lookup-open-url-fn 'eww)
 ;; TODO remove / make more generic
@@ -109,10 +109,10 @@
 (def-package! livid-mode)
 ;; (def-package! ob-php)
 
-(load! +bindings)  ; my key bindings
-(load! +git)
+(load! "+bindings")  ; my key bindings
+(load! "+git")
 (when IS-WINDOWS
-  (load! +windows))
+  (load! "+windows"))
 
 ;;
 ;; (after! doom-themes

@@ -29,8 +29,8 @@
   "Move by defun"
   (let ((count (or count 1))
         (begin-defun (or begin-defun 'beginning-of-defun))
-        (end-defun (or end-defun 'end-of-defun)))
-    (evil-motion-loop (var count)
+    (end-defun (or end-defun 'end-of-defun)))
+(evil-motion-loop (var count)
       (cond
        ((< var 0) (funcall begin-defun))
        (t         (funcall end-defun))))))

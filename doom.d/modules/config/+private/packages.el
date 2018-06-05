@@ -4,6 +4,7 @@
 
 ;; TODO should config not be in config.el
 (package! drupal-mode)
+(package! psysh)
 
 (package! pdf-tools)
 

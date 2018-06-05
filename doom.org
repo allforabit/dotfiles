@@ -878,7 +878,7 @@ Js is evaluated in a temporary folder, so node_path needs to be explicitly set
 (def-package! livid-mode)
 ;; (def-package! ob-php)
 
-(load! +bindings)  ; my key bindings
+(load! "+bindings")  ; my key bindings
 
 ;;
 ;; (after! doom-themes
