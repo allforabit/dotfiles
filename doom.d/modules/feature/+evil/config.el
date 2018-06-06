@@ -11,7 +11,8 @@
 (def-package! evil-structural
   :load-path evil-structural-load-path
   :config
-  (add-hook 'js2-mode-hook #'evil-structural-mode))
+  ;; (add-hook 'js2-mode-hook #'evil-structural-mode)
+  )
 
 (def-package! lispyville
   :config

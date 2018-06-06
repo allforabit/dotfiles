@@ -2,10 +2,12 @@
 SetTitleMatchMode, 2 ; match part of the title
 Return
 
+;; TODO get chrome and chrome canary working again
+
 #b:: ;Browser (chrome)
-if WinExist("Google Chrome")
+if WinExist("ahk_exe C:\Program Files (x86)\Google\Chrome\Application\chrome.exe")
 {
-    if WinActive("Google Chrome")
+    if WinActive("ahk_exe C:\Program Files (x86)\Google\Chrome\Application\chrome.exe")
     {
         SendInput !{Esc}
     }
@@ -14,14 +16,14 @@ if WinExist("Google Chrome")
     return
 }
 else
-    Run Chrome.exe
+    Run "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
 return
 
 
 #c:: ;Chromium
-if WinExist("Chromium")
+if WinExist("ahk_exe C:\Users\Admin\AppData\Local\Google\Chrome SxS\Application\chrome.exe")
 {
-    if WinActive("Chromium")
+    if WinActive("ahk_exe C:\Users\Admin\AppData\Local\Google\Chrome SxS\Application\chrome.exe")
     {
         SendInput !{Esc}
     }
@@ -30,7 +32,7 @@ if WinExist("Chromium")
     return
 }
 else
-    Run C:\Users\Admin\AppData\Local\Chromium\Application\Chrome.exe
+    Run, % """C:\Users\Admin\AppData\Local\Google\Chrome SxS\Application\chrome.exe"" --remote-debugging-port=9222"
 return
 
 
@@ -80,4 +82,17 @@ else
     Run C:\Program Files\Microsoft VS Code\Code.exe
 return
 
-; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+#t:: ;Terminal (chrome)
+if WinExist("ahk_exe ConEmu64.exe")
+{
+    if WinActive("ahk_exe ConEmu64.exe")
+    {
+        SendInput !{Esc}
+    }
+    else
+        WinActivate
+    return
+}
+else
+    Run "C:\Program Files\ConEmu\ConEmu64.exe"
+return

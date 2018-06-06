@@ -33,6 +33,7 @@
        :ui
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
+       ;; TODO disable from here
        doom-modeline     ; a snazzy Atom-inspired mode-line
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
        evil-goggles      ; display visual hints when editing in evil
@@ -276,6 +277,5 @@
 ;;        (default +bindings +snippets +evil-commands)
 ;;        +private          ; Misc personal config to be organized
 ;;        )
-
 
 (unless IS-WINDOWS (doom! :ui doom-modeline))

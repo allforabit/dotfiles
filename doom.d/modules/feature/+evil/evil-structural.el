@@ -17,58 +17,61 @@
   evil-extra-operator-mode evil-extra-operator-mode-install
   "Global minor mode of Evil structural.")
 
-(defvar evil-structural-overrides '()
-  "A PLIST of overrides to be applied to
-each evil text object. Will use advice to apply overrides. Although this may
-  change in the future. E.g. could do the override using key maps.")
+;; TODO: Eager macro-expansion failure: (error "Expected a cl-loop keyword, found (evil-structural-register s)")
 
-(defun evil-structural-register (major-mode evil-symbol)
-  "Register an evil structural override(s) for major mode"
-  (if (listp evil-symbol)
-    (cl-loop for s in evil-symbol 
-             (evil-structural-register s))
-    (message (concat "Adding major mode: " "thing"))))
+;; (defvar evil-structural-overrides '()
+;;   "A PLIST of overrides to be applied to
+;; each evil text object. Will use advice to apply overrides. Although this may
+;;   change in the future. E.g. could do the override using key maps.")
 
-(defun evil-structural-advice (orig-fun &rest args)
-  (if (bound-and-true-p evil-structural-mode)
-      (progn
-        ;; (apply orig-fun args)
-        (message "Do an override here based on evil-structural-overrides")
-        ;; TODO doesn't seem to be applying result like for like with original function
-        (apply 'evil-inner-symbol args)
-        ;; Cancel and go back to normal state
-        ;; (evil-normal-state)
-        )
-    (apply orig-fun args)))
+;; (defun evil-structural-register (major-mode evil-symbol)
+;;   "Register an evil structural override(s) for major mode"
+;;   (if (listp evil-symbol)
+;;     (cl-loop for s in evil-symbol
+;;              (evil-structural-register s))
+;;     (message (concat "Adding major mode: " "thing"))))
 
-(advice-remove 'evil-inner-word #'evil-structural-advice)
-(advice-add 'evil-inner-word :around #'evil-structural-advice)
+;; (defun evil-structural-advice (orig-fun &rest args)
+;;   (if (bound-and-true-p evil-structural-mode)
+;;       (progn
+;;         ;; (apply orig-fun args)
+;;         (message "Do an override here based on evil-structural-overrides")
+;;         ;; TODO doesn't seem to be applying result like for like with original function
+;;         (apply 'evil-inner-symbol args)
+;;         ;; Cancel and go back to normal state
+;;         ;; (evil-normal-state)
+;;         )
+;;     (apply orig-fun args)))
 
-(evil-structural-register 'org-mode '(evil-a-word evil-a-paragraph))
+;; (advice-remove 'evil-inner-word #'evil-structural-advice)
+;; (advice-add 'evil-inner-word :around #'evil-structural-advice)
+
+;; TODO this isn't working
+;; (evil-structural-register 'org-mode '(evil-a-word evil-a-paragraph))
 
 
 ;; https://gist.github.com/hyone/1323137
-(setq evil-structural-move-defun-alist
-      '((ruby-mode . (ruby-beginning-of-defun . ruby-end-of-defun))
-        (c-mode    . (c-beginning-of-defun . c-end-of-defun))
-        (rjsx-mode  . (beginning-of-defun . end-of-defun))))
+;; (setq evil-structural-move-defun-alist
+;;       '((ruby-mode . (ruby-beginning-of-defun . ruby-end-of-defun))
+;;         (c-mode    . (c-beginning-of-defun . c-end-of-defun))
+;;         (rjsx-mode  . (beginning-of-defun . end-of-defun))))
 
-(defun evil-structural-move-defun (count &optional begin-defun end-defun)
-  "Move by defun"
-  (let ((count (or count 1))
-        (begin-defun (or begin-defun 'beginning-of-defun))
-    (end-defun (or end-defun 'end-of-defun)))
-(evil-motion-loop (var count)
-      (cond
-       ((< var 0) (funcall begin-defun))
-       (t         (funcall end-defun))))))
+;; (defun evil-structural-move-defun (count &optional begin-defun end-defun)
+;;   "Move by defun"
+;;   (let ((count (or count 1))
+;;         (begin-defun (or begin-defun 'beginning-of-defun))
+;;     (end-defun (or end-defun 'end-of-defun)))
+;; (evil-motion-loop (var count)
+;;       (cond
+;;        ((< var 0) (funcall begin-defun))
+;;        (t         (funcall end-defun))))))
 
-(evil-define-text-object evil-structural-a-defun (&optional count begin end type)
-  "Select a defun."
-  (let* ((sexp (sp-get-hybrid-sexp))
-         (beg (plist-get sexp :beg))
-         (end (plist-get sexp :end)))
-    (evil-range beg end 'exclusive :expanded t)))
+;; (evil-define-text-object evil-structural-a-defun (&optional count begin end type)
+;;   "Select a defun."
+;;   (let* ((sexp (sp-get-hybrid-sexp))
+;;          (beg (plist-get sexp :beg))
+;;          (end (plist-get sexp :end)))
+;;     (evil-range beg end 'exclusive :expanded t)))
 
 
 ;; Cleverparens objects (should work with modes supported by smartparens)
