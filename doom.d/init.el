@@ -88,6 +88,7 @@
       ;hy                ; readability of scheme w/ speed of python
       ;(java +meghanada) ; the poster child for carpal tunnel syndrome
       javascript        ; all(hope(abandon(ye(who(enter(here))))))
+      +javascript
       ;julia             ; a better, faster MATLAB
       ;latex             ; writing papers in Emacs has never been so fun
       ;ledger            ; an accounting system in Emacs
@@ -116,6 +117,7 @@
       ;solidity          ; do you need a blockchain? No.
       ;swift             ; who asked for emoji variables?
       web               ; the tubes
+      +web
 
        ;; Applications are complex and opinionated modules that transform Emacs
        ;; toward a specific purpose. They may have additional dependencies and
